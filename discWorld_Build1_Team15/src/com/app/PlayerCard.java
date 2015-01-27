@@ -1,5 +1,10 @@
 package com.app;
 
+/**
+ * 
+ * @author Pratik 
+ * Class of player cards that will be given out to players when the game starts
+ */
 public class PlayerCard {
 	
 	private String color;
@@ -14,28 +19,47 @@ public class PlayerCard {
 
 	}
 
+	/**
+	 * @return the color
+	 */
 	public String getColor() {
 		return color;
 	}
 
+	/**
+	 * @param color the color to set
+	 */
 	public void setColor(String color) {
 		this.color = color;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	/**
+	 * @return the location
+	 */
 	public String getLocation() {
 		return location;
 	}
 
+	/**
+	 * @param location the location to set
+	 */
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 }
