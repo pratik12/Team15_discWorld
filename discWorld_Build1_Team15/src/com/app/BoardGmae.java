@@ -27,9 +27,11 @@ public class BoardGmae {
 		this.board_areas = board_areas;
 	}
 	
+	static Player p1;
+	
 	public static void main(String[] args) {
 		
-		Player p1 = new Player("Red");
+		 p1 = new Player("Red");
 		p1.toString();
 	}
 }
