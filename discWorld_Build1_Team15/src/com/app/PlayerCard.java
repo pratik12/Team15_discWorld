@@ -14,7 +14,7 @@ public class PlayerCard {
 	public PlayerCard(String color, String name, String location){
 		
 		setColor(color);
-		setLocation(location);
+		setLocation(location); 
 		setName(name);
 
 	}
@@ -41,7 +41,8 @@ public class PlayerCard {
 	}
 
 	/**
-	 * @param location the location to set
+	 * @param location the location of the player card to set
+	 * would be set to either players hand, discard pile or draw pile
 	 */
 	public void setLocation(String location) {
 		this.location = location;

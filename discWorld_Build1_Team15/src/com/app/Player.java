@@ -6,9 +6,10 @@ package com.app;
  */
 public class Player {
 	
+	private String player_color;
 	private String minion_Color;
 	private int minion_Quantity;
-	public int number_of_buildings = 6;
+	private int number_of_buildings ;
 	private String winning_condition;
 	public String random_event_card;
 	private double player_amount;
@@ -19,9 +20,11 @@ public class Player {
 	 * @param quantity
 	 */
 	public Player(String minion_Color, int quantity){
+		
 		set_Minion_Color(minion_Color);
 		set_Minion_Quantity(quantity);
 		set_Player_amount(10);
+		set_Number_of_buildings(6);
 	}
 	
 	/**
@@ -76,7 +79,45 @@ public class Player {
 		this.player_amount = player_amount;
 	}
 
-		
+	/**
+	 * @return the number_of_buildings
+	 */
+	public int get_Number_of_buildings() {
+		return number_of_buildings;
+	}
+
+	/**
+	 * @param number_of_buildings the number_of_buildings to set
+	 */
+	public void set_Number_of_buildings(int number_of_buildings) {
+		this.number_of_buildings = number_of_buildings;
+	}
+
+	/**
+	 * @return the player_color
+	 */
+	public String get_Player_color() {
+		return player_color;
+	}
+
+	/**
+	 * @param player_color the color of players piece to set
+	 */
+	public void set_Player_color(String player_color) {
+		this.player_color = player_color;
+	}
+
+	/**
+	 * String format of object
+	 */
+	public String toString(){
+		return  "Players Piece Color" + this.get_Player_color() +
+				"Number of Minion's" + this.get_Minion_Quantity() +
+				"Number of Building's" + this.get_Number_of_buildings() +
+				"Current Amount" + this.get_Player_amount() +
+				"Personality Card he holds" +this.get_Winning_condition()
+				;
+	}	
 	
 
 }
