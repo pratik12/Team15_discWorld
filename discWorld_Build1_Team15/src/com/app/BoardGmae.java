@@ -125,7 +125,7 @@ public class BoardGmae {
 		// setting 2 minions manually in the AREA that this player holds
 		p1.getPlayer_areas().get(0).setMinions(2);
 		// updating PLAYERS minions quantity
-		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
+		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2); 
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////
 		// this area has been et to player manually right now. will change further
