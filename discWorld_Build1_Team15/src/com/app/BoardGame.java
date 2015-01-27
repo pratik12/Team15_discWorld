@@ -75,8 +75,9 @@ public class BoardGame {
 	static BoardGame game;
 	public static void main(String[] args) {
 		
-		 game = BoardGame.getInstance(); 
-		 rand = new Random();
+		game = BoardGame.getInstance(); 
+		 
+		rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
 		
 		System.out.println("Personality Cards : ");
@@ -105,16 +106,21 @@ public class BoardGame {
 			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
 					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
 					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
-				temp.set_Trouble_markers(true);
+			   temp.set_Trouble_markers(true);
 			}
 			
 			System.out.println(temp.toString());
 		}
 	}
 
+	
+
 	private static void assign_personality_cards() {
 		
-		p1.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
+		int count = rand.nextInt(7);
+		
+		p1.set_Winning_condition(personality_cards.get(count));
+		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
 		p1.setPlayer_areas(game.board_areas.get(1));
 		// as soon as you set a player to the area you should set that Player to the area
@@ -129,14 +135,16 @@ public class BoardGame {
 		p1.setPlayer_areas(game.board_areas.get(1));
 		// as soon as you set a player to the area you should set that Player to the area
 		game.board_areas.get(1).setPlayersInThisAreas(p1);
-		// setting 2 minions manually in the AREA that this player holds
-		p1.getPlayer_areas().get(0).setMinions(2);
-		// updating PLAYERS minions quantity
+		// setting 2 minions manually in 2 different AREAs that this player holds
+		for(int i=0; i < p1.getPlayer_areas().size() ; i++)
+			 p1.getPlayer_areas().get(i).setMinions(2);
+		// updating PLAYERS minions quantity..unable to do it...
 		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
 		
 		////////////////////////////////////////////////////////////////////////////////////
-		
-		p2.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
+		count = rand.nextInt(7);
+		p2.set_Winning_condition(personality_cards.get(count));
+		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
 		p2.setPlayer_areas(game.board_areas.get(3));
 		// as soon as you set a player to the area you should set that Player to the area
