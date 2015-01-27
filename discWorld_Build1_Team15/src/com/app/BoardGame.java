@@ -13,7 +13,7 @@ import com.app.Player;
  * Singleton Class to ensure that there exists only 1 board for game to be played on 
  * Start point of the game. This class will have main function
  */
-public class BoardGmae {
+public class BoardGame {
 	
 	public static ArrayList<String> personality_cards;
 	public ArrayList<String> random_event_cards;
@@ -23,10 +23,10 @@ public class BoardGmae {
 	public HashMap<String,String> area_details = new HashMap<String,String>();
 	
 	// single static instance
-	private static BoardGmae board_Game_Object = new BoardGmae();
+	private static BoardGame board_Game_Object = new BoardGame();
 	
 	// private constructor allowing creation of only 1 object
-	private BoardGmae(){
+	private BoardGame(){
 		
 		board_areas = new ArrayList<Area>(); 
 		personality_cards = new ArrayList<String>(7);
@@ -38,7 +38,7 @@ public class BoardGmae {
 		}
 	}
 	
-	public static BoardGmae getInstance(){
+	public static BoardGame getInstance(){
 		return board_Game_Object;
 	}
 	
@@ -72,10 +72,10 @@ public class BoardGmae {
 	static Player p1;
 	static Player p2;
 	static Random rand;
-	static BoardGmae game;
+	static BoardGame game;
 	public static void main(String[] args) {
 		
-		 game = BoardGmae.getInstance();
+		 game = BoardGame.getInstance();
 		 rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
 		
