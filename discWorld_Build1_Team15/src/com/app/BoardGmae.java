@@ -126,6 +126,16 @@ public class BoardGmae {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////
 		
+		p1.setPlayer_areas(game.board_areas.get(1));
+		// as soon as you set a player to the area you should set that Player to the area
+		game.board_areas.get(1).setPlayersInThisAreas(p1);
+		// setting 2 minions manually in the AREA that this player holds
+		p1.getPlayer_areas().get(0).setMinions(2);
+		// updating PLAYERS minions quantity
+		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
+		
+		////////////////////////////////////////////////////////////////////////////////////
+		
 		p2.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
 		// this area has been et to player manually right now. will change further
 		p2.setPlayer_areas(game.board_areas.get(3));
