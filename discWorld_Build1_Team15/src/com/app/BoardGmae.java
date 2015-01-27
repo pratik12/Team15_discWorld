@@ -70,6 +70,7 @@ public class BoardGmae {
 	}
 
 	static Player p1;
+	static Player p2;
 	static Random rand;
 	static BoardGmae game;
 	public static void main(String[] args) {
@@ -77,6 +78,28 @@ public class BoardGmae {
 		 game = BoardGmae.getInstance();
 		 rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
+		
+		System.out.println("Personality Cards : ");
+		for(String t : game.personality_cards)
+			//System.out.println(t);
+		
+		 p1 = new Player("R");
+		 p2 = new Player("Y");
+		assign_personality_cards();
+		System.out.println(p1.toString());
+		System.out.println(p1.current_inventory());
+		System.out.println(game.board_areas.get(1).toString());
+		System.out.println("-----------------------------------");
+		System.out.println(p2.toString());
+		System.out.println(p2.current_inventory());
+		System.out.println(game.board_areas.get(3).toString());
+		System.out.println("-----------------------------------");
+		System.out.println(p1.current_inventory());
+		System.out.println("-----------------------------------");
+		System.out.println(p2.current_inventory());
+		
+		System.out.println("-----------------------------------");
+
 		System.out.println("Board Areas : ");
 		for(Area temp : game.board_areas){
 			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
@@ -87,17 +110,6 @@ public class BoardGmae {
 			
 			System.out.println(temp.toString());
 		}
-		
-		System.out.println("Personality Cards : ");
-		for(String t : game.personality_cards)
-			System.out.println(t);
-		
-		 p1 = new Player("Red");
-
-		assign_personality_cards();
-		System.out.println(p1.toString());
-		System.out.println(p1.current_inventory());
-		System.out.println(game.board_areas.get(1).toString());
 	}
 
 	private static void assign_personality_cards() {
@@ -111,5 +123,19 @@ public class BoardGmae {
 		p1.getPlayer_areas().get(0).setMinions(2);
 		// updating PLAYERS minions quantity
 		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		
+		p2.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
+		// this area has been et to player manually right now. will change further
+		p2.setPlayer_areas(game.board_areas.get(3));
+		// as soon as you set a player to the area you should set that Player to the area
+		game.board_areas.get(3).setPlayersInThisAreas(p2);
+		// setting 2 minions manually in the AREA that this player holds
+		p2.getPlayer_areas().get(0).setMinions(3);
+		// updating PLAYERS minions quantity
+		p2.set_Minion_Quantity(p2.get_Minion_Quantity() - 3);
+
+		
 	}
 }
