@@ -79,7 +79,7 @@ public class BoardGame {
 		 
 		rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
-		//sanchit's first commit (initial)
+		//sanchit's first commit 
 		System.out.println("Personality Cards : ");
 		for(String t : game.personality_cards)
 			//System.out.println(t);
