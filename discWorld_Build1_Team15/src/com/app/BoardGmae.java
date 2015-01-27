@@ -115,7 +115,7 @@ public class BoardGmae {
 	private static void assign_personality_cards() {
 		
 		int count = rand.nextInt(7);
-		p1.set_Winning_condition(personality_cards.get(count));
+		p1.set_Winning_condition(personality_cards.get(count)); 
 		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
 		p1.setPlayer_areas(game.board_areas.get(1));
