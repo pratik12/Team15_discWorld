@@ -1,6 +1,7 @@
 package com.app;
 
 import java.util.ArrayList;
+import com.app.Player;
 
 /**
  * 
@@ -27,11 +28,11 @@ public class BoardGmae {
 		this.board_areas = board_areas;
 	}
 	
-	static Player p1;
 	
 	public static void main(String[] args) {
 		
-		 p1 = new Player("Red");
-		p1.toString();
+		
+		Player p1 = new Player("Red");
+		System.out.println(p1.toString());
 	}
 }

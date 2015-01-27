@@ -1,6 +1,7 @@
 package com.app;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Player class holding properties of a player
@@ -22,13 +23,14 @@ public class Player {
 	 * @param minion_Color
 	 * @param quantity
 	 */
-	public Player(String player_Color){
+	
+	public Player(String player_color){
 		
-		this.set_Minion_Color(player_Color);
-		this.set_Player_color(player_Color);
-		this.set_Minion_Quantity(12);
-		this.set_Player_amount(10);
-		this.set_Number_of_buildings(6);
+		set_Player_color(player_color);
+		set_Minion_Color(player_color);
+		set_Minion_Quantity(12);
+		set_Player_amount(10);
+		set_Number_of_buildings(6);
 	}
 	
 	/**
@@ -115,12 +117,12 @@ public class Player {
 	 * String format of object
 	 */
 	public String toString(){
-		return  "Players Piece Color" + this.get_Player_color() +
-				"Number of Minion's" + this.get_Minion_Quantity() +
-				"Number of Building's" + this.get_Number_of_buildings() +
-				"Current Amount" + this.get_Player_amount() +
-				"Personality Card he holds" +this.get_Winning_condition()
-				;
+		
+		return  "Players Piece Color : " + get_Player_color() + "\n" +
+				"Number of Minion's : " + Integer.toString(get_Minion_Quantity()) + "\n" +
+				"Number of Building's : " + Integer.toString(get_Number_of_buildings()) + "\n" +
+				"Current Amount : " + Double.toString(get_Player_amount()) + "\n" +
+				"Personality Card he holds : " + get_Winning_condition();
 	}
 
 	
