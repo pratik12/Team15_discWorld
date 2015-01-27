@@ -14,10 +14,12 @@ public class Area {
 	private boolean area_city_cards;
 	private boolean trouble_markers;
 
-	public Area(String name, int number, int cost){
+	public Area(String name, String cost_num){
+		
+		String[] costNum = cost_num.split(":");
 		this.set_Area_name(name);
-		this.set_Area_number(number);
-		this.set_Cost_of_area(cost);
+		this.set_Area_number(Integer.parseInt(costNum[1]));
+		this.set_Cost_of_area(Integer.parseInt(costNum[0]));
 		this.set_Area_city_cards(false);
 	}
 	
@@ -82,5 +84,13 @@ public class Area {
 	 */
 	public void set_Trouble_markers(boolean trouble_markers) {
 		this.trouble_markers = trouble_markers;
+	}
+	
+	public String toString(){
+		return  "Area Number : " + Integer.toString(this.get_Area_number()) +
+				" Area Name : " + this.get_Area_name() +
+				" Area Cost : " + Integer.toString(this.get_Cost_of_area()) +
+				" Has a Trouble Marker : " + this.is_Trouble_markers();
+				
 	}
 }
