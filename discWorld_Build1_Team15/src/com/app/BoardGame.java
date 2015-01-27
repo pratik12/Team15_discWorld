@@ -75,7 +75,7 @@ public class BoardGame {
 	static BoardGame game;
 	public static void main(String[] args) {
 		
-		 game = BoardGame.getInstance();
+		 game = BoardGame.getInstance(); 
 		 rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
 		
