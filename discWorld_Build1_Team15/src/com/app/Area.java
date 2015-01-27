@@ -12,7 +12,7 @@ public class Area {
 	private int area_number;
 	private int cost_of_area;
 	private boolean area_city_cards;
-	
+	private boolean trouble_markers;
 
 	public Area(String name, int number, int cost){
 		this.set_Area_name(name);
@@ -68,5 +68,19 @@ public class Area {
 	 */
 	public void set_Area_city_cards(boolean area_city_cards) {
 		this.area_city_cards = area_city_cards;
+	}
+
+	/**
+	 * @return the trouble_markers
+	 */
+	public boolean is_Trouble_markers() {
+		return trouble_markers;
+	}
+
+	/**
+	 * @param trouble_markers the trouble_markers to set
+	 */
+	public void set_Trouble_markers(boolean trouble_markers) {
+		this.trouble_markers = trouble_markers;
 	}
 }

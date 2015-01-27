@@ -26,15 +26,19 @@ public class BoardGmae {
 	public BoardGmae(){
 		
 		board_areas = new ArrayList<Area>(); 
+		personality_cards = new ArrayList<String>(7);
+		random_event_cards = new ArrayList<String>(12);
 		int count = 1;
 		init();
 		for(String key : area_details.keySet()){
 			board_areas.add(new Area(key.toString(),area_details.get(key),count));
 			count++;
 		}
-		
 	}
 	
+	/**
+	 * initializing datastructure for storing area names and cost
+	 */
 	private void init() {
 		
 		area_details.put("Dolly Sisters", 6);
@@ -50,27 +54,29 @@ public class BoardGmae {
 		area_details.put("Seven Sleepers", 18);
 		area_details.put("Nap Hill", 12);
 		
-		
+		personality_cards.add("Lord Vetinari");
+		personality_cards.add("Lord Selachii");
+		personality_cards.add("Lord Rust");
+		personality_cards.add("Lord de Worde");
+		personality_cards.add("Dragon King of Arms");
+		personality_cards.add("Chryoprase");
+		personality_cards.add("Commander Vimes");
 	}
 
-	
-	/**
-	 * @return the board_areas
-	 */
-	public ArrayList<Area> get_Board_areas() {
-		return board_areas;
-	}
-	/**
-	 * @param board_areas the board_areas to set
-	 */
-	public void set_Board_areas(ArrayList<Area> board_areas) {
-		this.board_areas = board_areas;
-	}
-	
-	
+		
 	public static void main(String[] args) {
 		
 		BoardGmae game = new BoardGmae();
+		
+		// setting up 1 trouble marker in 3 pre specified areas of the board
+		for(Area temp : game.board_areas){
+			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
+					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
+					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
+				temp.set_Trouble_markers(true);
+			}
+		}
+		
 		Player p1 = new Player("Red");
 		System.out.println(p1.toString());
 	}
