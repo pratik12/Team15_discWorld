@@ -13,7 +13,7 @@ import com.app.Player;
  * Singleton Class to ensure that there exists only 1 board for game to be played on 
  * Start point of the game. This class will have main function
  */
-public class BoardGmae {
+public class BoardGame {
 	
 	public static ArrayList<String> personality_cards;
 	public ArrayList<String> random_event_cards;
@@ -23,10 +23,10 @@ public class BoardGmae {
 	public HashMap<String,String> area_details = new HashMap<String,String>();
 	
 	// single static instance
-	private static BoardGmae board_Game_Object = new BoardGmae();
+	private static BoardGame board_Game_Object = new BoardGame();
 	
 	// private constructor allowing creation of only 1 object
-	private BoardGmae(){
+	private BoardGame(){
 		
 		board_areas = new ArrayList<Area>(); 
 		personality_cards = new ArrayList<String>(7);
@@ -38,7 +38,7 @@ public class BoardGmae {
 		}
 	}
 	
-	public static BoardGmae getInstance(){
+	public static BoardGame getInstance(){
 		return board_Game_Object;
 	}
 	
@@ -72,10 +72,10 @@ public class BoardGmae {
 	static Player p1;
 	static Player p2;
 	static Random rand;
-	static BoardGmae game;
+	static BoardGame game;
 	public static void main(String[] args) {
 		
-		 game = BoardGmae.getInstance();
+		 game = BoardGame.getInstance(); 
 		 rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
 		
@@ -114,12 +114,9 @@ public class BoardGmae {
 
 	private static void assign_personality_cards() {
 		
-		int count = rand.nextInt(7);
-		p1.set_Winning_condition(personality_cards.get(count)); 
-		personality_cards.remove(count);
+		p1.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
 		// this area has been et to player manually right now. will change further
 		p1.setPlayer_areas(game.board_areas.get(1));
-		
 		// as soon as you set a player to the area you should set that Player to the area
 		game.board_areas.get(1).setPlayersInThisAreas(p1);
 		// setting 2 minions manually in the AREA that this player holds
@@ -128,29 +125,25 @@ public class BoardGmae {
 		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////
-		// this area has been et to player manually right now. will change further
-		p1.setPlayer_areas(game.board_areas.get(count));
-		personality_cards.remove(count);
+		
+		p1.setPlayer_areas(game.board_areas.get(1));
 		// as soon as you set a player to the area you should set that Player to the area
-		game.board_areas.get(2).setPlayersInThisAreas(p1);
-		// Iterating over all the areas that 1 player can hold and setting minion in each area to 2. this is just example.
-		// will change further
-		for(int i=0; i < p1.getPlayer_areas().size() ; i++)
-			p1.getPlayer_areas().get(i).setMinions(2);
-		// updating PLAYERS minions quantity...this still remains to do. I am unable to do it.
+		game.board_areas.get(1).setPlayersInThisAreas(p1);
+		// setting 2 minions manually in the AREA that this player holds
+		p1.getPlayer_areas().get(0).setMinions(2);
+		// updating PLAYERS minions quantity
 		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
 		
-		///////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////
 		
-		p2.set_Winning_condition(personality_cards.get(count));
-		personality_cards.remove(count);
+		p2.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
 		// this area has been et to player manually right now. will change further
 		p2.setPlayer_areas(game.board_areas.get(3));
 		// as soon as you set a player to the area you should set that Player to the area
 		game.board_areas.get(3).setPlayersInThisAreas(p2);
 		// setting 2 minions manually in the AREA that this player holds
 		p2.getPlayer_areas().get(0).setMinions(3);
-		// updating PLAYERS minions quantity..this still remains to do. I am unable to do it.
+		// updating PLAYERS minions quantity
 		p2.set_Minion_Quantity(p2.get_Minion_Quantity() - 3);
 
 		
