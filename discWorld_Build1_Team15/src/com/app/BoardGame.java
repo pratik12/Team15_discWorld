@@ -114,7 +114,9 @@ public class BoardGame {
 	}
 
 	
-
+	/**
+	 * assigning personailty cards to a player randomly
+	 */
 	private static void assign_personality_cards() {
 		
 		int count = rand.nextInt(7);
