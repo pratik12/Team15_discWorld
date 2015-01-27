@@ -26,4 +26,10 @@ public class BoardGmae {
 	public void set_Board_areas(ArrayList<Area> board_areas) {
 		this.board_areas = board_areas;
 	}
+	
+	public static void main(String[] args) {
+		
+		Player p1 = new Player("Red");
+		p1.toString();
+	}
 }

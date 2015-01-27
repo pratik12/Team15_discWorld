@@ -1,4 +1,7 @@
 package com.app;
+
+import java.util.ArrayList;
+
 /**
  * Player class holding properties of a player
  * @author Pratik
@@ -13,18 +16,19 @@ public class Player {
 	private String winning_condition;
 	public String random_event_card;
 	private double player_amount;
-	
+	private ArrayList<Area> player_areas;
 	/**
 	 * Constructor to set the properties of player
 	 * @param minion_Color
 	 * @param quantity
 	 */
-	public Player(String minion_Color, int quantity){
+	public Player(String player_Color){
 		
-		set_Minion_Color(minion_Color);
-		set_Minion_Quantity(quantity);
-		set_Player_amount(10);
-		set_Number_of_buildings(6);
+		this.set_Minion_Color(player_Color);
+		this.set_Player_color(player_Color);
+		this.set_Minion_Quantity(12);
+		this.set_Player_amount(10);
+		this.set_Number_of_buildings(6);
 	}
 	
 	/**
@@ -117,7 +121,9 @@ public class Player {
 				"Current Amount" + this.get_Player_amount() +
 				"Personality Card he holds" +this.get_Winning_condition()
 				;
-	}	
+	}
+
+	
 	
 
 }
