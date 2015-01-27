@@ -13,6 +13,7 @@ public class Area {
 	private int cost_of_area;
 	private boolean area_city_cards;
 	
+
 	public Area(String name, int number, int cost){
 		this.set_Area_name(name);
 		this.set_Area_number(number);

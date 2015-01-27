@@ -17,6 +17,8 @@ public class Player {
 	private String winning_condition;
 	public String random_event_card;
 	private double player_amount;
+	
+	// player can have many areas
 	private ArrayList<Area> player_areas;
 	/**
 	 * Constructor to set the properties of player
