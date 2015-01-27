@@ -1,5 +1,7 @@
 package com.app;
 
+import java.util.ArrayList;
+
 /**
  * 
  * Board will have 12 areas
@@ -13,7 +15,13 @@ public class Area {
 	private int cost_of_area;
 	private boolean area_city_cards;
 	private boolean trouble_markers;
-
+	private int demons;
+	private int trolls;
+	private int minions;
+	private int buildngs;
+	
+	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
+	
 	public Area(String name, String cost_num){
 		
 		String[] costNum = cost_num.split(":");
@@ -87,10 +95,67 @@ public class Area {
 	}
 	
 	public String toString(){
-		return  "Area Number : " + Integer.toString(this.get_Area_number()) +
-				" Area Name : " + this.get_Area_name() +
-				" Area Cost : " + Integer.toString(this.get_Cost_of_area()) +
-				" Has a Trouble Marker : " + this.is_Trouble_markers();
+		return  " Area Name : " + this.get_Area_name() +
 				
+				" Trouble Marker : " + this.is_Trouble_markers() + 
+				" Minions :" + getMinionsForEveryPlayer();
+	}
+
+	private String getMinionsForEveryPlayer() {
+		
+		String result = "";
+		if(!this.getPlayersInThisAreas().isEmpty()){
+			for(Player p : playersInThisAreas){
+				// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
+				//This will change further if player has nultiple areas I think. not sure
+				for(int i=0;i<p.getPlayer_areas().get(0).getMinions();i++){
+					 result += p.get_Minion_Color();
+				}
+			}
+			return result;
+		}
+		return "none";
+	}
+
+	/**
+	 * @return the minions
+	 */
+	public int getMinions() {
+		return minions;
+	}
+
+	/**
+	 * @param minions the minions to set
+	 */
+	public void setMinions(int minions) {
+		this.minions = minions;
+	}
+
+	/**
+	 * @return the buildings
+	 */
+	public int getBuildngs() {
+		return buildngs;
+	}
+
+	/**
+	 * @param buildngs the buildngs to set
+	 */
+	public void setBuildngs(int buildngs) {
+		this.buildngs = buildngs;
+	}
+
+	/**
+	 * @return the playersInThisAreas
+	 */
+	public ArrayList<Player> getPlayersInThisAreas() {
+		return playersInThisAreas;
+	}
+
+	/**
+	 * @param playersInThisAreas the playersInThisAreas to set
+	 */
+	public void setPlayersInThisAreas(Player playersInThisAreas) {
+		this.playersInThisAreas.add(playersInThisAreas);
 	}
 }

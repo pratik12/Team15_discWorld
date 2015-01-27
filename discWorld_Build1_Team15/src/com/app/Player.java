@@ -17,9 +17,24 @@ public class Player {
 	private String winning_condition;
 	public String random_event_card;
 	private double player_amount;
+	private String player_aid_card;
 	
 	// player can have many areas
-	private ArrayList<Area> player_areas;
+	private ArrayList<Area> player_areas = new ArrayList<Area>();
+	/**
+	 * @return the player_areas
+	 */
+	public ArrayList<Area> getPlayer_areas() {
+		return player_areas;
+	}
+
+	/**
+	 * @param player_areas the player_areas to set
+	 */
+	public void setPlayer_areas(Area area_of_player) {
+		this.player_areas.add(area_of_player);
+	}
+
 	/**
 	 * Constructor to set the properties of player
 	 * @param minion_Color
@@ -121,10 +136,20 @@ public class Player {
 	public String toString(){
 		
 		return  "Players Piece Color : " + get_Player_color() + "\n" +
-				"Number of Minion's : " + Integer.toString(get_Minion_Quantity()) + "\n" +
-				"Number of Building's : " + Integer.toString(get_Number_of_buildings()) + "\n" +
-				"Current Amount : " + Double.toString(get_Player_amount()) + "\n" +
-				"Personality Card he holds : " + get_Winning_condition();
+				" is playing with " + get_Winning_condition();
+				
+	}
+	
+	public String current_inventory(){
+		
+		return  "Players current Inventory - " + "\n" 
+				 + Integer.toString(get_Minion_Quantity()) + " Minion's , " + 
+				  Integer.toString(get_Number_of_buildings()) + " Building's , " + 
+				 Double.toString(get_Player_amount()) + " Ankh-Morph Dollars " + "\n" +
+				  
+				 "City Area Cards:" + "\n" +
+				 
+				 getPlayer_areas().get(0).get_Area_name();
 	}
 
 	
