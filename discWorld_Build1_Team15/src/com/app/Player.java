@@ -135,14 +135,14 @@ public class Player {
 	 */
 	public String toString(){
 		
-		return  "Players Piece Color : " + get_Player_color() + "\n" +
+		return  "Player with" + get_Player_color() +" Piece Color : " + "\n" +
 				" is playing with " + get_Winning_condition();
 				
 	}
 	
 	public String current_inventory(){
 		
-		return  "Players current Inventory - " + "\n" 
+		return  "Player with" +get_Player_color()+" current Inventory - " + "\n" 
 				 + Integer.toString(get_Minion_Quantity()) + " Minion's , " + 
 				  Integer.toString(get_Number_of_buildings()) + " Building's , " + 
 				 Double.toString(get_Player_amount()) + " Ankh-Morph Dollars " + "\n" +

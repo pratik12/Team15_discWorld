@@ -114,9 +114,12 @@ public class BoardGmae {
 
 	private static void assign_personality_cards() {
 		
-		p1.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
+		int count = rand.nextInt(7);
+		p1.set_Winning_condition(personality_cards.get(count));
+		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
 		p1.setPlayer_areas(game.board_areas.get(1));
+		
 		// as soon as you set a player to the area you should set that Player to the area
 		game.board_areas.get(1).setPlayersInThisAreas(p1);
 		// setting 2 minions manually in the AREA that this player holds
@@ -125,15 +128,29 @@ public class BoardGmae {
 		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////
+		// this area has been et to player manually right now. will change further
+		p1.setPlayer_areas(game.board_areas.get(count));
+		personality_cards.remove(count);
+		// as soon as you set a player to the area you should set that Player to the area
+		game.board_areas.get(2).setPlayersInThisAreas(p1);
+		// Iterating over all the areas that 1 player can hold and setting minion in each area to 2. this is just example.
+		// will change further
+		for(int i=0; i < p1.getPlayer_areas().size() ; i++)
+			p1.getPlayer_areas().get(i).setMinions(2);
+		// updating PLAYERS minions quantity...this still remains to do. I am unable to do it.
+		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
 		
-		p2.set_Winning_condition(personality_cards.get(rand.nextInt(7)));
+		///////////////////////////////////////////////////////////////////////////////////////////////
+		
+		p2.set_Winning_condition(personality_cards.get(count));
+		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
 		p2.setPlayer_areas(game.board_areas.get(3));
 		// as soon as you set a player to the area you should set that Player to the area
 		game.board_areas.get(3).setPlayersInThisAreas(p2);
 		// setting 2 minions manually in the AREA that this player holds
 		p2.getPlayer_areas().get(0).setMinions(3);
-		// updating PLAYERS minions quantity
+		// updating PLAYERS minions quantity..this still remains to do. I am unable to do it.
 		p2.set_Minion_Quantity(p2.get_Minion_Quantity() - 3);
 
 		
