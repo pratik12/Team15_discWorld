@@ -1,6 +1,9 @@
 package com.app;
+import com.app.BoardGame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -11,9 +14,12 @@ import java.util.Scanner;
 public class Player {
 	
 	private String player_color;
-	private String minion_Color;
+	
+	// data structure to store minion data
+	private HashMap<String,ArrayList<String>> minions = new HashMap<String, ArrayList<String>>();
+	
 	private int minion_Quantity;
-	private int number_of_buildings ;
+	private int number_of_buildings;
 	private String winning_condition;
 	public String random_event_card;
 	private double player_amount;
@@ -32,7 +38,10 @@ public class Player {
 	 * @param player_areas the player_areas to set
 	 */
 	public void setPlayer_areas(Area area_of_player) {
-		this.player_areas.add(area_of_player);
+		
+		if(area_of_player!=null){
+			this.player_areas.add(area_of_player);
+		}
 	}
 
 	/**
@@ -44,27 +53,13 @@ public class Player {
 	public Player(String player_color){
 		
 		set_Player_color(player_color);
-		set_Minion_Color(player_color);
+		setMinions(get_Player_color(), "Players Pile");
 		set_Minion_Quantity(12);
 		set_Player_amount(10);
 		set_Number_of_buildings(6);
 	}
 	
-	/**
-	 * 
-	 * @return color of minion
-	 */
-	public String get_Minion_Color() {
-		return minion_Color;
-	}
 	
-	/**
-	 * 
-	 * @param minion_Color the color of minion to be set
-	 */
-	public void set_Minion_Color(String minion_Color) {
-		this.minion_Color = minion_Color;
-	}
 	
 	public int get_Minion_Quantity() {
 		return minion_Quantity;
@@ -135,8 +130,8 @@ public class Player {
 	 */
 	public String toString(){
 		
-		return  "Player with" + get_Player_color() +" Piece Color : " + "\n" +
-				" is playing with " + get_Winning_condition();
+		return  "Player (" + get_Player_color()  +
+				") is playing with " + get_Winning_condition();
 				
 	}
 	
@@ -149,10 +144,48 @@ public class Player {
 				  
 				 "City Area Cards:" + "\n" +
 				 
-				 getPlayer_areas().get(0).get_Area_name();
+				 getCityAreaCards();
 	}
 
-	
-	
+	private String getCityAreaCards() {
+
+		String result = "";
+		if(!this.getPlayer_areas().isEmpty())
+			for(Area a : this.getPlayer_areas())
+				return result += " " + a.get_Area_name();
+			
+		return "Player has placed no building";
+		
+	}
+
+	/**
+	 * @return the minions
+	 */
+	public HashMap<String, ArrayList<String>> getMinions() {
+		
+		
+		return minions;
+		
+		
+	}
+
+	/**
+	 * @param minions the minions to set
+	 */
+	public void setMinions(String minion_color, String minion_location) {
+		
+		if(!(minion_color.isEmpty() && minion_location.isEmpty()))
+			
+			if(minions.containsKey(this.get_Player_color()))
+					minions.get(this.get_Player_color()).add(minion_location);
+			else{
+				 minions.put(this.get_Player_color(), new ArrayList<String>());
+				 for(int i=0; i <12; i++)
+				 minions.get(this.get_Player_color()).add(minion_location);
+			}
+				
+		else
+			System.out.println("Minion color or location cannot be empty");
+	}
 
 }

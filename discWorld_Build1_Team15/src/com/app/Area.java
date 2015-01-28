@@ -98,23 +98,34 @@ public class Area {
 		return  " Area Name : " + this.get_Area_name() +
 				
 				" Trouble Marker : " + this.is_Trouble_markers() + 
-				" Minions :" + getMinionsForEveryPlayer();
+				" Minions :" + getMinionsForEveryPlayer(this.get_Area_name());
 	}
 
-	private String getMinionsForEveryPlayer() {
+	private String getMinionsForEveryPlayer(String area) {
 		
 		String result = "";
-		if(!this.getPlayersInThisAreas().isEmpty()){
-			for(Player p : playersInThisAreas){
+		
 				// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
 				//This will change further if player has nultiple areas I think. not sure
-				for(int i=0;i<p.getPlayer_areas().get(0).getMinions();i++){
-					 result += p.get_Minion_Color();
+				for(Player p : BoardGame.playersInGame){
+					for(String minion_location : p.getMinions().get(p.get_Player_color())){
+						
+						if(minion_location.equals(area))
+							result += " ," +p.get_Player_color();
+					}
+								
+				}
+				
+			return result;
+			/*
+			String result = "";
+			for(String minion_location : minions.get(get_Player_color())){ // gives you array list as value of hash map
+				if(!(minion_location.equalsIgnoreCase("Players Pile"))){
+					  result = minion_location; 
 				}
 			}
-			return result;
-		}
-		return "none";
+			
+			return result;*/
 	}
 
 	/**
@@ -149,7 +160,11 @@ public class Area {
 	 * @return the playersInThisAreas
 	 */
 	public ArrayList<Player> getPlayersInThisAreas() {
-		return playersInThisAreas;
+		
+		if(!this.playersInThisAreas.isEmpty())
+			return playersInThisAreas;
+		else 
+			return null;
 	}
 
 	/**

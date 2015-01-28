@@ -19,6 +19,8 @@ public class BoardGame {
 	public ArrayList<String> random_event_cards;
 	private ArrayList<Area> board_areas;
 	
+	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
+	
 	public ArrayList<Integer> sub_area_details = new ArrayList<Integer>();
 	public HashMap<String,String> area_details = new HashMap<String,String>();
 	
@@ -73,6 +75,7 @@ public class BoardGame {
 	static Player p2;
 	static Random rand;
 	static BoardGame game;
+	
 	public static void main(String[] args) {
 		
 		game = BoardGame.getInstance(); 
@@ -80,26 +83,41 @@ public class BoardGame {
 		rand = new Random();
 		// setting up 1 trouble marker in 3 pre specified areas of the board
 		
-		System.out.println("Personality Cards : ");
-		for(String t : game.personality_cards)
+		//System.out.println("Personality Cards : ");
+		//for(String t : game.personality_cards)
 			//System.out.println(t);
 		
-		 p1 = new Player("R");
-		 p2 = new Player("Y");
-		assign_personality_cards();
-		System.out.println(p1.toString());
-		System.out.println(p1.current_inventory());
-		System.out.println(game.board_areas.get(1).toString());
-		System.out.println("-----------------------------------");
-		System.out.println(p2.toString());
-		System.out.println(p2.current_inventory());
-		System.out.println(game.board_areas.get(3).toString());
-		System.out.println("-----------------------------------");
-		System.out.println(p1.current_inventory());
-		System.out.println("-----------------------------------");
-		System.out.println(p2.current_inventory());
+		p1 = new Player("R");
+		playersInGame.add(p1);
 		
+		p2 = new Player("Y");
+		playersInGame.add(p2);
+		
+		assign_personality_cards(p1);
+		
+		assign_personality_cards(p2);
+
+		
+		System.out.println(p1.toString());
 		System.out.println("-----------------------------------");
+		System.out.println(p1.current_inventory());
+		System.out.println("-----------------------------------");
+		
+		placeMinion(p1,"Seven Sleepers");
+		placeMinion(p1,"Seven Sleepers");
+		placeMinion(p1,"Dolly Sisters");
+		placeMinion(p2,"Dolly Sisters");
+		System.out.println("-----------------------------------");
+		System.out.println(p1.current_inventory());
+		System.out.println("-----------------------------------");
+		
+		//System.out.println(game.board_areas.get(1).toString());
+		System.out.println(p2.toString());
+		System.out.println("-----------------------------------");
+		System.out.println(p2.current_inventory());
+		System.out.println("-----------------------------------");
+		
+		//System.out.println(game.board_areas.get(3).toString());
 
 		System.out.println("Board Areas : ");
 		for(Area temp : game.board_areas){
@@ -117,45 +135,55 @@ public class BoardGame {
 	/**
 	 * assigning personailty cards to a player randomly
 	 */
-	private static void assign_personality_cards() {
+	private static void assign_personality_cards(Player player) {
 		
-		int count = rand.nextInt(7);
+		int count = rand.nextInt(6);
 		
-		p1.set_Winning_condition(personality_cards.get(count));
+		player.set_Winning_condition(personality_cards.get(count));
 		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
-		p1.setPlayer_areas(game.board_areas.get(1));
+		//player.setPlayer_areas(game.board_areas.get(1));
 		// as soon as you set a player to the area you should set that Player to the area
-		game.board_areas.get(1).setPlayersInThisAreas(p1);
+		//game.board_areas.get(1).setPlayersInThisAreas(player);
 		// setting 2 minions manually in the AREA that this player holds
-		p1.getPlayer_areas().get(0).setMinions(2);
-		// updating PLAYERS minions quantity
-		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
 		
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		
+/*
 		p1.setPlayer_areas(game.board_areas.get(1));
 		// as soon as you set a player to the area you should set that Player to the area
 		game.board_areas.get(1).setPlayersInThisAreas(p1);
 		// setting 2 minions manually in 2 different AREAs that this player holds
-		for(int i=0; i < p1.getPlayer_areas().size() ; i++)
-			 p1.getPlayer_areas().get(i).setMinions(2);
+		for(int i=0; i < p1.getPlayer_areas().size() ; i++){
+			
+			p1.getPlayer_areas().get(i).setMinions(2);
+			if(p1.getPlayer_areas().get(i).get_Area_name().equals("Unreal Estate")){
+				
+			}
+				
+		}
 		// updating PLAYERS minions quantity..unable to do it...
-		p1.set_Minion_Quantity(p1.get_Minion_Quantity() - 2);
-		
-		////////////////////////////////////////////////////////////////////////////////////
 		count = rand.nextInt(7);
 		p2.set_Winning_condition(personality_cards.get(count));
 		personality_cards.remove(count);
 		// this area has been et to player manually right now. will change further
 		p2.setPlayer_areas(game.board_areas.get(3));
 		// as soon as you set a player to the area you should set that Player to the area
-		game.board_areas.get(3).setPlayersInThisAreas(p2);
-		// setting 2 minions manually in the AREA that this player holds
-		p2.getPlayer_areas().get(0).setMinions(3);
-		// updating PLAYERS minions quantity
-		p2.set_Minion_Quantity(p2.get_Minion_Quantity() - 3);
+		game.board_areas.get(3).setPlayersInThisAreas(p2);*/
+		
 
+		
+	}
+
+	private static void placeMinion(Player player, String location) {
+		
+		if(!(location.isEmpty())){
+			
+			player.setMinions(player.get_Player_color(), location);
+			// updating PLAYERS minions quantity
+			player.set_Minion_Quantity(player.get_Minion_Quantity() - 1);
+		}
+		else{
+			System.out.println("Provide location for minion to be placed");
+		}
 		
 	}
 }
