@@ -1,10 +1,6 @@
 package com.app;
-import com.app.BoardGame;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Scanner;
 
 /**
  * Player class holding properties of a player
@@ -183,6 +179,7 @@ public class Player {
 			if(minions.containsKey(this.get_Player_color()))
 					minions.get(this.get_Player_color()).add(minion_location);
 			else{ // initializing each player with 12 minions
+				
 				 minions.put(this.get_Player_color(), new ArrayList<String>());
 				 for(int i=0; i <12; i++)
 				 minions.get(this.get_Player_color()).add(minion_location);

@@ -84,43 +84,29 @@ public class BoardGame {
 		game = BoardGame.getInstance(); 
 		 
 		rand = new Random();
-		// setting up 1 trouble marker in 3 pre specified areas of the board
-		
-		//System.out.println("Personality Cards : ");
-		//for(String t : game.personality_cards)
-			//System.out.println(t);
 		
 		p1 = new Player("R"); // creating new player
-		
 		playersInGame.add(p1); // add the player to the store
 		
 		p2 = new Player("Y");
 		playersInGame.add(p2);
 		
 		assign_personality_cards(p1); // assign the personality card to the player
-		
 		assign_personality_cards(p2);
-
 		
-		
-		placeMinion(p1,"Seven Sleepers"); // place a minion to any area for a player
+		placeMinion(p1,"Seven Sleepers"); // place a minion in any area for a player
 		placeMinion(p1,"Seven Sleepers");
 		placeMinion(p1,"Dolly Sisters");
 		placeMinion(p2,"Dolly Sisters");
-		System.out.println("-----------------------------------");
-		System.out.println(p1.current_inventory());
-		System.out.println("-----------------------------------");
-		
-		//System.out.println(game.board_areas.get(1).toString());
-		System.out.println(p2.toString());
-		System.out.println("-----------------------------------");
-		System.out.println(p2.current_inventory());
 		
 		print_Out_PlayerState_And_Inventory();
 		
 		print_Out_GameBoard_State();
 	}
-
+	
+	/**
+	 * output to the console the current status for every player
+	 */
 	private static void print_Out_PlayerState_And_Inventory() {
 		
 		System.out.println(p1.toString());
@@ -137,13 +123,15 @@ public class BoardGame {
 		
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n","Areas","Minions","Trouble?","Buildings?","Demons","Trolls");
 		System.out.println();
+		
+		// iterating over alla reas of the board initially to setup 3 trouble markers in 3 specfic areas according ot the rule
 		for(Area temp : game.board_areas){
 			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
 					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
 					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
 				temp.set_Trouble_markers(true);
 			}
-			
+			// printout areas
 			temp.to_String();
 		}
 		

@@ -20,6 +20,7 @@ public class Area {
 	private int minions;
 	private int buildngs;
 	
+	// list to keep track of which players own which area
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
 	
 	/**
@@ -109,12 +110,16 @@ public class Area {
 				this.getDemons(),this.getTrolls());
 	}
 
+	/**
+	 * 
+	 * @param area
+	 * @return the minions placed by players in any area.
+	 */
 	private String getMinionsForEveryPlayer(String area) {
 		
 		String result = "";
 		
 				// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
-				//This will change further if player has nultiple areas I think. not sure
 				for(Player p : BoardGame.playersInGame){
 					for(String minion_location : p.getMinions().get(p.get_Player_color())){
 						
@@ -125,15 +130,7 @@ public class Area {
 				}
 				
 			return result;
-			/*
-			String result = "";
-			for(String minion_location : minions.get(get_Player_color())){ // gives you array list as value of hash map
-				if(!(minion_location.equalsIgnoreCase("Players Pile"))){
-					  result = minion_location; 
-				}
-			}
 			
-			return result;*/
 	}
 
 	/**
