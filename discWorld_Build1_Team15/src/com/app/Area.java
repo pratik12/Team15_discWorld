@@ -128,8 +128,10 @@ public class Area {
 					}
 								
 				}
-				
+		if(result!="none")
 			return result;
+		else
+			return "none";
 			
 	}
 

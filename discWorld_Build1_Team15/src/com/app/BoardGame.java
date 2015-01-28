@@ -94,8 +94,10 @@ public class BoardGame {
 		assign_personality_cards(p1); // assign the personality card to the player
 		assign_personality_cards(p2);
 		
-		placeMinion(p1,"Seven Sleepers"); // place a minion in any area for a player
+		placeMinion(p2,"The Shades"); // place a minion in any area for a player
 		placeMinion(p1,"Seven Sleepers");
+		placeMinion(p1,"Dragons Landing");
+		placeMinion(p2,"Nap Hill");
 		placeMinion(p1,"Dolly Sisters");
 		placeMinion(p2,"Dolly Sisters");
 		
