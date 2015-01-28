@@ -126,7 +126,7 @@ public class Player {
 	}
 
 	/**
-	 * String format of object
+	 * @return String representation of players personality card and his color
 	 */
 	public String toString(){
 		
@@ -135,21 +135,24 @@ public class Player {
 				
 	}
 	
+	/**
+	 * 
+	 * @return String representation of players collection of minions, buildings, money and his color
+	 */
 	public String current_inventory(){
 		
-		return  "Player with" +get_Player_color()+" current Inventory - " + "\n" 
+		return  "Player (" +get_Player_color()+") current Inventory - " + "\n" 
 				 + Integer.toString(get_Minion_Quantity()) + " Minion's , " + 
 				  Integer.toString(get_Number_of_buildings()) + " Building's , " + 
 				 Double.toString(get_Player_amount()) + " Ankh-Morph Dollars " + "\n" +
 				  
-				 "City Area Cards:" + "\n" +
-				 
-				 getCityAreaCards();
+				 "City Area Cards : " + "\n" + getCityAreaCards();
 	}
 
 	private String getCityAreaCards() {
 
 		String result = "";
+		
 		if(!this.getPlayer_areas().isEmpty())
 			for(Area a : this.getPlayer_areas())
 				return result += " " + a.get_Area_name();

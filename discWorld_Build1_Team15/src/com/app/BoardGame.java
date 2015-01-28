@@ -11,7 +11,8 @@ import com.app.Player;
  * 
  * @author Pratik
  * Singleton Class to ensure that there exists only 1 board for game to be played on 
- * Start point of the game. This class will have main function
+ * Start point of the game. This class has the main function
+ * This class initializes the collection of personality cards, 12 areas and collection of random event cards.
  */
 public class BoardGame {
 	
@@ -19,9 +20,10 @@ public class BoardGame {
 	public ArrayList<String> random_event_cards;
 	private ArrayList<Area> board_areas;
 	
+	// this arraylist acts as a store of current players in the game
 	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
-	
-	public ArrayList<Integer> sub_area_details = new ArrayList<Integer>();
+
+	// Map of 12 areas
 	public HashMap<String,String> area_details = new HashMap<String,String>();
 	
 	// single static instance
@@ -45,11 +47,12 @@ public class BoardGame {
 	}
 	
 	/**
-	 * initializing datastructure for storing area names and cost
+	 * initializing datastructure for storing 12 area names and cost
+	 * also initializes 7 personality cards which will be given 1 to each player
 	 */
 	private void init() {
 		
-		area_details.put("Dolly Sisters", "6:1");
+		area_details.put("Dtolly Sisers", "6:1");
 		area_details.put("Unreal Estate", "18:2");
 		area_details.put("Dragons Landing", "12:3");
 		area_details.put("Small Gods", "18:4");
@@ -87,23 +90,20 @@ public class BoardGame {
 		//for(String t : game.personality_cards)
 			//System.out.println(t);
 		
-		p1 = new Player("R");
-		playersInGame.add(p1);
+		p1 = new Player("R"); // creating new player
+		
+		playersInGame.add(p1); // add the player to the store
 		
 		p2 = new Player("Y");
 		playersInGame.add(p2);
 		
-		assign_personality_cards(p1);
+		assign_personality_cards(p1); // assign the personality card to the player
 		
 		assign_personality_cards(p2);
 
 		
-		System.out.println(p1.toString());
-		System.out.println("-----------------------------------");
-		System.out.println(p1.current_inventory());
-		System.out.println("-----------------------------------");
 		
-		placeMinion(p1,"Seven Sleepers");
+		placeMinion(p1,"Seven Sleepers"); // place a minion to any area for a player
 		placeMinion(p1,"Seven Sleepers");
 		placeMinion(p1,"Dolly Sisters");
 		placeMinion(p2,"Dolly Sisters");
@@ -115,23 +115,38 @@ public class BoardGame {
 		System.out.println(p2.toString());
 		System.out.println("-----------------------------------");
 		System.out.println(p2.current_inventory());
-		System.out.println("-----------------------------------");
 		
-		//System.out.println(game.board_areas.get(3).toString());
+		print_Out_PlayerState_And_Inventory();
+		
+		print_Out_GameBoard_State();
+	}
 
-		System.out.println("Board Areas : ");
+	private static void print_Out_PlayerState_And_Inventory() {
+		
+		System.out.println(p1.toString());
+		System.out.println(p1.current_inventory());
+		System.out.println("-----------------------------------");
+	}
+
+	/**
+	 * This method prints out the game board state
+	 */
+	private static void print_Out_GameBoard_State() {
+		
+		System.out.println("***** Game Board State *****");
+		
 		for(Area temp : game.board_areas){
 			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
 					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
 					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
-			   temp.set_Trouble_markers(true);
+				temp.set_Trouble_markers(true);
 			}
 			
 			System.out.println(temp.toString());
 		}
+		
 	}
 
-	
 	/**
 	 * assigning personailty cards to a player randomly
 	 */
