@@ -52,7 +52,7 @@ public class BoardGame {
 	 */
 	private void init() {
 		
-		area_details.put("Dtolly Sisers", "6:1");
+		area_details.put("Dolly Sisters", "6:1");
 		area_details.put("Unreal Estate", "18:2");
 		area_details.put("Dragons Landing", "12:3");
 		area_details.put("Small Gods", "18:4");
@@ -99,7 +99,8 @@ public class BoardGame {
 		placeMinion(p1,"Dolly Sisters");
 		placeMinion(p2,"Dolly Sisters");
 		
-		print_Out_PlayerState_And_Inventory();
+		print_Out_PlayerState_And_Inventory(p1);
+		print_Out_PlayerState_And_Inventory(p2);
 		
 		print_Out_GameBoard_State();
 	}
@@ -107,11 +108,11 @@ public class BoardGame {
 	/**
 	 * output to the console the current status for every player
 	 */
-	private static void print_Out_PlayerState_And_Inventory() {
+	private static void print_Out_PlayerState_And_Inventory(Player player) {
 		
-		System.out.println(p1.toString());
-		System.out.println(p1.current_inventory());
-		System.out.println("-----------------------------------");
+		System.out.println(player.toString());
+		System.out.println();
+		System.out.println(player.current_inventory());
 	}
 
 	/**
@@ -146,35 +147,6 @@ public class BoardGame {
 		
 		player.set_Winning_condition(personality_cards.get(count));
 		personality_cards.remove(count);
-		// this area has been et to player manually right now. will change further
-		//player.setPlayer_areas(game.board_areas.get(1));
-		// as soon as you set a player to the area you should set that Player to the area
-		//game.board_areas.get(1).setPlayersInThisAreas(player);
-		// setting 2 minions manually in the AREA that this player holds
-		
-/*
-		p1.setPlayer_areas(game.board_areas.get(1));
-		// as soon as you set a player to the area you should set that Player to the area
-		game.board_areas.get(1).setPlayersInThisAreas(p1);
-		// setting 2 minions manually in 2 different AREAs that this player holds
-		for(int i=0; i < p1.getPlayer_areas().size() ; i++){
-			
-			p1.getPlayer_areas().get(i).setMinions(2);
-			if(p1.getPlayer_areas().get(i).get_Area_name().equals("Unreal Estate")){
-				
-			}
-				
-		}
-		// updating PLAYERS minions quantity..unable to do it...
-		count = rand.nextInt(7);
-		p2.set_Winning_condition(personality_cards.get(count));
-		personality_cards.remove(count);
-		// this area has been et to player manually right now. will change further
-		p2.setPlayer_areas(game.board_areas.get(3));
-		// as soon as you set a player to the area you should set that Player to the area
-		game.board_areas.get(3).setPlayersInThisAreas(p2);*/
-		
-
 		
 	}
 
