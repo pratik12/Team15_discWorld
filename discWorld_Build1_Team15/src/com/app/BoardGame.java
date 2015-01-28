@@ -135,6 +135,8 @@ public class BoardGame {
 		
 		System.out.println("***** Game Board State *****");
 		
+		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n","Areas","Minions","Trouble?","Buildings?","Demons","Trolls");
+		System.out.println();
 		for(Area temp : game.board_areas){
 			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
 					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
@@ -142,7 +144,7 @@ public class BoardGame {
 				temp.set_Trouble_markers(true);
 			}
 			
-			System.out.println(temp.toString());
+			temp.to_String();
 		}
 		
 	}

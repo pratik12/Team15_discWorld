@@ -145,35 +145,36 @@ public class Player {
 				 + Integer.toString(get_Minion_Quantity()) + " Minion's , " + 
 				  Integer.toString(get_Number_of_buildings()) + " Building's , " + 
 				 Double.toString(get_Player_amount()) + " Ankh-Morph Dollars " + "\n" +
-				  
-				 "City Area Cards : " + "\n" + getCityAreaCards();
+				  "City Area Cards : " + "\n" + getCityAreaCards();
 	}
 
+	/**
+	 * 
+	 * @return city area card for each player, if the player has no buildings placed thie returns ""Player has placed no building" 
+	 */
 	private String getCityAreaCards() {
 
 		String result = "";
 		
-		if(!this.getPlayer_areas().isEmpty())
+		if(!this.getPlayer_areas().isEmpty()) // getPlayerAreas returns the arraylist with area objects 
+											  // only if player has placed a building in that area
 			for(Area a : this.getPlayer_areas())
 				return result += " " + a.get_Area_name();
 			
-		return "Player has placed no building";
+		return "none";
 		
 	}
 
 	/**
-	 * @return the minions
+	 * @return the minions as Map
 	 */
 	public HashMap<String, ArrayList<String>> getMinions() {
 		
-		
 		return minions;
-		
-		
 	}
 
 	/**
-	 * @param minions the minions to set
+	 * @param accepts minion color and area name as location where you want to set the minion
 	 */
 	public void setMinions(String minion_color, String minion_location) {
 		
@@ -181,7 +182,7 @@ public class Player {
 			
 			if(minions.containsKey(this.get_Player_color()))
 					minions.get(this.get_Player_color()).add(minion_location);
-			else{
+			else{ // initializing each player with 12 minions
 				 minions.put(this.get_Player_color(), new ArrayList<String>());
 				 for(int i=0; i <12; i++)
 				 minions.get(this.get_Player_color()).add(minion_location);

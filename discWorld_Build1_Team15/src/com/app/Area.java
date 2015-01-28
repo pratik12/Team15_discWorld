@@ -22,6 +22,11 @@ public class Area {
 	
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
 	
+	/**
+	 * constructor inititalizing the areas with its name cost and number
+	 * @param name
+	 * @param cost_num
+	 */
 	public Area(String name, String cost_num){
 		
 		String[] costNum = cost_num.split(":");
@@ -38,7 +43,7 @@ public class Area {
 		return area_name;
 	}
 	/**
-	 * @param area_name the area_name to set
+	 * @param accepts area_name which needs to be set
 	 */
 	public void set_Area_name(String area_name) {
 		this.area_name = area_name;
@@ -94,11 +99,14 @@ public class Area {
 		this.trouble_markers = trouble_markers;
 	}
 	
-	public String toString(){
-		return  " Area Name : " + this.get_Area_name() +
-				
-				" Trouble Marker : " + this.is_Trouble_markers() + 
-				" Minions :" + getMinionsForEveryPlayer(this.get_Area_name());
+	/**
+	 * String representation of area object with its properties
+	 */
+	public void to_String(){
+		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.get_Area_name(),
+				this.getMinionsForEveryPlayer(this.get_Area_name()),this.is_Trouble_markers(),
+				this.getBuildngs(),
+				this.getDemons(),this.getTrolls());
 	}
 
 	private String getMinionsForEveryPlayer(String area) {
@@ -111,7 +119,7 @@ public class Area {
 					for(String minion_location : p.getMinions().get(p.get_Player_color())){
 						
 						if(minion_location.equals(area))
-							result += " ," +p.get_Player_color();
+							result += "  " +p.get_Player_color();
 					}
 								
 				}
@@ -172,5 +180,33 @@ public class Area {
 	 */
 	public void setPlayersInThisAreas(Player playersInThisAreas) {
 		this.playersInThisAreas.add(playersInThisAreas);
+	}
+
+	/**
+	 * @return the demons
+	 */
+	public int getDemons() {
+		return demons;
+	}
+
+	/**
+	 * @param demons the demons to set
+	 */
+	public void setDemons(int demons) {
+		this.demons = demons;
+	}
+
+	/**
+	 * @return the trolls
+	 */
+	public int getTrolls() {
+		return trolls;
+	}
+
+	/**
+	 * @param trolls the trolls to set
+	 */
+	public void setTrolls(int trolls) {
+		this.trolls = trolls;
 	}
 }
