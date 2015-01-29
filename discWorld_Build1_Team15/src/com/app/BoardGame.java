@@ -18,7 +18,7 @@ public class BoardGame {
 	
 	public static ArrayList<String> personality_cards;
 	public ArrayList<String> random_event_cards;
-	private ArrayList<Area> board_areas;
+	public static ArrayList<Area> board_areas;
 	
 	// this arraylist acts as a store of current players in the game
 	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
@@ -88,13 +88,16 @@ public class BoardGame {
 		p1 = new Player("R"); // creating new player
 		playersInGame.add(p1); // add the player to the store
 		
+		placeMinion(p1,"The Shades"); // place a minion in any area for a player
+		p1.addBuilding("The Shades");
+
 		p2 = new Player("Y");
 		playersInGame.add(p2);
+		p2.addBuilding("Dolly Sisters");
 		
 		assign_personality_cards(p1); // assign the personality card to the player
 		assign_personality_cards(p2);
 		
-		placeMinion(p2,"The Shades"); // place a minion in any area for a player
 		placeMinion(p1,"Seven Sleepers");
 		placeMinion(p1,"Dragons Landing");
 		placeMinion(p2,"Nap Hill");

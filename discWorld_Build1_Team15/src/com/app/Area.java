@@ -18,7 +18,7 @@ public class Area {
 	private int demons;
 	private int trolls;
 	private int minions;
-	private int buildngs;
+	private boolean buildngs;
 	
 	// list to keep track of which players own which area
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
@@ -106,7 +106,7 @@ public class Area {
 	public void to_String(){
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.get_Area_name(),
 				this.getMinionsForEveryPlayer(this.get_Area_name()),this.is_Trouble_markers(),
-				this.getBuildngs(),
+				this.isBuildngs(),
 				this.getDemons(),this.getTrolls());
 	}
 
@@ -149,19 +149,6 @@ public class Area {
 		this.minions = minions;
 	}
 
-	/**
-	 * @return the buildings
-	 */
-	public int getBuildngs() {
-		return buildngs;
-	}
-
-	/**
-	 * @param buildngs the buildngs to set
-	 */
-	public void setBuildngs(int buildngs) {
-		this.buildngs = buildngs;
-	}
 
 	/**
 	 * @return the playersInThisAreas
@@ -207,5 +194,19 @@ public class Area {
 	 */
 	public void setTrolls(int trolls) {
 		this.trolls = trolls;
+	}
+
+	/**
+	 * @return the buildngs
+	 */
+	public boolean isBuildngs() {
+		return buildngs;
+	}
+
+	/**
+	 * @param buildngs the buildngs to set
+	 */
+	public void setBuildngs(boolean buildngs) {
+		this.buildngs = buildngs;
 	}
 }

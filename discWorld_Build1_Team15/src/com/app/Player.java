@@ -23,6 +23,7 @@ public class Player {
 	
 	// player can have many areas
 	private ArrayList<Area> player_areas = new ArrayList<Area>();
+	
 	/**
 	 * @return the player_areas
 	 */
@@ -146,7 +147,7 @@ public class Player {
 
 	/**
 	 * 
-	 * @return city area card for each player, if the player has no buildings placed thie returns ""Player has placed no building" 
+	 * @return city area card for each player, if the player has no buildings placed the returns "Player has placed no building" 
 	 */
 	private String getCityAreaCards() {
 
@@ -176,6 +177,7 @@ public class Player {
 		
 		if(!(minion_color.isEmpty() && minion_location.isEmpty()))
 			
+			// checking if the minions hashmap has any entries
 			if(minions.containsKey(this.get_Player_color()))
 					minions.get(this.get_Player_color()).add(minion_location);
 			else{ // initializing each player with 12 minions
@@ -189,4 +191,52 @@ public class Player {
 			System.out.println("Minion color or location cannot be empty");
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @param area_name
+	 */
+	public String addBuilding(String area_name){
+		
+		ArrayList<Area> temp = null;
+		// check if for the area there already exists a building
+		
+		// first make a copy of all the players area in temp arraylist
+		for(Player p : BoardGame.playersInGame){
+			temp = new ArrayList<Area>();
+			temp.addAll(p.getPlayer_areas());
+			
+		}
+		
+		// if area
+		if(!(temp.isEmpty())){
+			
+			for(Area area : temp){
+				if(!(area.get_Area_name().equals(area_name))){
+					this.setPlayer_areas(area);
+					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
+					
+				}
+				else{
+					return "Cannot place a building";
+				}
+			}
+		}
+		else{
+			// If the area does not exist with any player then just add that area object to current player 
+			for(Area area : BoardGame.board_areas){
+				if(area.get_Area_name().equals(area_name)){
+					// set corresponding building attributes of player
+					this.setPlayer_areas(area);
+					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
+					// set area's building attribute
+					area.setBuildngs(true);
+					break;
+				}
+				}
+	
+			
+		}
+		return "";
+	}
 }
