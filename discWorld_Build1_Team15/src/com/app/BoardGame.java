@@ -104,20 +104,25 @@ public class BoardGame {
 		placeMinion(p1,"Dolly Sisters");
 		placeMinion(p2,"Dolly Sisters");
 		
-		print_Out_PlayerState_And_Inventory(p1);
-		print_Out_PlayerState_And_Inventory(p2);
-		
+		print_Out_PlayerState(p1);
+		print_Out_PlayerState(p2);
 		print_Out_GameBoard_State();
+		print_Out_Inventory(p1);
+		print_Out_Inventory(p2);
+		
 	}
 	
+	private static void print_Out_Inventory(Player player ){
+		
+		System.out.println(player.current_inventory());
+		System.out.println();
+	}
 	/**
 	 * output to the console the current status for every player
 	 */
-	private static void print_Out_PlayerState_And_Inventory(Player player) {
-		
+	private static void print_Out_PlayerState(Player player) {
 		System.out.println(player.toString());
 		System.out.println();
-		System.out.println(player.current_inventory());
 	}
 
 	/**
@@ -140,6 +145,8 @@ public class BoardGame {
 			// printout areas
 			temp.to_String();
 		}
+		System.out.println();
+
 		
 	}
 

@@ -108,6 +108,7 @@ public class Area {
 				this.getMinionsForEveryPlayer(this.get_Area_name()),this.is_Trouble_markers(),
 				this.isBuildngs(),
 				this.getDemons(),this.getTrolls());
+		
 	}
 
 	/**
