@@ -152,6 +152,11 @@ public class BoardGame {
 		
 	}
 
+	/**
+	 * places a minion in any location.
+	 * @param player
+	 * @param location
+	 */
 	private static void placeMinion(Player player, String location) {
 		
 		if(!(location.isEmpty())){
