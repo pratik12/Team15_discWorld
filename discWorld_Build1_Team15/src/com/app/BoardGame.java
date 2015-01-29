@@ -72,6 +72,9 @@ public class BoardGame {
 		personality_cards.add("Dragon King of Arms");
 		personality_cards.add("Chryoprase");
 		personality_cards.add("Commander Vimes");		
+		
+		// iterating over all areas of the board initially to setup 3 trouble markers in 3 specfic areas according ot the rule
+				
 	}
 
 	static Player p1;
@@ -85,11 +88,19 @@ public class BoardGame {
 		 
 		rand = new Random();
 		
+		for(Area temp : BoardGame.board_areas){
+			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
+					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
+					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
+				temp.set_Trouble_markers(true);
+			}
+		}
 		p1 = new Player("R"); // creating new player
 		playersInGame.add(p1); // add the player to the store
 		
 		placeMinion(p1,"The Shades"); // place a minion in any area for a player
 		p1.addBuilding("The Shades");
+		p1.addBuilding("Seven Sleepers");
 
 		p2 = new Player("Y");
 		playersInGame.add(p2);
@@ -135,13 +146,8 @@ public class BoardGame {
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n","Areas","Minions","Trouble?","Buildings?","Demons","Trolls");
 		System.out.println();
 		
-		// iterating over alla reas of the board initially to setup 3 trouble markers in 3 specfic areas according ot the rule
-		for(Area temp : game.board_areas){
-			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
-					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
-					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
-				temp.set_Trouble_markers(true);
-			}
+		// iterating over all areas of the board initially to setup 3 trouble markers in 3 specfic areas according ot the rule
+		for(Area temp : BoardGame.board_areas){
 			// printout areas
 			temp.to_String();
 		}

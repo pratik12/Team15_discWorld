@@ -212,10 +212,11 @@ public class Player {
 		if(!(temp.isEmpty())){
 			
 			for(Area area : temp){
-				if(!(area.get_Area_name().equals(area_name))){
+				if(!(area.get_Area_name().equals(area_name)) && !(area.is_Trouble_markers()) ){
 					this.setPlayer_areas(area);
 					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
-					
+					area.setBuildngs(true);
+
 				}
 				else{
 					return "Cannot place a building";
@@ -225,7 +226,7 @@ public class Player {
 		else{
 			// If the area does not exist with any player then just add that area object to current player 
 			for(Area area : BoardGame.board_areas){
-				if(area.get_Area_name().equals(area_name)){
+				if(area.get_Area_name().equals(area_name) && area.is_Trouble_markers()==false ){
 					// set corresponding building attributes of player
 					this.setPlayer_areas(area);
 					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);

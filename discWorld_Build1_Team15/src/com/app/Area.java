@@ -122,6 +122,7 @@ public class Area {
 		
 				// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
 				for(Player p : BoardGame.playersInGame){
+					// checking for every minion location for all the players
 					for(String minion_location : p.getMinions().get(p.get_Player_color())){
 						
 						if(minion_location.equals(area))
