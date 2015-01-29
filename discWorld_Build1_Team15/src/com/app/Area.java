@@ -24,7 +24,7 @@ public class Area {
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
 	
 	/**
-	 * constructor inititalizing the areas with its name cost and number
+	 * constructor initializing the areas with its name cost and number
 	 * @param name
 	 * @param cost_num
 	 */
@@ -106,8 +106,7 @@ public class Area {
 	public void to_String(){
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.get_Area_name(),
 				this.getMinionsForEveryPlayer(this.get_Area_name()),this.is_Trouble_markers(),
-				this.isBuildngs(),
-				this.getDemons(),this.getTrolls());
+				this.isBuildngs(),this.getDemons(),this.getTrolls());
 		
 	}
 

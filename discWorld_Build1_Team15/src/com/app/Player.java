@@ -251,13 +251,16 @@ public class Player {
 					this.set_Player_amount(get_Player_amount() -checkForTroubleMarkers(area_name).get_Cost_of_area());
 					break;
 				}
-				}
-	
-			
+			}
 		}
 		return "";
 	}
-
+	
+	/**
+	 * 
+	 * @param area_name
+	 * @return the current area object depending on the area name
+	 */
 	private Area checkForTroubleMarkers(String area_name) {
 		
 		
