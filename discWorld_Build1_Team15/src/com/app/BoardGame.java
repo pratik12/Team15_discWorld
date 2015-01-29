@@ -19,7 +19,7 @@ public class BoardGame {
 	public static ArrayList<String> personality_cards;
 	public ArrayList<String> random_event_cards;
 	public static ArrayList<Area> board_areas;
-	
+	private static int bank;
 	// this arraylist acts as a store of current players in the game
 	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
 
@@ -35,6 +35,7 @@ public class BoardGame {
 		board_areas = new ArrayList<Area>(); 
 		personality_cards = new ArrayList<String>(7);
 		random_event_cards = new ArrayList<String>(12);
+		bank = 500;
 		init();
 		
 		for(String key : area_details.keySet()){
@@ -89,7 +90,7 @@ public class BoardGame {
 		rand = new Random();
 		
 		for(Area temp : BoardGame.board_areas){
-			if(temp.get_Area_name().equalsIgnoreCase("The Scours") ||
+			if(		temp.get_Area_name().equalsIgnoreCase("The Scours") ||
 					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
 					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
 				temp.set_Trouble_markers(true);
@@ -101,10 +102,11 @@ public class BoardGame {
 		placeMinion(p1,"The Shades"); // place a minion in any area for a player
 		p1.addBuilding("The Shades");
 		p1.addBuilding("Seven Sleepers");
-
+		p1.addBuilding("Longwell");
 		p2 = new Player("Y");
 		playersInGame.add(p2);
 		p2.addBuilding("Dolly Sisters");
+		p2.addBuilding("Seven Sleepers");
 		
 		assign_personality_cards(p1); // assign the personality card to the player
 		assign_personality_cards(p2);
@@ -185,5 +187,13 @@ public class BoardGame {
 			System.out.println("Provide location for minion to be placed");
 		}
 		
+	}
+	
+	public static void setBank(int amt){
+		bank = amt;
+	}
+	
+	public static int getBank(){
+		return bank;
 	}
 }

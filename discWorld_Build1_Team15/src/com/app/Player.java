@@ -1,6 +1,7 @@
 package com.app;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Player class holding properties of a player
@@ -18,7 +19,7 @@ public class Player {
 	private int number_of_buildings;
 	private String winning_condition;
 	public String random_event_card;
-	private double player_amount;
+	private int player_amount;
 	private String player_aid_card;
 	
 	// player can have many areas
@@ -52,7 +53,7 @@ public class Player {
 		set_Player_color(player_color);
 		setMinions(get_Player_color(), "Players Pile");
 		set_Minion_Quantity(12);
-		set_Player_amount(10);
+		set_Player_amount(100);
 		set_Number_of_buildings(6);
 	}
 	
@@ -83,15 +84,15 @@ public class Player {
 	/**
 	 * @return the player_amount
 	 */
-	public double get_Player_amount() {
+	public int get_Player_amount() {
 		return player_amount;
 	}
 
 	/**
-	 * @param player_amount the player_amount to set
+	 * @param d the player_amount to set
 	 */
-	public void set_Player_amount(double player_amount) {
-		this.player_amount = player_amount;
+	public void set_Player_amount(int d) {
+		this.player_amount = d;
 	}
 
 	/**
@@ -156,9 +157,9 @@ public class Player {
 		if(!this.getPlayer_areas().isEmpty()) // getPlayerAreas returns the arraylist with area objects 
 											  // only if player has placed a building in that area
 			for(Area a : this.getPlayer_areas())
-				return result += " " + a.get_Area_name();
+				result +=  a.get_Area_name() + " : ";
 			
-		return "none";
+		return result;
 		
 	}
 
@@ -198,24 +199,36 @@ public class Player {
 	 */
 	public String addBuilding(String area_name){
 		
-		ArrayList<Area> temp = null;
+		ArrayList<Area> temp = new ArrayList<Area>();
 		// check if for the area there already exists a building
 		
 		// first make a copy of all the players area in temp arraylist
 		for(Player p : BoardGame.playersInGame){
-			temp = new ArrayList<Area>();
-			temp.addAll(p.getPlayer_areas());
 			
+			for(int i =0 ; i<p.getPlayer_areas().size(); i++){
+				temp.add(p.getPlayer_areas().get(i));
+			}		
 		}
 		
-		// if area
+		
 		if(!(temp.isEmpty())){
-			
+			// always check that if you want to place a building in an area then that area should not have a trouble marker 
 			for(Area area : temp){
-				if(!(area.get_Area_name().equals(area_name)) && !(area.is_Trouble_markers()) ){
-					this.setPlayer_areas(area);
+				
+				
+				//calls for the method which will give you the object at runtime for the area where building has to be placed
+				if(!(area.get_Area_name().equals(area_name)) && !(checkForTroubleMarkers(area_name).is_Trouble_markers()) ){
+					// setting the player to the area that he wants to place a building
+					// setting the buildings attrobute for that area to be true
+					// thus setting up the dependency of WHICH PLAYER HAS BUILDING IN WHICH AREA
+					this.setPlayer_areas(checkForTroubleMarkers(area_name));
+					checkForTroubleMarkers(area_name).setBuildngs(true);
+					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
+					
 					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
-					area.setBuildngs(true);
+					// update players own amount and deposit the cost of constructing building in the bank
+					BoardGame.setBank(checkForTroubleMarkers(area_name).get_Cost_of_area());
+					this.set_Player_amount(get_Player_amount() - checkForTroubleMarkers(area_name).get_Cost_of_area());
 
 				}
 				else{
@@ -226,12 +239,16 @@ public class Player {
 		else{
 			// If the area does not exist with any player then just add that area object to current player 
 			for(Area area : BoardGame.board_areas){
-				if(area.get_Area_name().equals(area_name) && area.is_Trouble_markers()==false ){
+				if(area.get_Area_name().equals(area_name) && checkForTroubleMarkers(area_name).is_Trouble_markers()==false ){
 					// set corresponding building attributes of player
-					this.setPlayer_areas(area);
+					this.setPlayer_areas(checkForTroubleMarkers(area_name));
 					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
 					// set area's building attribute
-					area.setBuildngs(true);
+					checkForTroubleMarkers(area_name).setBuildngs(true);
+					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
+					// update players own amount and deposit the cost of constructing building in the bank
+					BoardGame.setBank(checkForTroubleMarkers(area_name).get_Cost_of_area());
+					this.set_Player_amount(get_Player_amount() -checkForTroubleMarkers(area_name).get_Cost_of_area());
 					break;
 				}
 				}
@@ -240,4 +257,14 @@ public class Player {
 		}
 		return "";
 	}
+
+	private Area checkForTroubleMarkers(String area_name) {
+		
+		
+		for(Area a : BoardGame.board_areas)
+			if(a.get_Area_name().equals(area_name)){
+				return a;
+			}
+		return null;
+		}
 }
