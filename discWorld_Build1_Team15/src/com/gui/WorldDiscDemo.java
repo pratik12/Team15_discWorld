@@ -1,5 +1,7 @@
 package com.gui;
 
+import com.app.BoardGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,8 +57,13 @@ public class WorldDiscDemo {
         startButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                //Execute when button is pressed
-                System.out.println("You clicked the start button");
+                String playersNumber = JOptionPane.showInputDialog(null,
+                        "How many players are going to be initiated?",
+                        "Let's start!",
+                        JOptionPane.QUESTION_MESSAGE);
+                if ((playersNumber != null) && (playersNumber.length() > 0)) {
+                    BoardGame.initiate_number_of_players(Integer.getInteger(playersNumber));
+                }
             }
         });
 
