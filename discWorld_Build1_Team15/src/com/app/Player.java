@@ -1,7 +1,6 @@
 package com.app;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Player class holding properties of a player
@@ -46,8 +45,7 @@ public class Player {
 	 * Constructor to set the properties of player
 	 * @param minion_Color
 	 * @param quantity
-	 */
-	
+	 */	
 	public Player(String player_color){
 		
 		set_Player_color(player_color);
