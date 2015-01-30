@@ -63,7 +63,6 @@ public class WorldDiscDemo {
                         JOptionPane.QUESTION_MESSAGE);
                 if ((playersNumber != null) && (playersNumber.length() > 0)) {
                     BoardGame.startGame();
-                    //hi
                     BoardGame.initiate_number_of_players(Integer.parseInt(playersNumber));
                 }
             }
@@ -80,9 +79,9 @@ public class WorldDiscDemo {
                 File File_Path = saveFile.getSelectedFile();
                 String fullPath = File_Path.getAbsolutePath();
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File save = new File(fullPath + ".txt");
+//                    String address = fullPath + ".txt";
                     try {
-                        flag = save.createNewFile();
+                        BoardGame.saveMap(fullPath);
                     } catch (IOException e1) {
                         e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
