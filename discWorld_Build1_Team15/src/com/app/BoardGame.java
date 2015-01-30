@@ -85,22 +85,10 @@ public class BoardGame {
 	
 	public static void main(String[] args) {
 		
-		game = BoardGame.getInstance(); 
-		 
-		rand = new Random();
-		
-		for(Area temp : BoardGame.board_areas){
-			if(		temp.get_Area_name().equalsIgnoreCase("The Scours") ||
-					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
-					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
-				temp.set_Trouble_markers(true);
-			}
-		}
 		
 		
-		
-		p1 = new Player("R"); // creating new player
-		playersInGame.add(p1); // add the player to the store
+		/*p1 = new Player("R"); // creating new player
+		playersInGame.add(p1); // add the player to the store*/
 		
 		placeMinion(p1,"The Shades"); // place a minion in any area for a player
 		p1.addBuilding("The Shades");
@@ -145,9 +133,43 @@ public class BoardGame {
 		
 	}
 	
-	private static void initiate_number_of_players(int players){
+	/**
+	 * takes the number of players and creates them
+	 * @param players
+	 */
+	public static void initiate_number_of_players(int players){
 		
+		String[] color = {"R","G","Y","B"};
 		
+		if(players>1){
+			
+			for(int i=0; i<players; i++){
+				
+				Player player = new Player(color[i]); // creating new player
+				playersInGame.add(player); // add the player to the store
+				
+			}
+			System.out.println("3");
+		}
+		else{
+			System.out.println("Player cannot be less than 2");
+		}
+		
+	}
+	
+	public static void startGame(){
+		
+		game = BoardGame.getInstance(); 
+		
+		rand = new Random();
+		
+		for(Area temp : BoardGame.board_areas){
+			if(		temp.get_Area_name().equalsIgnoreCase("The Scours") ||
+					temp.get_Area_name().equalsIgnoreCase("The Shades") ||
+					temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")){
+				temp.set_Trouble_markers(true);
+			}
+		}
 	}
 	
 	private static void print_Out_Inventory(Player player ){
