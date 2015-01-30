@@ -248,15 +248,10 @@ public class BoardGame {
         String inventoryData;
         FileWriter writeFile = new FileWriter(filePath, true);
         for (Player player : playersInGame) {
-            playerData = player.toString();
-            inventoryData = player.current_inventory();
-//            String player_col = new String ("Player_Colour|"+ player_color);
-
-            writeFile.write("Red");
+            writeFile.write("Players : "+playersInGame.size());
+            writeFile.write("Players : "+player.get_Player_color());
 
         }
-        writeFile.flush();
-        writeFile.close();
 
 
 //		String winning_condition = new String ("Winning Condition|"+ winning_condition);
@@ -267,5 +262,7 @@ public class BoardGame {
 //		String player_col = new String ("Player_Colour|"+ player_color);
 
     }
+    writeFile.flush();
+    writeFile.close();
 
 }
