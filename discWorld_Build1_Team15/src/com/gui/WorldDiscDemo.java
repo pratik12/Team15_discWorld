@@ -63,6 +63,7 @@ public class WorldDiscDemo {
                         JOptionPane.QUESTION_MESSAGE);
                 if ((playersNumber != null) && (playersNumber.length() > 0)) {
                     BoardGame.startGame();
+                    //hi
                     BoardGame.initiate_number_of_players(Integer.parseInt(playersNumber));
                 }
             }
