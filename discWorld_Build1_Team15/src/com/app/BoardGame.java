@@ -257,14 +257,14 @@ public class BoardGame {
 
     public static void saveMap(String filePath) throws IOException {
 
-        String playerData;
-        String inventoryData;
         FileWriter writeFile = new FileWriter(filePath, true);
         for (Player player : playersInGame) {
             writeFile.write("Players : "+playersInGame.size()+"\n");
             
             writeFile.write(player.get_Player_color()+"\n"); // player color
             writeFile.write(player.get_Winning_condition()+"\n"); // personality card
+            writeFile.write(player.get_Minion_Quantity()); // get number of minions
+            
             // every player has a minion in hashmap datastructure
             if(player.getMinions().size()!=0){
             	// retrieving the arraylist data structure for each minion
@@ -292,6 +292,8 @@ public class BoardGame {
             
             
             }
+        
+        writeFile.write("BankAmount "+BoardGame.getBank()+"\n");
 
         writeFile.flush();
         writeFile.close();
