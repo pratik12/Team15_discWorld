@@ -81,7 +81,7 @@ public class WorldDiscDemo {
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
 //                    String address = fullPath + ".txt";
                     try {
-                        BoardGame.saveMap(fullPath);
+                        BoardGame.saveMap(fullPath+".txt");
                     } catch (IOException e1) {
                         e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }

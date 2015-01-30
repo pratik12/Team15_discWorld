@@ -146,7 +146,7 @@ public class BoardGame {
 
                 Player player = new Player(color[i]); // creating new player
                 playersInGame.add(player); // add the player to the store
-
+                placeMinion(player, "Seven Sleepers");
             }
         } else {
             System.out.println("Player cannot be less than 2");
@@ -248,9 +248,21 @@ public class BoardGame {
         String inventoryData;
         FileWriter writeFile = new FileWriter(filePath, true);
         for (Player player : playersInGame) {
-            writeFile.write("Players : "+playersInGame.size());
-            writeFile.write("Players : "+player.get_Player_color());
+            writeFile.write("Players : "+playersInGame.size()+"/n");
+            
+            writeFile.write(player.get_Player_color()+"/n");
+            
+            for(int i =0 ;i < player.getMinions().size(); i++){
+            	
+            	for(int j = 0 ; j< player.getMinions().get(i).size() ;j++){
+            		writeFile.write(player.getMinions().get(i).get(i)+"\n");
+            	}
+            }
+            
+            }
 
+        writeFile.flush();
+        writeFile.close();
         }
 
 
@@ -260,9 +272,7 @@ public class BoardGame {
 //		String player_col = new String ("Player_Colour|"+ player_color);
 //		String player_col = new String ("Player_Colour|"+ player_color);
 //		String player_col = new String ("Player_Colour|"+ player_color);
-
     }
-    writeFile.flush();
-    writeFile.close();
 
-}
+
+
