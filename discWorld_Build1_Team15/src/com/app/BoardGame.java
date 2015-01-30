@@ -96,6 +96,9 @@ public class BoardGame {
 				temp.set_Trouble_markers(true);
 			}
 		}
+		
+		
+		
 		p1 = new Player("R"); // creating new player
 		playersInGame.add(p1); // add the player to the store
 		
@@ -106,6 +109,7 @@ public class BoardGame {
 		p2 = new Player("Y");
 		playersInGame.add(p2);
 		p2.addBuilding("Dolly Sisters");
+		
 		p2.addBuilding("Seven Sleepers");
 		
 		assign_personality_cards(p1); // assign the personality card to the player
@@ -135,8 +139,13 @@ public class BoardGame {
 		// populate player's private data members with data from file..use all setters to do this
 		// then add buildings depending on city area card attributes
 		// populate the area class with all the data
-		// set arraylist playersInthisAreas with appropriate players who have placed buildings in the areas
+		// set arraylist pcoen691pconcordia@gmail.comcoen691pconcordia@gmail.comlayersInthisAreas with appropriate players who have placed buildings in the areas
 		// print game board status finally to check if the game has been loaded correctly 
+		
+		
+	}
+	
+	private static void initiate_number_of_players(int players){
 		
 		
 	}
