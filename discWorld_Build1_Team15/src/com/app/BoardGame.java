@@ -242,4 +242,42 @@ public class BoardGame {
 	public static int getBank(){
 		return bank;
 	}
+	
+	public void saveMap(){
+		
+		for(int i=0 ; i< playersInGame.size() ; i++)
+		{
+				Iterator it = (Iterator)playersInGame.get(i).entryset().iterator();
+				
+				while(it.hasNext())
+				{
+					p.toString();
+					p.current_inventory();
+				}
+				
+		}
+				
+		FileWriter writeFile = new FileWriter(saveFileName + ".txt", true);
+		String player_col = new String ("Player_Colour|"+ player_color);
+		writeFile.write(gamelevel);
+		String winning_condition = new String ("Winning Condition|"+ winning_condition);
+		writeFile.write(winning_condition);
+		int minion_Quantity = new int ("Player_Colour|"+ player_color);
+		String player_col = new String ("Player_Colour|"+ player_color);
+		String player_col = new String ("Player_Colour|"+ player_color);
+		String player_col = new String ("Player_Colour|"+ player_color);
+		
+		writeFile.write	();
+		writeFile.flush();
+		writeFile.close();
+		
+		
+	}
+
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		
+	}
+
 }
