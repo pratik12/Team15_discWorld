@@ -83,10 +83,21 @@ public class BoardGame {
 
     public static void main(String[] args) {
 
+    	 game = BoardGame.getInstance();
+
+         rand = new Random();
+
+         for (Area temp : BoardGame.board_areas) {
+             if (temp.get_Area_name().equalsIgnoreCase("The Scours") ||
+                     temp.get_Area_name().equalsIgnoreCase("The Shades") ||
+                     temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")) {
+                 temp.set_Trouble_markers(true);
+             }
+         }
+
 		
-		
-		/*p1 = new Player("R"); // creating new player
-        playersInGame.add(p1); // add the player to the store*/
+		p1 = new Player("R"); // creating new player
+        playersInGame.add(p1); // add the player to the store
 
         placeMinion(p1, "The Shades"); // place a minion in any area for a player
         p1.addBuilding("The Shades");
@@ -146,6 +157,7 @@ public class BoardGame {
 
                 Player player = new Player(color[i]); // creating new player
                 playersInGame.add(player); // add the player to the store
+                assign_personality_cards(player);
                 placeMinion(player, "Seven Sleepers");
                 player.addBuilding("Seven Sleepers");
             }
@@ -269,10 +281,15 @@ public class BoardGame {
             	
             }
             writeFile.write("\n");
+            writeFile.write(player.get_Number_of_buildings()+"\n");
+            // getting the area names where the player has  build a building
             for(Area area : player.getPlayer_areas() ){
             	
             	writeFile.write("BUILDING : "+area.get_Area_name()+"\n");	
             }
+            // player amount 
+            writeFile.write(player.get_Player_amount());
+            
             
             }
 
