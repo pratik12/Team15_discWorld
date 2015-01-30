@@ -62,7 +62,7 @@ public class WorldDiscDemo {
                         "Let's start!",
                         JOptionPane.QUESTION_MESSAGE);
                 if ((playersNumber != null) && (playersNumber.length() > 0)) {
-                    BoardGame.initiate_number_of_players(Integer.getInteger(playersNumber));
+                    BoardGame.initiate_number_of_players(Integer.parseInt(playersNumber));
                 }
             }
         });
