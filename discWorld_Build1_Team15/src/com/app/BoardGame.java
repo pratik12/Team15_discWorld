@@ -149,7 +149,6 @@ public class BoardGame {
 				playersInGame.add(player); // add the player to the store
 				
 			}
-			System.out.println("3");
 		}
 		else{
 			System.out.println("Player cannot be less than 2");
