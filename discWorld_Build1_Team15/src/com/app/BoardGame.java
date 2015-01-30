@@ -147,6 +147,7 @@ public class BoardGame {
                 Player player = new Player(color[i]); // creating new player
                 playersInGame.add(player); // add the player to the store
                 placeMinion(player, "Seven Sleepers");
+                player.addBuilding("Seven Sleepers");
             }
         } else {
             System.out.println("Player cannot be less than 2");
@@ -248,15 +249,29 @@ public class BoardGame {
         String inventoryData;
         FileWriter writeFile = new FileWriter(filePath, true);
         for (Player player : playersInGame) {
-            writeFile.write("Players : "+playersInGame.size()+"/n");
+            writeFile.write("Players : "+playersInGame.size()+"\n");
             
-            writeFile.write(player.get_Player_color()+"/n");
-            
-            for(int i =0 ;i < player.getMinions().size(); i++){
-            	
-            	for(int j = 0 ; j< player.getMinions().get(i).size() ;j++){
-            		writeFile.write(player.getMinions().get(i).get(i)+"\n");
+            writeFile.write(player.get_Player_color()+"\n"); // player color
+            writeFile.write(player.get_Winning_condition()+"\n"); // personality card
+            // every player has a minion in hashmap datastructure
+            if(player.getMinions().size()!=0){
+            	// retrieving the arraylist data structure for each minion
+            	for(ArrayList<String> str : player.getMinions().values()){
+            		
+            		for(int i=0;i<str.size();i++){
+            			// only taking out those names of areas where the minion is placed
+            			if(!(str.get(i).equals("Players Pile"))){
+            				
+            				writeFile.write(str.get(i)+":");
+            			}
+            		}
             	}
+            	
+            }
+            writeFile.write("\n");
+            for(Area area : player.getPlayer_areas() ){
+            	
+            	writeFile.write("BUILDING : "+area.get_Area_name()+"\n");	
             }
             
             }
