@@ -1,7 +1,6 @@
 package com.app;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -83,20 +82,20 @@ public class BoardGame {
 
     public static void main(String[] args) throws IOException {
 
-    	 game = BoardGame.getInstance();
+        game = BoardGame.getInstance();
 
-         rand = new Random();
+        rand = new Random();
 
-         for (Area temp : BoardGame.board_areas) {
-             if (temp.get_Area_name().equalsIgnoreCase("The Scours") ||
-                     temp.get_Area_name().equalsIgnoreCase("The Shades") ||
-                     temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")) {
-                 temp.set_Trouble_markers(true);
-             }
-         }
+        for (Area temp : BoardGame.board_areas) {
+            if (temp.get_Area_name().equalsIgnoreCase("The Scours") ||
+                    temp.get_Area_name().equalsIgnoreCase("The Shades") ||
+                    temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")) {
+                temp.set_Trouble_markers(true);
+            }
+        }
 
-		
-		p1 = new Player("R"); // creating new player
+
+        p1 = new Player("R"); // creating new player
         playersInGame.add(p1); // add the player to the store
 
         placeMinion(p1, "The Shades"); // place a minion in any area for a player
@@ -246,8 +245,10 @@ public class BoardGame {
         }
 
     }
+
     /**
      * set total amount in bank
+     *
      * @param amt
      */
     public static void setBank(int amt) {
@@ -256,68 +257,90 @@ public class BoardGame {
 
     /**
      * get amount from bank
+     *
      * @return
      */
     public static int getBank() {
         return bank;
     }
-    
+
     /**
      * functionality to save state of game
+     *
      * @param filePath
      * @throws IOException
      */
     public static void saveMap(String filePath) throws IOException {
 
-        FileWriter writeFile = new FileWriter(filePath, true);
-        writeFile.write("Players : "+playersInGame.size()+"\n");//total number of players
-        for (Player player : playersInGame) {            
-            writeFile.write(player.get_Player_color()+"\n"); // player color
-            writeFile.write(player.get_Winning_condition()+"\n"); // personality card
-            writeFile.write(player.get_Minion_Quantity()+"\n"); // get number of minions
-            
+        FileWriter writeFile = new FileWriter(filePath);
+        String eol = System.getProperty("line.separator");
+        BufferedWriter out = new BufferedWriter(writeFile);
+        out.write("Players : " + playersInGame.size() + eol);//total number of players
+        for (Player player : playersInGame) {
+            out.write(player.get_Player_color() + eol); // player color
+            out.write(player.get_Winning_condition() + eol); // personality card
+            out.write(player.get_Minion_Quantity() + eol); // get number of minions
+
             // every player has a minion in hashmap datastructure
-            if(player.getMinions().size()!=0){
-            	// retrieving the arraylist data structure for each minion
-            	for(ArrayList<String> str : player.getMinions().values()){
-            		
-            		for(int i=0;i<str.size();i++){
-            			// only taking out those names of areas where the minion is placed
-            			if(!(str.get(i).equals("Players Pile"))){
-            				
-            				writeFile.write((str.get(i).trim()+":").trim());
-            			}
-            		}
-            	}
-            	
+            if (player.getMinions().size() != 0) {
+                // retrieving the arraylist data structure for each minion
+                for (ArrayList<String> str : player.getMinions().values()) {
+
+                    for (int i = 0; i < str.size(); i++) {
+                        // only taking out those names of areas where the minion is placed
+                        if (!(str.get(i).equals("Players Pile"))) {
+
+                            out.write(str.get(i) + ":" + eol);
+                        }
+                    }
+                }
+
             }
-            
-            writeFile.write("\n"+player.get_Number_of_buildings()+"\n");
+
+            out.write(player.get_Number_of_buildings() + eol);
             // getting the area names where the player has  build a building
-            for(Area area : player.getPlayer_areas() ){
-            	
-            	writeFile.write("BUILDING : "+area.get_Area_name()+"\n");	
+            for (Area area : player.getPlayer_areas()) {
+
+                out.write("BUILDING : " + area.get_Area_name() + eol);
             }
             // player amount 
-            writeFile.write(player.get_Player_amount()+"\n");
-            
-            
-            }
-        
-        writeFile.write("BankAmount "+BoardGame.getBank()+"\n");
+            out.write(player.get_Player_amount() + eol);
 
-        writeFile.flush();
-        writeFile.close();
+
         }
 
-
-//		String winning_condition = new String ("Winning Condition|"+ winning_condition);
-//		writeFile.write(winning_condition);
-//		int minion_Quantity = new int ("Player_Colour|"+ player_color);
-//		String player_col = new String ("Player_Colour|"+ player_color);
-//		String player_col = new String ("Player_Colour|"+ player_color);
-//		String player_col = new String ("Player_Colour|"+ player_color);
+        out.write("BankAmount " + BoardGame.getBank() + eol);
+        out.newLine();
+        out.flush();
+        out.close();
     }
+
+
+    public static ArrayList loadFile(String filePath) {
+        BufferedReader br = null;
+        ArrayList<String> playersRecords = new ArrayList<String>();
+        try {
+            br = new BufferedReader(new FileReader(filePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                playersRecords.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return playersRecords;
+    }
+}
 
 
 

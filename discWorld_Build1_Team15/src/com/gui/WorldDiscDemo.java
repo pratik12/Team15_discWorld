@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 
@@ -21,11 +22,12 @@ import static javax.swing.JFileChooser.APPROVE_OPTION;
 public class WorldDiscDemo {
 
     public static boolean RIGHT_TO_LEFT = false;
+    static ArrayList<String> playerData = new ArrayList();
 
     public static void addComponentsToPane(final Container contentPane) throws IOException {
         final JFileChooser fc = new JFileChooser();
         fc.setMultiSelectionEnabled(true);
-        fc.setCurrentDirectory(new File("C:\\tmp"));
+        //fc.setCurrentDirectory(new File("C:\\tmp"));
 
 
         contentPane.setLayout(new BorderLayout(5, 5));
@@ -44,11 +46,8 @@ public class WorldDiscDemo {
         contentPane.setLayout(new FlowLayout());
         JPanel playerPanel = new JPanel();
         playerPanel.setLayout(new GridLayout(2, 2));
-        playerPanel.add(new JLabel("Player 1"));
-        playerPanel.add(new JLabel("Player 2"));
-        playerPanel.add(new JLabel("Player 3"));
-        playerPanel.add(new JLabel("Player 4"));
-        contentPane.add(playerPanel, BorderLayout.CENTER);
+
+        showTextAreas(contentPane, playerPanel);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 1));
@@ -81,7 +80,7 @@ public class WorldDiscDemo {
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
 //                    String address = fullPath + ".txt";
                     try {
-                        BoardGame.saveMap(fullPath+".txt");
+                        BoardGame.saveMap(fullPath + ".txt");
                     } catch (IOException e1) {
                         e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
@@ -94,16 +93,17 @@ public class WorldDiscDemo {
         buttonPanel.add(saveButton);
         JButton loadButton = new JButton("Load");
         loadButton.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 int retVal = fc.showOpenDialog(contentPane);
                 if (retVal == APPROVE_OPTION) {
-                    File[] selectedfiles = fc.getSelectedFiles();
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < selectedfiles.length; i++) {
-                        sb.append(selectedfiles[i].getName() + "\n");
+                    String selectedfilePath = fc.getSelectedFile().getAbsolutePath();
+                    playerData = BoardGame.loadFile(selectedfilePath);
+                    try {
+                        createAndShowGUI();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
-                    JOptionPane.showMessageDialog(contentPane, sb.toString());
+
                 }
 
             }
@@ -117,8 +117,43 @@ public class WorldDiscDemo {
                 System.out.println("You clicked the exit button");
             }
         });
+        buttonPanel.add(exitButton);
         contentPane.add(buttonPanel, BorderLayout.CENTER);
+    }
 
+    private static void showTextAreas(Container contentPane, JPanel playersPanel) {
+        JPanel firstPlayer = new JPanel();
+        firstPlayer.setBackground(Color.GREEN);
+        JTextArea firstAreaText = new JTextArea("lilili", 7, 10);
+        firstAreaText.setLineWrap(true);
+        firstPlayer.add(new JScrollPane(firstAreaText));
+        playersPanel.add(firstPlayer);
+
+        JPanel secondPlayer = new JPanel();
+        secondPlayer.setBackground(Color.RED);
+        StringBuffer secondPlayerContent = new StringBuffer();
+        for (int i = 0; i < 8 && !playerData.isEmpty(); i++) {
+            secondPlayerContent.append(playerData.get(i));
+        }
+        JTextArea secondPlayerText = new JTextArea(secondPlayerContent.toString(), 7, 10);
+        secondPlayerText.setLineWrap(true);
+        secondPlayer.add(new JScrollPane(secondPlayerText));
+        playersPanel.add(secondPlayer);
+
+        JPanel thirdPlayer = new JPanel();
+        thirdPlayer.setBackground(Color.YELLOW);
+        JTextArea thirdPlayerText = new JTextArea("487365734", 7, 10);
+        thirdPlayerText.setLineWrap(true);
+        thirdPlayer.add(new JScrollPane(thirdPlayerText));
+        playersPanel.add(thirdPlayer);
+
+        JPanel fourthPlayer = new JPanel();
+        fourthPlayer.setBackground(Color.BLUE);
+        JTextArea fourthPlayerText = new JTextArea("test", 7, 10);
+        fourthPlayerText.setLineWrap(true);
+        fourthPlayer.add(new JScrollPane(fourthPlayerText));
+        playersPanel.add(fourthPlayer);
+        contentPane.add(playersPanel, BorderLayout.CENTER);
     }
 
     private static void createAndShowGUI() throws IOException {
