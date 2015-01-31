@@ -258,9 +258,8 @@ public class BoardGame {
     public static void saveMap(String filePath) throws IOException {
 
         FileWriter writeFile = new FileWriter(filePath, true);
-        for (Player player : playersInGame) {
-            writeFile.write("Players : "+playersInGame.size()+"\n");
-            
+        writeFile.write("Players : "+playersInGame.size()+"\n");//total number of players
+        for (Player player : playersInGame) {            
             writeFile.write(player.get_Player_color()+"\n"); // player color
             writeFile.write(player.get_Winning_condition()+"\n"); // personality card
             writeFile.write(player.get_Minion_Quantity()); // get number of minions
