@@ -81,7 +81,7 @@ public class BoardGame {
     static Random rand;
     static BoardGame game;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
     	 game = BoardGame.getInstance();
 
@@ -124,7 +124,7 @@ public class BoardGame {
         print_Out_Inventory(p1);
         print_Out_Inventory(p2);
 
-
+        saveMap("C:\\Users\\Pratik Bidkar\\Desktop\\output.txt");
         // functions for loading the game state from a file starts here
         // create a single function that will call other smaller functions to collectively update player and area
         // this single function would be called from swings controller
@@ -246,15 +246,27 @@ public class BoardGame {
         }
 
     }
-
+    /**
+     * set total amount in bank
+     * @param amt
+     */
     public static void setBank(int amt) {
         bank = amt;
     }
 
+    /**
+     * get amount from bank
+     * @return
+     */
     public static int getBank() {
         return bank;
     }
-
+    
+    /**
+     * functionality to save state of game
+     * @param filePath
+     * @throws IOException
+     */
     public static void saveMap(String filePath) throws IOException {
 
         FileWriter writeFile = new FileWriter(filePath, true);
@@ -279,15 +291,15 @@ public class BoardGame {
             	}
             	
             }
-            writeFile.write("\n");
-            writeFile.write(player.get_Number_of_buildings()+"\n");
+            
+            writeFile.write("\n"+player.get_Number_of_buildings()+"\n");
             // getting the area names where the player has  build a building
             for(Area area : player.getPlayer_areas() ){
             	
             	writeFile.write("BUILDING : "+area.get_Area_name()+"\n");	
             }
             // player amount 
-            writeFile.write(player.get_Player_amount());
+            writeFile.write(player.get_Player_amount()+"\n");
             
             
             }
