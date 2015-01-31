@@ -274,7 +274,7 @@ public class BoardGame {
         for (Player player : playersInGame) {            
             writeFile.write(player.get_Player_color()+"\n"); // player color
             writeFile.write(player.get_Winning_condition()+"\n"); // personality card
-            writeFile.write(player.get_Minion_Quantity()); // get number of minions
+            writeFile.write(player.get_Minion_Quantity()+"\n"); // get number of minions
             
             // every player has a minion in hashmap datastructure
             if(player.getMinions().size()!=0){
@@ -285,7 +285,7 @@ public class BoardGame {
             			// only taking out those names of areas where the minion is placed
             			if(!(str.get(i).equals("Players Pile"))){
             				
-            				writeFile.write(str.get(i)+":");
+            				writeFile.write((str.get(i).trim()+":").trim());
             			}
             		}
             	}
