@@ -9,8 +9,6 @@ package com.testcase;
  */
 
 import org.junit.Test;
- import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 /**
  http://java2novice.com/junit-examples/
@@ -19,21 +17,29 @@ import static org.junit.Assert.assertEquals;
 public class SuitTest {
 
     @Test
-    public void testEvenOddNumber() {
-
-        MyEvenOdd meo = new MyEvenOdd();
-
-        assertEquals("10 is a even number", true, meo.isEvenNumber(10));
+    public void gameSnapshot() {
 
     }
 
     @Test
-    public void myTestMethod() {
+    public void gameInstantiation(){
 
-        String[] expectedOutput = {"apple", "mango", "grape"};
-
-        String[] methodOutput = {"apple", "mango", "grape"};
-
-        assertArrayEquals(expectedOutput, methodOutput);
     }
+
+    @Test
+    public void dispencePersonalityCards(){
+
+    }
+
+   @Test
+    public void controlNumberOfPlayers(){
+
+   }
+
+    @Test
+    public void loadDataFromrecordedFile(){
+
+    }
+
+
 }
