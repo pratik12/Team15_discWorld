@@ -71,8 +71,19 @@ public class BoardGame {
         personality_cards.add("Chryoprase");
         personality_cards.add("Commander Vimes");
 
-        // iterating over all areas of the board initially to setup 3 trouble markers in 3 specific areas according ot the rule
-
+        random_event_cards.add("Flood");
+        random_event_cards.add("The Dragon");
+        random_event_cards.add("Mysterious Murders");
+        random_event_cards.add("Fog");
+        random_event_cards.add("Riots");
+        random_event_cards.add("Demons from the Dungeon Dimensions");
+        random_event_cards.add("Subsidence");
+        random_event_cards.add("Bloody Stupid Johnson");
+        random_event_cards.add("Trolls");
+        random_event_cards.add("Explosion");
+        random_event_cards.add("Earthquake");
+        random_event_cards.add("Fire");
+        
     }
 
     static Player p1;
