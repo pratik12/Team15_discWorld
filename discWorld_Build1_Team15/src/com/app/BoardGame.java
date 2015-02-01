@@ -16,6 +16,7 @@ public class BoardGame {
     public static ArrayList<String> personality_cards;
     public ArrayList<String> random_event_cards;
     public static ArrayList<Area> board_areas;
+    public static ArrayList<PlayerCard> player_cards;
     private static int bank;
     // this arraylist acts as a store of current players in the game
     public static ArrayList<Player> playersInGame = new ArrayList<Player>();
@@ -32,6 +33,7 @@ public class BoardGame {
         board_areas = new ArrayList<Area>();
         personality_cards = new ArrayList<String>(7);
         random_event_cards = new ArrayList<String>(12);
+        player_cards = new ArrayList<PlayerCard>(101);
         bank = 500;
         init();
 
@@ -83,6 +85,14 @@ public class BoardGame {
         random_event_cards.add("Explosion");
         random_event_cards.add("Earthquake");
         random_event_cards.add("Fire");
+        
+        for(int i =0 ; i<101;i++){
+        	if(i!=47){
+        		player_cards.add(new PlayerCard("Green", " ", "Deck Pile"));
+        	}else{
+        		player_cards.add(new PlayerCard("Brown", " ", "Deck Pile"));
+        	}
+        }
         
     }
 
@@ -170,6 +180,8 @@ public class BoardGame {
                 assign_personality_cards(player);
                 placeMinion(player, "Seven Sleepers");
                 player.addBuilding("Seven Sleepers");
+                // every player will be assigned 5 playing cards..first inly green ones are to be used
+                
             }
         } else {
             System.out.println("Player cannot be less than 2");

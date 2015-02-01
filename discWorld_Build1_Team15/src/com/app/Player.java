@@ -14,6 +14,8 @@ public class Player {
 	// data structure to store minion data
 	private HashMap<String,ArrayList<String>> minions = new HashMap<String, ArrayList<String>>();
 	
+	private ArrayList<PlayerCard> playersPlayingCard = new ArrayList<PlayerCard>();
+	
 	private int minion_Quantity;
 	private int number_of_buildings;
 	private String winning_condition;
@@ -268,4 +270,21 @@ public class Player {
 			}
 		return null;
 		}
+
+	/**
+	 * @return the playersPlayingCard
+	 */
+	public ArrayList<PlayerCard> getPlayersPlayingCard() {
+		return playersPlayingCard;
+	}
+
+	/**
+	 * @param playersPlayingCard the playersPlayingCard to set
+	 */
+	public void setPlayersPlayingCard(PlayerCard playersPlayingCard) {
+		if(playersPlayingCard!=null)
+			this.playersPlayingCard.add(playersPlayingCard);
+		else
+			System.out.println("Invalid playing card");
+	}
 }
