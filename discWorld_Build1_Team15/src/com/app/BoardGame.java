@@ -71,8 +71,19 @@ public class BoardGame {
         personality_cards.add("Chryoprase");
         personality_cards.add("Commander Vimes");
 
-        // iterating over all areas of the board initially to setup 3 trouble markers in 3 specific areas according ot the rule
-
+        random_event_cards.add("Flood");
+        random_event_cards.add("The Dragon");
+        random_event_cards.add("Mysterious Murders");
+        random_event_cards.add("Fog");
+        random_event_cards.add("Riots");
+        random_event_cards.add("Demons from the Dungeon Dimensions");
+        random_event_cards.add("Subsidence");
+        random_event_cards.add("Bloody Stupid Johnson");
+        random_event_cards.add("Trolls");
+        random_event_cards.add("Explosion");
+        random_event_cards.add("Earthquake");
+        random_event_cards.add("Fire");
+        
     }
 
     static Player p1;
@@ -315,7 +326,9 @@ public class BoardGame {
         out.close();
     }
 
-
+   /**
+    * functionality to load the arbitrary game  
+    */
     public static ArrayList loadFile(String filePath) {
         BufferedReader br = null;
         ArrayList<String> playersRecords = new ArrayList<String>();
@@ -340,6 +353,61 @@ public class BoardGame {
         }
         return playersRecords;
     }
+
+/**
+ * @author Sanchit
+ * if we can make a separate class for load and save it would be better even in the future builds (LoadSave class)
+ * mentioned all the changes I think in the comments so that the program's current state is not impacted.
+ * filename contains all the information about the game i.e the current status and the details about the players
+ */
+    /*
+    public static void save(String filename, LoadState ls)
+    {
+    
+    	FileOutputStream fout ; 
+    	
+    		try{
+    	
+    			fout = new FileOutputStream(filename);
+   				ObjectOutputStream objout = new ObjectOutputStream(fout);
+    			objout.writeObject(ls);
+    	
+    			}
+    			
+    		catch(Exception e) 
+    		
+    			{
+    				e.printStackTrace();
+    			}
+    			
+    
+    }
+     
+     
+     
+    public static void load(String filename)
+     {
+     	LoadSave ls = null;
+     	try{
+     			FileInputStream fin = new FileInputStream(filename);
+     			ObjectInputStream objin = new ObjectInputStream(fin);
+     			Object obj = objin.readObject();
+     			if(obj instanceof LoadSave) 
+     			{
+     				ls= (LoadSave)obj; 
+     		
+     			}
+     
+     			objin.close();
+     		}
+     	catch(Exception e)
+     		{
+     			e.printStackTrace();
+     	 	}
+     	 	
+     	 return ls;	
+     }
+     */
 }
 
 
