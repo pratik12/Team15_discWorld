@@ -103,18 +103,7 @@ public class BoardGame {
 
     public static void main(String[] args) throws IOException {
 
-        game = BoardGame.getInstance();
-
-        rand = new Random();
-
-        for (Area temp : BoardGame.board_areas) {
-            if (temp.getAreaName().equalsIgnoreCase("The Scours") ||
-                    temp.getAreaName().equalsIgnoreCase("The Shades") ||
-                    temp.getAreaName().equalsIgnoreCase("Dolly Sisters")) {
-                temp.set_Trouble_markers(true);
-            }
-        }
-
+        startGame();
 
         p1 = new Player("R"); // creating new player
         playersInGame.add(p1); // add the player to the store
@@ -138,13 +127,13 @@ public class BoardGame {
         placeMinion(p1, "Dolly Sisters");
         placeMinion(p2, "Dolly Sisters");
 
-        printOutPlayerState(p1);
-        printOutPlayerState(p2);
-        printOutGameBoardState();
-        printOutInventory(p1);
-        printOutInventory(p2);
+        ConsoleOutput.printOutPlayerState(p1);
+        ConsoleOutput.printOutPlayerState(p2);
+        ConsoleOutput.printOutGameBoardState();
+        ConsoleOutput.printOutInventory(p1);
+        ConsoleOutput.printOutInventory(p2);
 
-        GameState.saveMap("output.txt");
+        FileManager.saveMap("output.txt");
         // functions for loading the game state from a file starts here
         // create a single function that will call other smaller functions to collectively update player and area
         // this single function would be called from swings controller
@@ -156,7 +145,7 @@ public class BoardGame {
         // populate player's private data members with data from file..use all setters to do this
         // then add buildings depending on city area card attributes
         // populate the area class with all the data
-        // set arraylist pcoen691pconcordia@gmail.comcoen691pconcordia@gmail.comlayersInthisAreas with appropriate players who have placed buildings in the areas
+        // set arraylist playersInthisAreas with appropriate players who have placed buildings in the areas
         // print game board status finally to check if the game has been loaded correctly
 
 
@@ -180,7 +169,7 @@ public class BoardGame {
                 assignPersonalityCards(player);
                 placeMinion(player, "Seven Sleepers");
                 player.addBuilding("Seven Sleepers");
-                // every player will be assigned 5 playing cards..first inly green ones are to be used
+                // every player will be assigned 5 playing cards..first only green ones are to be used
                 
             }
         } else {
@@ -204,40 +193,7 @@ public class BoardGame {
         }
     }
 
-    private static void printOutInventory(Player player) {
-
-        System.out.println(player.current_inventory());
-        System.out.println();
-    }
-
-    /**
-     * output to the console the current status for every player
-     */
-    private static void printOutPlayerState(Player player) {
-        System.out.println(player.toString());
-        System.out.println();
-    }
-
-    /**
-     * This method prints out the game board state
-     */
-    private static void printOutGameBoardState() {
-
-        System.out.println("***** Game Board State *****");
-
-        System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n", "Areas", "Minions", "Trouble?", "Buildings?", "Demons", "Trolls");
-        System.out.println();
-
-        // iterating over all areas of the board initially to setup 3 trouble markers in 3 specfic areas according ot the rule
-        for (Area temp : BoardGame.board_areas) {
-            // printout areas
-            temp.to_String();
-        }
-        System.out.println();
-
-
-    }
-
+    
     /**
      * assigning personailty cards to a player randomly
      */
