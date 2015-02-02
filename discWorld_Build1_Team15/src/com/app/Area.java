@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 /**
  * 
- * Board will have 12 areas
+ * Board will have 12 areas hence area is good candidate as a class
+ * Also every area will have a state as the game progresses.
+ * 
  * @author Pratik
  *
  */
@@ -138,7 +140,7 @@ public class Area {
 	}
 
 	/**
-	 * @return the minions
+	 * @return the number of minions
 	 */
 	public int getMinions() {
 		return minions;
@@ -171,7 +173,7 @@ public class Area {
 	}
 
 	/**
-	 * @return the demons
+	 * @return the number of demons
 	 */
 	public int getDemons() {
 		return demons;
@@ -185,7 +187,7 @@ public class Area {
 	}
 
 	/**
-	 * @return the trolls
+	 * @return the number of trolls
 	 */
 	public int getTrolls() {
 		return trolls;
@@ -199,7 +201,7 @@ public class Area {
 	}
 
 	/**
-	 * @return the buildngs
+	 * @return if the buildngs exist in this area
 	 */
 	public boolean isBuildngs() {
 		return buildngs;
