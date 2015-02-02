@@ -170,6 +170,25 @@ public class Player {
 		
 		return minions;
 	}
+	
+    /**
+     * places a minion in any location.
+     *
+     * @param player
+     * @param location
+     */
+    public void placeMinion(String location) {
+
+        if (!(location.isEmpty())) {
+
+            this.setMinions(this.getPlayerColor(), location);
+            // updating PLAYERS minions quantity
+            this.setMinionQuantity(this.getMinionQuantity() - 1);
+        } else {
+            System.out.println("Provide location for minion to be placed");
+        }
+
+    }
 
 	/**
 	 * @param accepts minion color and area name as location where you want to set the minion
