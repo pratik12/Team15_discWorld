@@ -124,15 +124,12 @@ public class WorldDiscDemo {
     private static void showTextAreas(Container contentPane, JPanel playersPanel) {
         int playerCount = 0;
         if (!playerData.isEmpty()) {
-            playerCount = playerData.get(0).charAt(playerData.get(0).length() - 1) - 48;
-            for (int i = 1; i <= playerCount; i++) {
+            playerCount = playerData.size() - 1;
+            for (int i = 0; i < playerCount; i++) {
                 JPanel player = new JPanel();
-                player.setBackground(identifyColor(playerData.get(7 * (i - 1) + 1)));
+                player.setBackground(identifyColor(playerData.get(i)));
                 StringBuffer playerContent = new StringBuffer();
-                for (int j = 7 * (i - 1) + 1; j < 7 * i; j++) {
-                    playerContent.append(playerData.get(j));
-                    playerContent.append(System.getProperty("line.separator"));
-                }
+                playerContent.append(playerData.get(i));
                 JTextArea textArea = new JTextArea(playerContent.toString(), 8, 15);
                 textArea.setLineWrap(true);
                 player.add(new JScrollPane(textArea));
@@ -172,7 +169,7 @@ public class WorldDiscDemo {
         }
     }
 
-    public static boolean inputNumberIsValid(String userInput){
+    public static boolean inputNumberIsValid(String userInput) {
         boolean validationResult = true;
         if ((userInput == null) || (!userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4")))
             validationResult = false;
