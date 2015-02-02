@@ -202,7 +202,7 @@ public class BoardGame {
      */
     private static void assignPersonalityCards(Player player) {
 
-        int count = rand.nextInt(6);
+        int count = rand.nextInt(personality_cards.size());
 
         player.setWinningCondition(personality_cards.get(count));
         personality_cards.remove(count);

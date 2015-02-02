@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * adding modularity for separation of concerns.
@@ -26,13 +29,13 @@ public class FileManager {
     public static void saveMap(String filePath) throws IOException {
 
         FileWriter writeFile = new FileWriter(filePath);
-        String eol = System.getProperty("line.separator");
+       // String eol = System.getProperty("line.separator");
         BufferedWriter out = new BufferedWriter(writeFile);
-        out.write("Players : " + BoardGame.playersInGame.size() + eol);//total number of players
+        out.write("Players : " + BoardGame.playersInGame.size() + "\n");//total number of players
         for (Player player : BoardGame.playersInGame) {
-            out.write(player.getPlayerColor() + eol); // player color
-            out.write(player.getWinningCondition() + eol); // personality card
-            out.write(player.getMinionQuantity() + eol); // get number of minions
+            out.write(player.getPlayerColor() + ":"); // player color
+            out.write(player.getWinningCondition() + ":"); // personality card
+            out.write(player.getMinionQuantity() + ":"); // get number of minions
 
             // every player has a minion in hashmap datastructure
             if (player.getMinions().size() != 0) {
@@ -43,31 +46,30 @@ public class FileManager {
                         // only taking out those names of areas where the minion is placed
                         if (!(str.get(i).equals("Players Pile"))) {
 
-                            out.write("MINION : "+str.get(i) + eol);
+                            out.write("MINION:"+str.get(i) + ":");
                         }
                     }
                 }
 
             }
 
-            out.write(player.getNumberOfBuildings() + eol);
+            out.write(player.getNumberOfBuildings() + ":");
             boolean count = false;
             // getting the area names where the player has  build a building
             for (Area area : player.getPlayerAreas()) {
 
-                out.write("BUILDING : " + area.getAreaName() + eol);
+                out.write("BUILDING : " + area.getAreaName() + ":");
                 count = true;
             }
             // player amount 
             if(!count)
-            	out.write("BUILDING : None" + eol);
-            out.write(player.getPlayerAmount() + eol);
+            	out.write("BUILDING : None" + ":");
+            out.write(player.getPlayerAmount() + "\n");
 
 
         }
 
-        out.write("BankAmount " + BoardGame.getBank() + eol);
-        out.newLine();
+        out.write("BankAmount " + BoardGame.getBank());
         out.flush();
         out.close();
     }
@@ -97,7 +99,41 @@ public class FileManager {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        initializeGameState(playersRecords);
         return playersRecords;
     }
+
+    
+private static void initializeGameState(ArrayList<String> playersRecords) {
+
+	String[] firstLine = playersRecords.get(0).split(":");
+	int noOfPlayers = Integer.parseInt(firstLine[1].trim());
+	playersRecords.remove(0);
+	// initializing the board
+	BoardGame.startGame();
+	// creating number of players
+	System.out.println(noOfPlayers);
+	createPlayers(playersRecords);
+}
+
+private static void createPlayers(ArrayList<String> playersRecords) {
+
+	String[] playerInfo = null;
+	for(String str : playersRecords){
+		
+		playerInfo = str.split(":");
+		System.out.println((playerInfo));
+		System.out.println("4th item :  "+playerInfo[4]);
+		Player player = new Player(playerInfo[1]);
+		player.setWinningCondition(playerInfo[2]);
+		player.setMinionQuantity(Integer.parseInt(playerInfo[3]));
+		int i = 4 ;
+		int count = 12 - player.getMinionQuantity();
+		do{
+			player.setMinions(player.getPlayerColor(), playerInfo[i].split(":")[1]);
+			count--;
+		}while(count == 0);
+	}
+}
 
 }
