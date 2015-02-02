@@ -60,7 +60,7 @@ public class WorldDiscDemo {
                         "How many players are going to be initiated?",
                         "Let's start!",
                         JOptionPane.QUESTION_MESSAGE);
-                if ((playersNumber == null) || (!playersNumber.equals("2") && !playersNumber.equals("3") && !playersNumber.equals("4"))) {
+                if (!inputNumberIsValid(playersNumber)) {
                     JOptionPane.showMessageDialog(null, "Entered Number Is not Valid!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     BoardGame.startGame();
@@ -73,7 +73,6 @@ public class WorldDiscDemo {
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                boolean flag = false;
                 JFileChooser saveFile = new JFileChooser();
                 saveFile.setDialogTitle("Save to");
                 int userSelection = saveFile.showSaveDialog(null);
@@ -144,10 +143,10 @@ public class WorldDiscDemo {
         contentPane.add(playersPanel, BorderLayout.CENTER);
     }
 
-    private static void createAndShowGUI() throws IOException {
+    public static void createAndShowGUI() throws IOException {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        JFrame frame = new JFrame("WorldDisc Demo");
+        JFrame frame = new JFrame("DiscWorld Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane and add swing components to it
@@ -171,6 +170,13 @@ public class WorldDiscDemo {
             default:
                 return Color.CYAN;
         }
+    }
+
+    public static boolean inputNumberIsValid(String userInput){
+        boolean validationResult = true;
+        if ((userInput == null) || (!userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4")))
+            validationResult = false;
+        return validationResult;
     }
 
     public static void main(String[] args) {
