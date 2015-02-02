@@ -313,7 +313,7 @@ public class BoardGame {
                         // only taking out those names of areas where the minion is placed
                         if (!(str.get(i).equals("Players Pile"))) {
 
-                            out.write(str.get(i) + ":" + eol);
+                            out.write("MINION : "+str.get(i) + eol);
                         }
                     }
                 }
@@ -321,12 +321,16 @@ public class BoardGame {
             }
 
             out.write(player.get_Number_of_buildings() + eol);
+            boolean count = false;
             // getting the area names where the player has  build a building
             for (Area area : player.getPlayer_areas()) {
 
                 out.write("BUILDING : " + area.get_Area_name() + eol);
+                count = true;
             }
             // player amount 
+            if(!count)
+            	out.write("BUILDING : None" );
             out.write(player.get_Player_amount() + eol);
 
 
