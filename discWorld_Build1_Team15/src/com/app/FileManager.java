@@ -12,8 +12,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * adding modularity for separation of concerns.
+ * This class adds modularity for separation of concerns.
  * file management module
+ * Contains methods for loading a game from an existing state 
+ * Contains methods to save a game
  * @author Pratik
  *
  */
@@ -22,8 +24,9 @@ public class FileManager {
 	
 	/**
      * functionality to save state of game
-     *
-     * @param filePath
+     * This method connects the GUI with the game control	
+     * @param filePath to where you want to store the game
+     * 
      * @throws IOException
      */
     public static void saveMap(String filePath) throws IOException {
@@ -64,9 +67,9 @@ public class FileManager {
                 out.write("BUILDING-" + area.getAreaName() + ":");
                 count = true;
             }
-            // player amount 
             if(!count)
             	out.write("BUILDING-None" + ":");
+            // player amount 
             out.write(player.getPlayerAmount() + "\n");
 
 
@@ -78,6 +81,8 @@ public class FileManager {
     }
 
    /**
+    * This method takes as input any file name and loads the game from that file 
+    * Initializes all the required data structures accordingly
     * functionality to load the arbitrary game  
     */
     public static ArrayList<String> loadFile(String filePath) {
@@ -106,7 +111,10 @@ public class FileManager {
         return playersRecords;
     }
 
-    
+    /**
+     * this method will initialize the game board wrt the state it reads from the file
+     * @param playersRecords 
+     */
 	private static void initializeGameState(ArrayList<String> playersRecords) {
 	
 		String[] firstLine = playersRecords.get(0).split(":");
@@ -123,6 +131,10 @@ public class FileManager {
 		createPlayers(playersRecords);
 	}
 	
+	/**
+	 * 
+	 * @param playersRecords - initializing troubleMarkers on the game board
+	 */
 	private static void initializeTroubleMarkerOnGameBoard(ArrayList<String> playersRecords) {
 		
 		String[] tempTroubleMarker = null;
@@ -131,7 +143,7 @@ public class FileManager {
 			String areaName = str.split("-")[1];
 			for(Area a : BoardGame.board_areas){
 				if(a.getAreaName().equalsIgnoreCase(areaName)){
-					a.setTroubleMarkerArea(areaName);
+					a.setTroubleMarkerArea(areaName); 
 					break;					
 				}
 			}
@@ -139,6 +151,11 @@ public class FileManager {
 		playersRecords.remove(0);
 	}
 	
+	/**
+	 * This method creates the players in the game and updates their inventory according to the game state
+	 * and data read from the file
+	 * @param playersRecords - An arraylist that contains the records from the file for each player's data
+	 */
 	private static void createPlayers(ArrayList<String> playersRecords) {
 	
 		String[] playerInfo = null;
@@ -163,13 +180,14 @@ public class FileManager {
 						
 					}
 
-					//player.setNumberOfBuildings(Integer.parseInt(playerInfo[index]));
-					// setting buildings in respective areas
-					
 					int countBuilding = 6 - Integer.parseInt(playerInfo[index]);
 					index++;
 					BoardGame.playersInGame.add(player);
 					
+					/**
+					 * This for loop will return you the existing instance of player from the game board.
+					 * every detail of the player needs to be updated so that there are no duplicate players created
+					 */
 					for(Player playerInBoardGame : BoardGame.playersInGame){
 						if(player.getPlayerColor().equalsIgnoreCase(playerInBoardGame.getPlayerColor())){
 							
@@ -184,7 +202,6 @@ public class FileManager {
 							
 							// setting players bank account balance
 							playerInBoardGame.setPlayerAmount(Integer.parseInt(playerInfo[index]));
-							// finally adding player to global data structure
 							ConsoleOutput.printOutPlayerState(playerInBoardGame);
 							ConsoleOutput.printOutInventory(playerInBoardGame);
 							
