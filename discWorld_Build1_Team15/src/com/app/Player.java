@@ -234,7 +234,7 @@ public class Player {
 		}
 		
 		
-		if(!(temp.isEmpty())){
+		if(!(temp.isEmpty()) && (this.getPlayerAreas().size()!=0)){
 			// always check that if you want to place a building in an area then that area should not have a trouble marker 
 			for(Area area : temp){
 				
@@ -251,7 +251,7 @@ public class Player {
 					
 					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
 					// update players own amount and deposit the cost of constructing building in the bank
-					BoardGame.setBank(checkForTroubleMarkers(area_name).getCostOfArea());
+					BoardGame.setBank(BoardGame.getBank() + checkForTroubleMarkers(area_name).getCostOfArea());
 					this.setPlayerAmount(getPlayerAmount() - checkForTroubleMarkers(area_name).getCostOfArea());
 					
 				}
@@ -287,7 +287,7 @@ public class Player {
 	 * @param area_name
 	 * @return the current area object depending on the area name
 	 */
-	private Area checkForTroubleMarkers(String area_name) {
+	public Area checkForTroubleMarkers(String area_name) {
 		
 		
 		for(Area a : BoardGame.board_areas)

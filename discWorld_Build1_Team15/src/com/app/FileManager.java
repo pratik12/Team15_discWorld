@@ -144,8 +144,8 @@ public class FileManager {
 		String[] playerInfo = null;
 		for(String str : playersRecords){
 			if(!str.startsWith("BankAmount")){
+				playerInfo = str.split(":");
 				
-					playerInfo = str.split(":");
 					
 					Player player = new Player(playerInfo[0]); // setting players color
 					player.setWinningCondition(playerInfo[1]); // setting personality card
@@ -162,27 +162,35 @@ public class FileManager {
 						}while(countMinion != 0);
 						
 					}
-					
-					player.setNumberOfBuildings(Integer.parseInt(playerInfo[index]));
-					index++;
+
+					//player.setNumberOfBuildings(Integer.parseInt(playerInfo[index]));
 					// setting buildings in respective areas
 					
-					int countBuilding = 6 - player.getNumberOfBuildings();
-					if(countBuilding!=0){
-						
-						do{
-							player.addBuilding(playerInfo[index].split("-")[1]);
-							index++;
-							countBuilding--;
-						}while(countBuilding != 0);
+					int countBuilding = 6 - Integer.parseInt(playerInfo[index]);
+					index++;
+					BoardGame.playersInGame.add(player);
+					
+					for(Player playerInBoardGame : BoardGame.playersInGame){
+						if(player.getPlayerColor().equalsIgnoreCase(playerInBoardGame.getPlayerColor())){
+							
+							if(countBuilding!=0){
+								
+								do{
+									playerInBoardGame.addBuilding(playerInfo[index].split("-")[1]);
+									index++;
+									countBuilding--;
+								}while(countBuilding != 0);
+							}
+							
+							// setting players bank account balance
+							playerInBoardGame.setPlayerAmount(Integer.parseInt(playerInfo[index]));
+							// finally adding player to global data structure
+							ConsoleOutput.printOutPlayerState(playerInBoardGame);
+							ConsoleOutput.printOutInventory(playerInBoardGame);
+							
+						}
 					}
 					
-					// setting players bank account balance
-					player.setPlayerAmount(Integer.parseInt(playerInfo[index]));
-					// finally adding player to global data structure
-					BoardGame.playersInGame.add(player);
-					ConsoleOutput.printOutPlayerState(player);
-					ConsoleOutput.printOutInventory(player);
 				}
 			else{
 				// write bank amount

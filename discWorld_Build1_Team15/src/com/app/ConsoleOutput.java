@@ -37,7 +37,7 @@ public class ConsoleOutput {
             // printout areas
             temp.to_String();
         }
-        System.out.println();
+        System.out.println("Amount with the Bank"+BoardGame.getBank());
 
 
     }
