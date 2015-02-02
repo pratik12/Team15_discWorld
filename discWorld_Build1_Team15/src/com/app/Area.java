@@ -15,6 +15,7 @@ public class Area {
 	private int cost_of_area;
 	private boolean area_city_cards;
 	private boolean trouble_markers;
+	private String troubleMarkerArea;
 	private int demons;
 	private int trolls;
 	private int minions;
@@ -209,5 +210,20 @@ public class Area {
 	 */
 	public void setBuildngs(boolean buildngs) {
 		this.buildngs = buildngs;
+	}
+
+	/**
+	 * @return the troubleMarkerArea
+	 */
+	public String getTroubleMarkerArea() {
+		return troubleMarkerArea;
+	}
+
+	/**
+	 * @param troubleMarkerArea the troubleMarkerArea to set
+	 */
+	public void setTroubleMarkerArea(String troubleMarkerArea) {
+		this.troubleMarkerArea = troubleMarkerArea;
+		this.trouble_markers = true;
 	}
 }

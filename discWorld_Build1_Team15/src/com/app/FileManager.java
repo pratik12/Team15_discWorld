@@ -32,6 +32,10 @@ public class FileManager {
        // String eol = System.getProperty("line.separator");
         BufferedWriter out = new BufferedWriter(writeFile);
         out.write("Players : " + BoardGame.playersInGame.size() + "\n");//total number of players
+        for(Area area : BoardGame.board_areas)
+        	if(area.isTroubleMarkers())
+        		out.write("TroubleMarkers-"+area.getAreaName()+":");
+        out.write("\n");
         for (Player player : BoardGame.playersInGame) {
             out.write(player.getPlayerColor() + ":"); // player color
             out.write(player.getWinningCondition() + ":"); // personality card
@@ -46,24 +50,23 @@ public class FileManager {
                         // only taking out those names of areas where the minion is placed
                         if (!(str.get(i).equals("Players Pile"))) {
 
-                            out.write("MINION:"+str.get(i) + ":");
+                            out.write("MINION-"+str.get(i) + ":");
                         }
                     }
                 }
 
             }
-
             out.write(player.getNumberOfBuildings() + ":");
             boolean count = false;
             // getting the area names where the player has  build a building
             for (Area area : player.getPlayerAreas()) {
 
-                out.write("BUILDING : " + area.getAreaName() + ":");
+                out.write("BUILDING-" + area.getAreaName() + ":");
                 count = true;
             }
             // player amount 
             if(!count)
-            	out.write("BUILDING : None" + ":");
+            	out.write("BUILDING-None" + ":");
             out.write(player.getPlayerAmount() + "\n");
 
 
@@ -104,36 +107,80 @@ public class FileManager {
     }
 
     
-private static void initializeGameState(ArrayList<String> playersRecords) {
-
-	String[] firstLine = playersRecords.get(0).split(":");
-	int noOfPlayers = Integer.parseInt(firstLine[1].trim());
-	playersRecords.remove(0);
-	// initializing the board
-	BoardGame.startGame();
-	// creating number of players
-	System.out.println(noOfPlayers);
-	createPlayers(playersRecords);
-}
-
-private static void createPlayers(ArrayList<String> playersRecords) {
-
-	String[] playerInfo = null;
-	for(String str : playersRecords){
+	private static void initializeGameState(ArrayList<String> playersRecords) {
+	
+		String[] firstLine = playersRecords.get(0).split(":");
+		int noOfPlayers = Integer.parseInt(firstLine[1].trim());
+		playersRecords.remove(0);
+		// initializing the board
+		BoardGame.startGame();
+		// creating number of players
+		System.out.println(noOfPlayers);
+		System.out.println(playersRecords.get(0));
 		
-		playerInfo = str.split(":");
-		System.out.println((playerInfo));
-		System.out.println("4th item :  "+playerInfo[4]);
-		Player player = new Player(playerInfo[1]);
-		player.setWinningCondition(playerInfo[2]);
-		player.setMinionQuantity(Integer.parseInt(playerInfo[3]));
-		int i = 4 ;
-		int count = 12 - player.getMinionQuantity();
-		do{
-			player.setMinions(player.getPlayerColor(), playerInfo[i].split(":")[1]);
-			count--;
-		}while(count == 0);
+		initializeTroubleMarkerOnGameBoard(playersRecords);
+			
+		createPlayers(playersRecords);
 	}
-}
+	
+	private static void initializeTroubleMarkerOnGameBoard(ArrayList<String> playersRecords) {
+		
+		String[] tempTroubleMarker = null;
+		tempTroubleMarker = playersRecords.get(0).split(":");
+		for(String str : tempTroubleMarker){
+			String areaName = str.split("-")[1];
+			for(Area a : BoardGame.board_areas){
+				if(a.getAreaName().equalsIgnoreCase(areaName)){
+					a.setTroubleMarkerArea(areaName);
+					break;					
+				}
+			}
+		}
+		playersRecords.remove(0);
+	}
+	
+	private static void createPlayers(ArrayList<String> playersRecords) {
+	
+		String[] playerInfo = null;
+		for(String str : playersRecords){
+			
+			playerInfo = str.split(":");
+	
+			Player player = new Player(playerInfo[0]); // setting players color
+			player.setWinningCondition(playerInfo[1]); // setting personality card
+			player.setMinionQuantity(Integer.parseInt(playerInfo[2])); // setting number of minions
+			int index = 3 ;
+			int countMinion = 12 - player.getMinionQuantity();
+			// setting minions in respective areas
+			if(countMinion!=0){
+				
+				do{
+					player.setMinions(player.getPlayerColor(), playerInfo[index].split("-")[1]);
+					index++;
+					countMinion--;
+				}while(countMinion != 0);
+				
+			}
+				
+			player.setNumberOfBuildings(Integer.parseInt(playerInfo[index]));
+			index++;
+			// setting buildings in respective areas
+
+			int countBuilding = 6 - player.getNumberOfBuildings();
+			if(countBuilding!=0){
+				
+				do{
+					player.addBuilding(playerInfo[index].split("-")[1]);
+					index++;
+					countBuilding--;
+				}while(countBuilding != 0);
+			}
+			
+			// setting players bank account balance
+			player.setPlayerAmount(Integer.parseInt(playerInfo[index]));
+			// finally adding player to global data structure
+			BoardGame.playersInGame.add(player);
+			}
+	}
 
 }
