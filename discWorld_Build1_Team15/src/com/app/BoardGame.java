@@ -134,20 +134,6 @@ public class BoardGame {
         ConsoleOutput.printOutInventory(p2);
 
         FileManager.saveMap("output.txt");
-        // functions for loading the game state from a file starts here
-        // create a single function that will call other smaller functions to collectively update player and area
-        // this single function would be called from swings controller
-        // need to validate following data from file, create a new instance of gameboard
-        // initially a gameboard will be created with all default data and then we would be overwriting it with required current data
-        // number of players and their personality cards they are playing with
-        // update this in all required datastructures...playersInGame
-        // update players inventory with first validating all input and
-        // populate player's private data members with data from file..use all setters to do this
-        // then add buildings depending on city area card attributes
-        // populate the area class with all the data
-        // set arraylist playersInthisAreas with appropriate players who have placed buildings in the areas
-        // print game board status finally to check if the game has been loaded correctly
-
 
     }
 

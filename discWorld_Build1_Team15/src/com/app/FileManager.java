@@ -72,7 +72,7 @@ public class FileManager {
 
         }
 
-        out.write("BankAmount " + BoardGame.getBank());
+        out.write("BankAmount-" + BoardGame.getBank());
         out.flush();
         out.close();
     }
@@ -143,44 +143,53 @@ public class FileManager {
 	
 		String[] playerInfo = null;
 		for(String str : playersRecords){
-			
-			playerInfo = str.split(":");
-	
-			Player player = new Player(playerInfo[0]); // setting players color
-			player.setWinningCondition(playerInfo[1]); // setting personality card
-			player.setMinionQuantity(Integer.parseInt(playerInfo[2])); // setting number of minions
-			int index = 3 ;
-			int countMinion = 12 - player.getMinionQuantity();
-			// setting minions in respective areas
-			if(countMinion!=0){
+			if(!str.startsWith("BankAmount")){
 				
-				do{
-					player.setMinions(player.getPlayerColor(), playerInfo[index].split("-")[1]);
+					playerInfo = str.split(":");
+					
+					Player player = new Player(playerInfo[0]); // setting players color
+					player.setWinningCondition(playerInfo[1]); // setting personality card
+					player.setMinionQuantity(Integer.parseInt(playerInfo[2])); // setting number of minions
+					int index = 3 ;
+					int countMinion = 12 - player.getMinionQuantity();
+					// setting minions in respective areas
+					if(countMinion!=0){
+						
+						do{
+							player.setMinions(player.getPlayerColor(), playerInfo[index].split("-")[1]);
+							index++;
+							countMinion--;
+						}while(countMinion != 0);
+						
+					}
+					
+					player.setNumberOfBuildings(Integer.parseInt(playerInfo[index]));
 					index++;
-					countMinion--;
-				}while(countMinion != 0);
-				
+					// setting buildings in respective areas
+					
+					int countBuilding = 6 - player.getNumberOfBuildings();
+					if(countBuilding!=0){
+						
+						do{
+							player.addBuilding(playerInfo[index].split("-")[1]);
+							index++;
+							countBuilding--;
+						}while(countBuilding != 0);
+					}
+					
+					// setting players bank account balance
+					player.setPlayerAmount(Integer.parseInt(playerInfo[index]));
+					// finally adding player to global data structure
+					BoardGame.playersInGame.add(player);
+					ConsoleOutput.printOutPlayerState(player);
+					ConsoleOutput.printOutInventory(player);
+				}
+			else{
+				// write bank amount
+				BoardGame.setBank(Integer.parseInt(str.split("-")[1]));
 			}
-				
-			player.setNumberOfBuildings(Integer.parseInt(playerInfo[index]));
-			index++;
-			// setting buildings in respective areas
-
-			int countBuilding = 6 - player.getNumberOfBuildings();
-			if(countBuilding!=0){
-				
-				do{
-					player.addBuilding(playerInfo[index].split("-")[1]);
-					index++;
-					countBuilding--;
-				}while(countBuilding != 0);
 			}
-			
-			// setting players bank account balance
-			player.setPlayerAmount(Integer.parseInt(playerInfo[index]));
-			// finally adding player to global data structure
-			BoardGame.playersInGame.add(player);
-			}
+		ConsoleOutput.printOutGameBoardState();
 	}
 
 }

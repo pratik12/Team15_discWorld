@@ -212,6 +212,10 @@ public class Player {
 	}
 
 	/**
+	 * adds a building taking into consideration all the rules for setting a building
+	 * updates the following data:
+	 * City area card vlaue from the area class
+	 * which area belongs to which player and vice versa
 	 * 
 	 * @param player
 	 * @param area_name
@@ -238,17 +242,18 @@ public class Player {
 				//calls for the method which will give you the object at runtime for the area where building has to be placed
 				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).isTroubleMarkers()) ){
 					// setting the player to the area that he wants to place a building
-					// setting the buildings attrobute for that area to be true
+					// setting the buildings attribute for that area to be true
 					// thus setting up the dependency of WHICH PLAYER HAS BUILDING IN WHICH AREA
 					this.setPlayerAreas(checkForTroubleMarkers(area_name));
 					checkForTroubleMarkers(area_name).setBuildngs(true);
 					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
+					checkForTroubleMarkers(area_name).setAreaCityCards(true);
 					
 					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
 					// update players own amount and deposit the cost of constructing building in the bank
 					BoardGame.setBank(checkForTroubleMarkers(area_name).getCostOfArea());
 					this.setPlayerAmount(getPlayerAmount() - checkForTroubleMarkers(area_name).getCostOfArea());
-
+					
 				}
 				else{
 					return "Cannot place a building";
@@ -265,6 +270,8 @@ public class Player {
 					// set area's building attribute
 					checkForTroubleMarkers(area_name).setBuildngs(true);
 					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
+					checkForTroubleMarkers(area_name).setAreaCityCards(true);
+
 					// update players own amount and deposit the cost of constructing building in the bank
 					BoardGame.setBank(checkForTroubleMarkers(area_name).getCostOfArea());
 					this.setPlayerAmount(getPlayerAmount() -checkForTroubleMarkers(area_name).getCostOfArea());
