@@ -60,8 +60,7 @@ public class WorldDiscDemo {
                         JOptionPane.QUESTION_MESSAGE);
                 if ((playersNumber == null) || (!playersNumber.equals("2") && !playersNumber.equals("3") && !playersNumber.equals("4"))) {
                     JOptionPane.showMessageDialog(null, "Entered Number Is not Valid!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                } else {
                     BoardGame.startGame();
                     BoardGame.initiate_number_of_players(Integer.parseInt(playersNumber));
                 }
@@ -127,12 +126,13 @@ public class WorldDiscDemo {
             playerCount = playerData.get(0).charAt(playerData.get(0).length() - 1) - 48;
             for (int i = 1; i <= playerCount; i++) {
                 JPanel player = new JPanel();
-                player.setBackground(identifyColor(playerData.get(7 * i)));
+                player.setBackground(identifyColor(playerData.get(7 * (i - 1) + 1)));
                 StringBuffer playerContent = new StringBuffer();
-                for (int j = 0; j < 7 * i; j++) {
+                for (int j = 7 * (i - 1) + 1; j < 7 * i; j++) {
                     playerContent.append(playerData.get(j));
+                    playerContent.append(System.getProperty("line.separator"));
                 }
-                JTextArea textArea = new JTextArea(playerContent.toString(), 7, 10);
+                JTextArea textArea = new JTextArea(playerContent.toString(), 8, 15);
                 textArea.setLineWrap(true);
                 player.add(new JScrollPane(textArea));
                 playersPanel.add(player);
@@ -157,9 +157,18 @@ public class WorldDiscDemo {
 
 
     public static Color identifyColor(String colour) {
-        if (!colour.isEmpty())
-            return new Color(colour.trim().charAt(0));
-        return null;
+        switch (colour.trim().charAt(0)) {
+            case 'R':
+                return Color.RED;
+            case 'G':
+                return Color.GREEN;
+            case 'B':
+                return Color.BLUE;
+            case 'Y':
+                return Color.YELLOW;
+            default:
+                return Color.CYAN;
+        }
     }
 
     public static void main(String[] args) {
