@@ -144,7 +144,7 @@ public class BoardGame {
         print_Out_Inventory(p1);
         print_Out_Inventory(p2);
 
-        saveMap("output.txt");
+        saveMap("C:\\Users\\Pratik Bidkar\\Desktop\\output.txt");
         // functions for loading the game state from a file starts here
         // create a single function that will call other smaller functions to collectively update player and area
         // this single function would be called from swings controller
