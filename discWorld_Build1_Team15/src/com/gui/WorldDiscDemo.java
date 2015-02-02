@@ -27,8 +27,6 @@ public class WorldDiscDemo {
     public static void addComponentsToPane(final Container contentPane) throws IOException {
         final JFileChooser fc = new JFileChooser();
         fc.setMultiSelectionEnabled(true);
-        //fc.setCurrentDirectory(new File("C:\\tmp"));
-
 
         contentPane.setLayout(new BorderLayout(5, 5));
         if (!(contentPane.getLayout() instanceof BorderLayout)) {
@@ -49,7 +47,7 @@ public class WorldDiscDemo {
 
         showTextAreas(contentPane, playerPanel);
 
-        JPanel buttonPanel = new JPanel();
+        final JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 1));
         JButton startButton = new JButton("Start");
         //Add action listener to button
@@ -60,7 +58,9 @@ public class WorldDiscDemo {
                         "How many players are going to be initiated?",
                         "Let's start!",
                         JOptionPane.QUESTION_MESSAGE);
-                if ((playersNumber != null) && (playersNumber.length() > 0)) {
+                if ((playersNumber == null) || (!playersNumber.equals("2") && !playersNumber.equals("3") && !playersNumber.equals("4"))) {
+                    JOptionPane.showMessageDialog(null, "Entered Number Is not Valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
                     BoardGame.startGame();
                     BoardGame.initiate_number_of_players(Integer.parseInt(playersNumber));
                 }
@@ -78,7 +78,6 @@ public class WorldDiscDemo {
                 File File_Path = saveFile.getSelectedFile();
                 String fullPath = File_Path.getAbsolutePath();
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
-//                    String address = fullPath + ".txt";
                     try {
                         BoardGame.saveMap(fullPath + ".txt");
                     } catch (IOException e1) {
@@ -114,7 +113,7 @@ public class WorldDiscDemo {
 
             public void actionPerformed(ActionEvent e) {
                 //Execute when button is pressed
-                System.out.println("You clicked the exit button");
+                System.exit(0);
             }
         });
         buttonPanel.add(exitButton);
@@ -122,37 +121,24 @@ public class WorldDiscDemo {
     }
 
     private static void showTextAreas(Container contentPane, JPanel playersPanel) {
-        JPanel firstPlayer = new JPanel();
-        firstPlayer.setBackground(Color.GREEN);
-        JTextArea firstAreaText = new JTextArea("lilili", 7, 10);
-        firstAreaText.setLineWrap(true);
-        firstPlayer.add(new JScrollPane(firstAreaText));
-        playersPanel.add(firstPlayer);
+        int playerCount = 0;
+        if (!playerData.isEmpty()) {
+            playerCount = playerData.get(0).charAt(playerData.get(0).length() - 1) - 48;
+            for (int i = 1; i <= playerCount; i++) {
+                JPanel player = new JPanel();
+                player.setBackground(identifyColor(playerData.get(7 * (i - 1) + 1)));
+                StringBuffer playerContent = new StringBuffer();
+                for (int j = 7 * (i - 1) + 1; j < 7 * i; j++) {
+                    playerContent.append(playerData.get(j));
+                    playerContent.append(System.getProperty("line.separator"));
+                }
+                JTextArea textArea = new JTextArea(playerContent.toString(), 8, 15);
+                textArea.setLineWrap(true);
+                player.add(new JScrollPane(textArea));
+                playersPanel.add(player);
 
-        JPanel secondPlayer = new JPanel();
-        secondPlayer.setBackground(Color.RED);
-        StringBuffer secondPlayerContent = new StringBuffer();
-        for (int i = 0; i < 8 && !playerData.isEmpty(); i++) {
-            secondPlayerContent.append(playerData.get(i));
+            }
         }
-        JTextArea secondPlayerText = new JTextArea(secondPlayerContent.toString(), 7, 10);
-        secondPlayerText.setLineWrap(true);
-        secondPlayer.add(new JScrollPane(secondPlayerText));
-        playersPanel.add(secondPlayer);
-
-        JPanel thirdPlayer = new JPanel();
-        thirdPlayer.setBackground(Color.YELLOW);
-        JTextArea thirdPlayerText = new JTextArea("487365734", 7, 10);
-        thirdPlayerText.setLineWrap(true);
-        thirdPlayer.add(new JScrollPane(thirdPlayerText));
-        playersPanel.add(thirdPlayer);
-
-        JPanel fourthPlayer = new JPanel();
-        fourthPlayer.setBackground(Color.BLUE);
-        JTextArea fourthPlayerText = new JTextArea("test", 7, 10);
-        fourthPlayerText.setLineWrap(true);
-        fourthPlayer.add(new JScrollPane(fourthPlayerText));
-        playersPanel.add(fourthPlayer);
         contentPane.add(playersPanel, BorderLayout.CENTER);
     }
 
@@ -167,6 +153,22 @@ public class WorldDiscDemo {
 
         frame.pack();
         frame.setVisible(true);
+    }
+
+
+    public static Color identifyColor(String colour) {
+        switch (colour.trim().charAt(0)) {
+            case 'R':
+                return Color.RED;
+            case 'G':
+                return Color.GREEN;
+            case 'B':
+                return Color.BLUE;
+            case 'Y':
+                return Color.YELLOW;
+            default:
+                return Color.CYAN;
+        }
     }
 
     public static void main(String[] args) {

@@ -27,7 +27,7 @@ public class SuitTest {
     }
 
     @Test
-    public void dispencePersonalityCards(){
+    public void dispensePersonalityCards(){
 
     }
 
@@ -37,7 +37,8 @@ public class SuitTest {
    }
 
     @Test
-    public void loadDataFromrecordedFile(){
+    public void loadDataFromRecordedFile(){
+
 
     }
 
