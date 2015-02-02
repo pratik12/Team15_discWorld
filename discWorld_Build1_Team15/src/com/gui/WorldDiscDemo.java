@@ -1,8 +1,10 @@
 package com.gui;
 
 import com.app.BoardGame;
+import com.app.GameState;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,7 +81,7 @@ public class WorldDiscDemo {
                 String fullPath = File_Path.getAbsolutePath();
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
                     try {
-                        BoardGame.saveMap(fullPath + ".txt");
+                        GameState.saveMap(fullPath + ".txt");
                     } catch (IOException e1) {
                         e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
@@ -96,7 +98,7 @@ public class WorldDiscDemo {
                 int retVal = fc.showOpenDialog(contentPane);
                 if (retVal == APPROVE_OPTION) {
                     String selectedfilePath = fc.getSelectedFile().getAbsolutePath();
-                    playerData = BoardGame.loadFile(selectedfilePath);
+                    playerData = GameState.loadFile(selectedfilePath);
                     try {
                         createAndShowGUI();
                     } catch (IOException e1) {
