@@ -40,7 +40,7 @@ public class Area {
 	/**
 	 * @return the area_name
 	 */
-	public String get_Area_name() {
+	public String getAreaName() {
 		return area_name;
 	}
 	/**
@@ -104,8 +104,8 @@ public class Area {
 	 * String representation of area object with its properties
 	 */
 	public void to_String(){
-		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.get_Area_name(),
-				this.getMinionsForEveryPlayer(this.get_Area_name()),this.is_Trouble_markers(),
+		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.getAreaName(),
+				this.getMinionsForEveryPlayer(this.getAreaName()),this.is_Trouble_markers(),
 				this.isBuildngs(),this.getDemons(),this.getTrolls());
 		
 	}

@@ -108,9 +108,9 @@ public class BoardGame {
         rand = new Random();
 
         for (Area temp : BoardGame.board_areas) {
-            if (temp.get_Area_name().equalsIgnoreCase("The Scours") ||
-                    temp.get_Area_name().equalsIgnoreCase("The Shades") ||
-                    temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")) {
+            if (temp.getAreaName().equalsIgnoreCase("The Scours") ||
+                    temp.getAreaName().equalsIgnoreCase("The Shades") ||
+                    temp.getAreaName().equalsIgnoreCase("Dolly Sisters")) {
                 temp.set_Trouble_markers(true);
             }
         }
@@ -129,8 +129,8 @@ public class BoardGame {
 
         p2.addBuilding("Seven Sleepers");
 
-        assign_personality_cards(p1); // assign the personality card to the player
-        assign_personality_cards(p2);
+        assignPersonalityCards(p1); // assign the personality card to the player
+        assignPersonalityCards(p2);
 
         placeMinion(p1, "Seven Sleepers");
         placeMinion(p1, "Dragons Landing");
@@ -138,11 +138,11 @@ public class BoardGame {
         placeMinion(p1, "Dolly Sisters");
         placeMinion(p2, "Dolly Sisters");
 
-        print_Out_PlayerState(p1);
-        print_Out_PlayerState(p2);
-        print_Out_GameBoard_State();
-        print_Out_Inventory(p1);
-        print_Out_Inventory(p2);
+        printOutPlayerState(p1);
+        printOutPlayerState(p2);
+        printOutGameBoardState();
+        printOutInventory(p1);
+        printOutInventory(p2);
 
         GameState.saveMap("output.txt");
         // functions for loading the game state from a file starts here
@@ -167,7 +167,7 @@ public class BoardGame {
      *
      * @param players
      */
-    public static void initiate_number_of_players(int players) {
+    public static void initiateNumberOfPlayers(int players) {
 
         String[] color = {"R", "G", "Y", "B"};
 
@@ -177,7 +177,7 @@ public class BoardGame {
 
                 Player player = new Player(color[i]); // creating new player
                 playersInGame.add(player); // add the player to the store
-                assign_personality_cards(player);
+                assignPersonalityCards(player);
                 placeMinion(player, "Seven Sleepers");
                 player.addBuilding("Seven Sleepers");
                 // every player will be assigned 5 playing cards..first inly green ones are to be used
@@ -196,15 +196,15 @@ public class BoardGame {
         rand = new Random();
 
         for (Area temp : BoardGame.board_areas) {
-            if (temp.get_Area_name().equalsIgnoreCase("The Scours") ||
-                    temp.get_Area_name().equalsIgnoreCase("The Shades") ||
-                    temp.get_Area_name().equalsIgnoreCase("Dolly Sisters")) {
+            if (temp.getAreaName().equalsIgnoreCase("The Scours") ||
+                    temp.getAreaName().equalsIgnoreCase("The Shades") ||
+                    temp.getAreaName().equalsIgnoreCase("Dolly Sisters")) {
                 temp.set_Trouble_markers(true);
             }
         }
     }
 
-    private static void print_Out_Inventory(Player player) {
+    private static void printOutInventory(Player player) {
 
         System.out.println(player.current_inventory());
         System.out.println();
@@ -213,7 +213,7 @@ public class BoardGame {
     /**
      * output to the console the current status for every player
      */
-    private static void print_Out_PlayerState(Player player) {
+    private static void printOutPlayerState(Player player) {
         System.out.println(player.toString());
         System.out.println();
     }
@@ -221,7 +221,7 @@ public class BoardGame {
     /**
      * This method prints out the game board state
      */
-    private static void print_Out_GameBoard_State() {
+    private static void printOutGameBoardState() {
 
         System.out.println("***** Game Board State *****");
 
@@ -241,7 +241,7 @@ public class BoardGame {
     /**
      * assigning personailty cards to a player randomly
      */
-    private static void assign_personality_cards(Player player) {
+    private static void assignPersonalityCards(Player player) {
 
         int count = rand.nextInt(6);
 

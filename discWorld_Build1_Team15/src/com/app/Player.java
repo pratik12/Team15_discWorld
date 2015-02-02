@@ -157,7 +157,7 @@ public class Player {
 		if(!this.getPlayer_areas().isEmpty()) // getPlayerAreas returns the arraylist with area objects 
 											  // only if player has placed a building in that area
 			for(Area a : this.getPlayer_areas())
-				result +=  a.get_Area_name() + " : ";
+				result +=  a.getAreaName() + " : ";
 			
 		return result;
 		
@@ -217,7 +217,7 @@ public class Player {
 				
 				
 				//calls for the method which will give you the object at runtime for the area where building has to be placed
-				if(!(area.get_Area_name().equals(area_name)) && !(checkForTroubleMarkers(area_name).is_Trouble_markers()) ){
+				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).is_Trouble_markers()) ){
 					// setting the player to the area that he wants to place a building
 					// setting the buildings attrobute for that area to be true
 					// thus setting up the dependency of WHICH PLAYER HAS BUILDING IN WHICH AREA
@@ -239,7 +239,7 @@ public class Player {
 		else{
 			// If the area does not exist with any player then just add that area object to current player 
 			for(Area area : BoardGame.board_areas){
-				if(area.get_Area_name().equals(area_name) && checkForTroubleMarkers(area_name).is_Trouble_markers()==false ){
+				if(area.getAreaName().equals(area_name) && checkForTroubleMarkers(area_name).is_Trouble_markers()==false ){
 					// set corresponding building attributes of player
 					this.setPlayer_areas(checkForTroubleMarkers(area_name));
 					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
@@ -265,7 +265,7 @@ public class Player {
 		
 		
 		for(Area a : BoardGame.board_areas)
-			if(a.get_Area_name().equals(area_name)){
+			if(a.getAreaName().equals(area_name)){
 				return a;
 			}
 		return null;
