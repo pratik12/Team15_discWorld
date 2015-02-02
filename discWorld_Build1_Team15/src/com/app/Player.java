@@ -29,14 +29,14 @@ public class Player {
 	/**
 	 * @return the player_areas
 	 */
-	public ArrayList<Area> getPlayer_areas() {
+	public ArrayList<Area> getPlayerAreas() {
 		return player_areas;
 	}
 
 	/**
 	 * @param player_areas the player_areas to set
 	 */
-	public void setPlayer_areas(Area area_of_player) {
+	public void setPlayerAreas(Area area_of_player) {
 		
 		if(area_of_player!=null){
 			this.player_areas.add(area_of_player);
@@ -50,76 +50,76 @@ public class Player {
 	 */	
 	public Player(String player_color){
 		
-		set_Player_color(player_color);
-		setMinions(get_Player_color(), "Players Pile");
-		set_Minion_Quantity(12);
-		set_Player_amount(100);
-		set_Number_of_buildings(6);
+		setPlayerColor(player_color);
+		setMinions(getPlayerColor(), "Players Pile");
+		setMinionQuantity(12);
+		setPlayerAmount(100);
+		setNumberOfBuildings(6);
 	}
 	
 	
 	
-	public int get_Minion_Quantity() {
+	public int getMinionQuantity() {
 		return minion_Quantity;
 	}
 	
-	public void set_Minion_Quantity(int minion_Quantity) {
+	public void setMinionQuantity(int minion_Quantity) {
 		this.minion_Quantity = minion_Quantity;
 	}
 
 	/**
 	 * @return the winning_condition
 	 */
-	public String get_Winning_condition() {
+	public String getWinningCondition() {
 		return winning_condition;
 	}
 
 	/**
 	 * @param winning_condition the winning_condition to set
 	 */
-	public void set_Winning_condition(String winning_condition) {
+	public void setWinningCondition(String winning_condition) {
 		this.winning_condition = winning_condition;
 	}
 
 	/**
 	 * @return the player_amount
 	 */
-	public int get_Player_amount() {
+	public int getPlayerAmount() {
 		return player_amount;
 	}
 
 	/**
 	 * @param d the player_amount to set
 	 */
-	public void set_Player_amount(int d) {
+	public void setPlayerAmount(int d) {
 		this.player_amount = d;
 	}
 
 	/**
 	 * @return the number_of_buildings
 	 */
-	public int get_Number_of_buildings() {
+	public int getNumberOfBuildings() {
 		return number_of_buildings;
 	}
 
 	/**
 	 * @param number_of_buildings the number_of_buildings to set
 	 */
-	public void set_Number_of_buildings(int number_of_buildings) {
+	public void setNumberOfBuildings(int number_of_buildings) {
 		this.number_of_buildings = number_of_buildings;
 	}
 
 	/**
 	 * @return the player_color
 	 */
-	public String get_Player_color() {
+	public String getPlayerColor() {
 		return player_color;
 	}
 
 	/**
 	 * @param player_color the color of players piece to set
 	 */
-	public void set_Player_color(String player_color) {
+	public void setPlayerColor(String player_color) {
 		this.player_color = player_color;
 	}
 
@@ -128,8 +128,8 @@ public class Player {
 	 */
 	public String toString(){
 		
-		return  "Player (" + get_Player_color()  +
-				") is playing with " + get_Winning_condition();
+		return  "Player (" + getPlayerColor()  +
+				") is playing with " + getWinningCondition();
 				
 	}
 	
@@ -137,12 +137,12 @@ public class Player {
 	 * 
 	 * @return String representation of players collection of minions, buildings, money and his color
 	 */
-	public String current_inventory(){
+	public String currentInventory(){
 		
-		return  "Player (" +get_Player_color()+") current Inventory - " + "\n" 
-				 + Integer.toString(get_Minion_Quantity()) + " Minion's , " + 
-				  Integer.toString(get_Number_of_buildings()) + " Building's , " + 
-				 Double.toString(get_Player_amount()) + " Ankh-Morph Dollars " + "\n" +
+		return  "Player (" +getPlayerColor()+") current Inventory - " + "\n" 
+				 + Integer.toString(getMinionQuantity()) + " Minion's , " + 
+				  Integer.toString(getNumberOfBuildings()) + " Building's , " + 
+				 Double.toString(getPlayerAmount()) + " Ankh-Morph Dollars " + "\n" +
 				  "City Area Cards : " + "\n" + getCityAreaCards();
 	}
 
@@ -154,9 +154,9 @@ public class Player {
 
 		String result = "";
 		
-		if(!this.getPlayer_areas().isEmpty()) // getPlayerAreas returns the arraylist with area objects 
+		if(!this.getPlayerAreas().isEmpty()) // getPlayerAreas returns the arraylist with area objects 
 											  // only if player has placed a building in that area
-			for(Area a : this.getPlayer_areas())
+			for(Area a : this.getPlayerAreas())
 				result +=  a.getAreaName() + " : ";
 			
 		return result;
@@ -179,13 +179,13 @@ public class Player {
 		if(!(minion_color.isEmpty() && minion_location.isEmpty()))
 			
 			// checking if the minions hashmap has any entries
-			if(minions.containsKey(this.get_Player_color()))
-					minions.get(this.get_Player_color()).add(minion_location);
+			if(minions.containsKey(this.getPlayerColor()))
+					minions.get(this.getPlayerColor()).add(minion_location);
 			else{ // initializing each player with 12 minions
 				
-				 minions.put(this.get_Player_color(), new ArrayList<String>());
+				 minions.put(this.getPlayerColor(), new ArrayList<String>());
 				 for(int i=0; i <12; i++)
-				 minions.get(this.get_Player_color()).add(minion_location);
+				 minions.get(this.getPlayerColor()).add(minion_location);
 			}
 				
 		else
@@ -205,8 +205,8 @@ public class Player {
 		// first make a copy of all the players area in temp arraylist
 		for(Player p : BoardGame.playersInGame){
 			
-			for(int i =0 ; i<p.getPlayer_areas().size(); i++){
-				temp.add(p.getPlayer_areas().get(i));
+			for(int i =0 ; i<p.getPlayerAreas().size(); i++){
+				temp.add(p.getPlayerAreas().get(i));
 			}		
 		}
 		
@@ -217,18 +217,18 @@ public class Player {
 				
 				
 				//calls for the method which will give you the object at runtime for the area where building has to be placed
-				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).is_Trouble_markers()) ){
+				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).isTroubleMarkers()) ){
 					// setting the player to the area that he wants to place a building
 					// setting the buildings attrobute for that area to be true
 					// thus setting up the dependency of WHICH PLAYER HAS BUILDING IN WHICH AREA
-					this.setPlayer_areas(checkForTroubleMarkers(area_name));
+					this.setPlayerAreas(checkForTroubleMarkers(area_name));
 					checkForTroubleMarkers(area_name).setBuildngs(true);
 					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
 					
-					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
+					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
 					// update players own amount and deposit the cost of constructing building in the bank
-					BoardGame.setBank(checkForTroubleMarkers(area_name).get_Cost_of_area());
-					this.set_Player_amount(get_Player_amount() - checkForTroubleMarkers(area_name).get_Cost_of_area());
+					BoardGame.setBank(checkForTroubleMarkers(area_name).getCostOfArea());
+					this.setPlayerAmount(getPlayerAmount() - checkForTroubleMarkers(area_name).getCostOfArea());
 
 				}
 				else{
@@ -239,16 +239,16 @@ public class Player {
 		else{
 			// If the area does not exist with any player then just add that area object to current player 
 			for(Area area : BoardGame.board_areas){
-				if(area.getAreaName().equals(area_name) && checkForTroubleMarkers(area_name).is_Trouble_markers()==false ){
+				if(area.getAreaName().equals(area_name) && checkForTroubleMarkers(area_name).isTroubleMarkers()==false ){
 					// set corresponding building attributes of player
-					this.setPlayer_areas(checkForTroubleMarkers(area_name));
-					this.set_Number_of_buildings(this.get_Number_of_buildings()-1);
+					this.setPlayerAreas(checkForTroubleMarkers(area_name));
+					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
 					// set area's building attribute
 					checkForTroubleMarkers(area_name).setBuildngs(true);
 					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
 					// update players own amount and deposit the cost of constructing building in the bank
-					BoardGame.setBank(checkForTroubleMarkers(area_name).get_Cost_of_area());
-					this.set_Player_amount(get_Player_amount() -checkForTroubleMarkers(area_name).get_Cost_of_area());
+					BoardGame.setBank(checkForTroubleMarkers(area_name).getCostOfArea());
+					this.setPlayerAmount(getPlayerAmount() -checkForTroubleMarkers(area_name).getCostOfArea());
 					break;
 				}
 			}

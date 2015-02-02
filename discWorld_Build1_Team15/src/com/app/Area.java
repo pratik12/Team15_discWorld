@@ -31,10 +31,10 @@ public class Area {
 	public Area(String name, String cost_num){
 		
 		String[] costNum = cost_num.split(":");
-		this.set_Area_name(name);
-		this.set_Area_number(Integer.parseInt(costNum[1]));
-		this.set_Cost_of_area(Integer.parseInt(costNum[0]));
-		this.set_Area_city_cards(false);
+		this.setAreaName(name);
+		this.setAreaNumber(Integer.parseInt(costNum[1]));
+		this.setCostOfArea(Integer.parseInt(costNum[0]));
+		this.setAreaCityCards(false);
 	}
 	
 	/**
@@ -46,57 +46,57 @@ public class Area {
 	/**
 	 * @param accepts area_name which needs to be set
 	 */
-	public void set_Area_name(String area_name) {
+	public void setAreaName(String area_name) {
 		this.area_name = area_name;
 	}
 	/**
 	 * @return the area_number
 	 */
-	public int get_Area_number() {
+	public int getAreaNumber() {
 		return area_number;
 	}
 	/**
 	 * @param area_number the area_number to set
 	 */
-	public void set_Area_number(int area_number) {
+	public void setAreaNumber(int area_number) {
 		this.area_number = area_number;
 	}
 	/**
 	 * @return the cost_of_area
 	 */
-	public int get_Cost_of_area() {
+	public int getCostOfArea() {
 		return cost_of_area;
 	}
 	/**
 	 * @param cost_of_area the cost_of_area to set
 	 */
-	public void set_Cost_of_area(int cost_of_area) {
+	public void setCostOfArea(int cost_of_area) {
 		this.cost_of_area = cost_of_area;
 	}
 	/**
 	 * @return the area_city_cards
 	 */
-	public boolean isArea_city_cards() {
+	public boolean isAreaCityCards() {
 		return area_city_cards;
 	}
 	/**
 	 * @param area_city_cards the area_city_cards to set
 	 */
-	public void set_Area_city_cards(boolean area_city_cards) {
+	public void setAreaCityCards(boolean area_city_cards) {
 		this.area_city_cards = area_city_cards;
 	}
 
 	/**
 	 * @return the trouble_markers
 	 */
-	public boolean is_Trouble_markers() {
+	public boolean isTroubleMarkers() {
 		return trouble_markers;
 	}
 
 	/**
 	 * @param trouble_markers the trouble_markers to set
 	 */
-	public void set_Trouble_markers(boolean trouble_markers) {
+	public void setTroubleMarkers(boolean trouble_markers) {
 		this.trouble_markers = trouble_markers;
 	}
 	
@@ -105,7 +105,7 @@ public class Area {
 	 */
 	public void to_String(){
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.getAreaName(),
-				this.getMinionsForEveryPlayer(this.getAreaName()),this.is_Trouble_markers(),
+				this.getMinionsForEveryPlayer(this.getAreaName()),this.isTroubleMarkers(),
 				this.isBuildngs(),this.getDemons(),this.getTrolls());
 		
 	}
@@ -122,10 +122,10 @@ public class Area {
 				// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
 				for(Player p : BoardGame.playersInGame){
 					// checking for every minion location for all the players
-					for(String minion_location : p.getMinions().get(p.get_Player_color())){
+					for(String minion_location : p.getMinions().get(p.getPlayerColor())){
 						
 						if(minion_location.equals(area))
-							result += "  " +p.get_Player_color();
+							result += "  " +p.getPlayerColor();
 					}
 								
 				}

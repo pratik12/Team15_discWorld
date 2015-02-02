@@ -30,9 +30,9 @@ public class FileManager {
         BufferedWriter out = new BufferedWriter(writeFile);
         out.write("Players : " + BoardGame.playersInGame.size() + eol);//total number of players
         for (Player player : BoardGame.playersInGame) {
-            out.write(player.get_Player_color() + eol); // player color
-            out.write(player.get_Winning_condition() + eol); // personality card
-            out.write(player.get_Minion_Quantity() + eol); // get number of minions
+            out.write(player.getPlayerColor() + eol); // player color
+            out.write(player.getWinningCondition() + eol); // personality card
+            out.write(player.getMinionQuantity() + eol); // get number of minions
 
             // every player has a minion in hashmap datastructure
             if (player.getMinions().size() != 0) {
@@ -50,10 +50,10 @@ public class FileManager {
 
             }
 
-            out.write(player.get_Number_of_buildings() + eol);
+            out.write(player.getNumberOfBuildings() + eol);
             boolean count = false;
             // getting the area names where the player has  build a building
-            for (Area area : player.getPlayer_areas()) {
+            for (Area area : player.getPlayerAreas()) {
 
                 out.write("BUILDING : " + area.getAreaName() + eol);
                 count = true;
@@ -61,7 +61,7 @@ public class FileManager {
             // player amount 
             if(!count)
             	out.write("BUILDING : None" );
-            out.write(player.get_Player_amount() + eol);
+            out.write(player.getPlayerAmount() + eol);
 
 
         }

@@ -188,7 +188,7 @@ public class BoardGame {
             if (temp.getAreaName().equalsIgnoreCase("The Scours") ||
                     temp.getAreaName().equalsIgnoreCase("The Shades") ||
                     temp.getAreaName().equalsIgnoreCase("Dolly Sisters")) {
-                temp.set_Trouble_markers(true);
+                temp.setTroubleMarkers(true);
             }
         }
     }
@@ -201,7 +201,7 @@ public class BoardGame {
 
         int count = rand.nextInt(6);
 
-        player.set_Winning_condition(personality_cards.get(count));
+        player.setWinningCondition(personality_cards.get(count));
         personality_cards.remove(count);
 
     }
@@ -216,9 +216,9 @@ public class BoardGame {
 
         if (!(location.isEmpty())) {
 
-            player.setMinions(player.get_Player_color(), location);
+            player.setMinions(player.getPlayerColor(), location);
             // updating PLAYERS minions quantity
-            player.set_Minion_Quantity(player.get_Minion_Quantity() - 1);
+            player.setMinionQuantity(player.getMinionQuantity() - 1);
         } else {
             System.out.println("Provide location for minion to be placed");
         }
