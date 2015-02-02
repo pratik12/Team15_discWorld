@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  */
 public class FileManager {
-
+   
 	
 	/**
      * functionality to save state of game
@@ -60,7 +60,7 @@ public class FileManager {
             }
             // player amount 
             if(!count)
-            	out.write("BUILDING : None" );
+            	out.write("BUILDING : None" + eol);
             out.write(player.getPlayerAmount() + eol);
 
 
