@@ -108,7 +108,7 @@ public class BoardGame {
         p1 = new Player("R"); // creating new player
         playersInGame.add(p1); // add the player to the store
 
-        placeMinion(p1, "The Shades"); // place a minion in any area for a player
+        p1.placeMinion("The Shades"); // place a minion in any area for a player
         p1.addBuilding("The Shades");
         p1.addBuilding("Seven Sleepers");
         p1.addBuilding("Longwell");
@@ -121,11 +121,11 @@ public class BoardGame {
         assignPersonalityCards(p1); // assign the personality card to the player
         assignPersonalityCards(p2);
 
-        placeMinion(p1, "Seven Sleepers");	//as per the rules, minions can be placed only in these three areas for the first turn
-        placeMinion(p1, "Dragons Landing");
-        placeMinion(p2, "Nap Hill");
-        placeMinion(p1, "Dolly Sisters");
-        placeMinion(p2, "Dolly Sisters");
+        p1.placeMinion("Seven Sleepers");
+        p1.placeMinion("Dragons Landing");
+        p2.placeMinion("Nap Hill");
+        p1.placeMinion("Dolly Sisters");
+        p2.placeMinion("Dolly Sisters");
 
         ConsoleOutput.printOutPlayerState(p1);
         ConsoleOutput.printOutPlayerState(p2);
@@ -167,7 +167,7 @@ public class BoardGame {
                 Player player = new Player(color[i]); // creating new player
                 playersInGame.add(player); // add the player to the store
                 assignPersonalityCards(player);
-                placeMinion(player, "Seven Sleepers");
+                player.placeMinion("Seven Sleepers");
                 player.addBuilding("Seven Sleepers");
                 // every player will be assigned 5 playing cards..first only green ones are to be used
                 
@@ -177,7 +177,10 @@ public class BoardGame {
         }
 
     }
-
+    
+    /**
+     * start the game . connected to swings
+     */
     public static void startGame() {
 
         game = BoardGame.getInstance();
@@ -206,24 +209,7 @@ public class BoardGame {
 
     }
 
-    /**
-     * places a minion in any location.
-     *
-     * @param player
-     * @param location
-     */
-    private static void placeMinion(Player player, String location) {
 
-        if (!(location.isEmpty())) {
-
-            player.setMinions(player.getPlayerColor(), location);
-            // updating PLAYERS minions quantity
-            player.setMinionQuantity(player.getMinionQuantity() - 1);
-        } else {
-            System.out.println("Provide location for minion to be placed");
-        }
-
-    }
 
     /**
      * set total amount in bank
