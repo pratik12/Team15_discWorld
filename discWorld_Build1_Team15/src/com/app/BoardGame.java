@@ -121,7 +121,7 @@ public class BoardGame {
         assignPersonalityCards(p1); // assign the personality card to the player
         assignPersonalityCards(p2);
 
-        placeMinion(p1, "Seven Sleepers");
+        placeMinion(p1, "Seven Sleepers");	//as per the rules, minions can be placed only in these three areas for the first turn
         placeMinion(p1, "Dragons Landing");
         placeMinion(p2, "Nap Hill");
         placeMinion(p1, "Dolly Sisters");
