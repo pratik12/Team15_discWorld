@@ -17,7 +17,9 @@ public class PlayerCard {
 	
 	/** The location. */
 	private String location;
-
+	
+	/** The id of playing card **/
+	private int number;
 	/**
 	 * Instantiates a new player card.
 	 *
@@ -25,11 +27,12 @@ public class PlayerCard {
 	 * @param name the name
 	 * @param location the location
 	 */
-	public PlayerCard(String color, String name, String location){
+	public PlayerCard(int number, String color, String name, String location){
 		
 		setColor(color);
 		setLocation(location); 
 		setName(name);
+		setNumber(number);
 
 	}
 
@@ -86,6 +89,20 @@ public class PlayerCard {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the number
+	 */
+	public int getNumber() {
+		return number;
+	}
+
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	

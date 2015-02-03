@@ -109,11 +109,11 @@ public class BoardGame {
         random_event_cards.add("Earthquake");
         random_event_cards.add("Fire");
         
-        for(int i =0 ; i<101;i++){
-        	if(i!=47){
-        		player_cards.add(new PlayerCard("Green", " ", "Deck Pile"));
+        for(int i = 1 ; i<102;i++){
+        	if(i!=48){
+        		player_cards.add(new PlayerCard(i,"Green", " ", "Deck Pile"));
         	}else{
-        		player_cards.add(new PlayerCard("Brown", " ", "Deck Pile"));
+        		player_cards.add(new PlayerCard(i, "Brown", " ", "Deck Pile"));
         	}
         }
         
@@ -192,7 +192,23 @@ public class BoardGame {
                 player.placeMinion("Seven Sleepers");
                 player.addBuilding("Seven Sleepers");
                 // every player will be assigned 5 playing cards..first only green ones are to be used
+                for(int j = 1; j < 6  ; j++){
+                	Random rand = new Random();
+                	int randInt = rand.nextInt(48);
+                	if(randInt!=0){
+                		
+                		if(BoardGame.player_cards.get(randInt).getColor().equalsIgnoreCase("green")){
+                			player.setPlayersPlayingCard(BoardGame.player_cards.get(j));
+                			BoardGame.player_cards.remove(j);                			
+                	}
+                	}
+                }
+            // temporary printing out to console from here
                 
+                ConsoleOutput.printOutPlayerState(player);
+                ConsoleOutput.printOutGameBoardState();
+                ConsoleOutput.printOutInventory(player);
+
             }
         } else {
             System.out.println("Player cannot be less than 2");

@@ -70,9 +70,14 @@ public class FileManager {
             }
             if(!count)
             	out.write("BUILDING-None" + ":");
+            // playing cards
+            out.write("PLAYING CARD-"+player.getPlayersPlayingCard().get(0).getColor()+":");
+            for(int i=0 ; i<player.getPlayersPlayingCard().size(); i++){
+            	
+            	out.write(player.getPlayersPlayingCard().get(i).getNumber()+":");
+            }
             // player amount 
-            out.write(player.getPlayerAmount() + "\n");
-
+            out.write("BANK-"+player.getPlayerAmount() + "\n");
 
         }
 
@@ -206,9 +211,18 @@ public class FileManager {
 									countBuilding--;
 								}while(countBuilding != 0);
 							}
-							
+							// setting players playing cards
+							if(playerInfo[index].split("-")[1].equalsIgnoreCase("green")){
+								index++;
+								if(!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank"))){
+									PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index]), "Green", " ", " ");
+									playerInBoardGame.setPlayersPlayingCard(p);
+									
+									BoardGame.player_cards.remove(playerInfo[index]);
+								}
+							}
 							// setting players bank account balance
-							playerInBoardGame.setPlayerAmount(Integer.parseInt(playerInfo[index]));
+							playerInBoardGame.setPlayerAmount(Integer.parseInt(playerInfo[index].split("-")[1]));
 							ConsoleOutput.printOutPlayerState(playerInBoardGame);
 							ConsoleOutput.printOutInventory(playerInBoardGame);
 							

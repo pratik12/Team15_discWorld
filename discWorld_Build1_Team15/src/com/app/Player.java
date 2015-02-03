@@ -285,7 +285,23 @@ public class Player {
 				 + Integer.toString(getMinionQuantity()) + " Minion's , " + 
 				  Integer.toString(getNumberOfBuildings()) + " Building's , " + 
 				 Double.toString(getPlayerAmount()) + " Ankh-Morph Dollars " + "\n" +
-				  "City Area Cards : " + "\n" + getCityAreaCards();
+				  "City Area Cards : " + "\n" + getCityAreaCards() + "\n" +
+				  "Players Playing Cards :" + "\n" + getPlayingCards();
+	}
+	
+	/**
+	 * 
+	 * @return string with names of players playing cards
+	 */
+	private String getPlayingCards() {
+		String result = "";
+		
+		if(!(this.getPlayersPlayingCard().isEmpty())){
+			result += this.playersPlayingCard.get(0).getColor();
+			for(PlayerCard p : this.getPlayersPlayingCard())
+				result += p.getNumber() + ",";
+		}
+		return result;
 	}
 
 	/**
