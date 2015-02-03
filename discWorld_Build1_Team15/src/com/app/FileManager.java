@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// TODO: Auto-generated Javadoc
 /**
  * This class adds modularity for separation of concerns.
  * file management module
@@ -23,12 +24,12 @@ public class FileManager {
    
 	
 	/**
-     * functionality to save state of game
-     * This method connects the GUI with the game control	
-     * @param filePath to where you want to store the game
-     * 
-     * @throws IOException
-     */
+	 * functionality to save state of game
+	 * This method connects the GUI with the game control	.
+	 *
+	 * @param filePath to where you want to store the game
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
     public static void saveMap(String filePath) throws IOException {
 
         FileWriter writeFile = new FileWriter(filePath);
@@ -83,7 +84,10 @@ public class FileManager {
    /**
     * This method takes as input any file name and loads the game from that file 
     * Initializes all the required data structures accordingly
-    * functionality to load the arbitrary game  
+    * functionality to load the arbitrary game.
+    *
+    * @param filePath the file path
+    * @return the array list
     */
     public static ArrayList<String> loadFile(String filePath) {
         BufferedReader br = null;
@@ -112,8 +116,9 @@ public class FileManager {
     }
 
     /**
-     * this method will initialize the game board wrt the state it reads from the file
-     * @param playersRecords 
+     * this method will initialize the game board wrt the state it reads from the file.
+     *
+     * @param playersRecords the players records
      */
 	private static void initializeGameState(ArrayList<String> playersRecords) {
 	
@@ -132,7 +137,8 @@ public class FileManager {
 	}
 	
 	/**
-	 * 
+	 * Initialize trouble marker on game board.
+	 *
 	 * @param playersRecords - initializing troubleMarkers on the game board
 	 */
 	private static void initializeTroubleMarkerOnGameBoard(ArrayList<String> playersRecords) {
@@ -153,7 +159,8 @@ public class FileManager {
 	
 	/**
 	 * This method creates the players in the game and updates their inventory according to the game state
-	 * and data read from the file
+	 * and data read from the file.
+	 *
 	 * @param playersRecords - An arraylist that contains the records from the file for each player's data
 	 */
 	private static void createPlayers(ArrayList<String> playersRecords) {

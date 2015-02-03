@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class BoardGame.
+ *
  * @author Pratik
  *         Singleton Class to ensure that there exists only 1 board for game to be played on
  *         Start point of the game. This class has the main function
@@ -13,21 +16,36 @@ import java.util.Random;
  */
 public class BoardGame {
 
+    /** The personality_cards. */
     public static ArrayList<String> personality_cards;
+    
+    /** The random_event_cards. */
     public ArrayList<String> random_event_cards;
+    
+    /** The board_areas. */
     public static ArrayList<Area> board_areas;
+    
+    /** The player_cards. */
     public static ArrayList<PlayerCard> player_cards;
+    
+    /** The bank. */
     private static int bank;
     // this arraylist acts as a store of current players in the game
+    /** The players in game. */
     public static ArrayList<Player> playersInGame = new ArrayList<Player>();
 
     // Map of 12 areas
+    /** The area_details. */
     public HashMap<String, String> area_details = new HashMap<String, String>();
 
     // single static instance
+    /** The board_ game_ object. */
     private static BoardGame board_Game_Object = new BoardGame();
 
     // private constructor allowing creation of only 1 object
+    /**
+     * Instantiates a new board game.
+     */
     private BoardGame() {
 
         board_areas = new ArrayList<Area>();
@@ -42,13 +60,18 @@ public class BoardGame {
         }
     }
 
+    /**
+     * Gets the single instance of BoardGame.
+     *
+     * @return single instance of BoardGame
+     */
     public static BoardGame getInstance() {
         return board_Game_Object;
     }
 
     /**
      * initializing datastructure for storing 12 area names and cost
-     * also initializes 7 personality cards which will be given 1 to each player
+     * also initializes 7 personality cards which will be given 1 to each player.
      */
     private void init() {
 
@@ -96,11 +119,24 @@ public class BoardGame {
         
     }
 
+    /** The p1. */
     static Player p1;
+    
+    /** The p2. */
     static Player p2;
+    
+    /** The rand. */
     static Random rand;
+    
+    /** The game. */
     static BoardGame game;
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public static void main(String[] args) throws IOException {
 
         startGame();
@@ -138,9 +174,9 @@ public class BoardGame {
     }
 
     /**
-     * takes the number of players and creates them
+     * takes the number of players and creates them.
      *
-     * @param players
+     * @param players the players
      */
     public static void initiateNumberOfPlayers(int players) {
 
@@ -184,7 +220,9 @@ public class BoardGame {
 
     
     /**
-     * assigning personailty cards to a player randomly
+     * assigning personailty cards to a player randomly.
+     *
+     * @param player the player
      */
     private static void assignPersonalityCards(Player player) {
 
@@ -198,18 +236,18 @@ public class BoardGame {
 
 
     /**
-     * set total amount in bank
+     * set total amount in bank.
      *
-     * @param amt
+     * @param amt the new bank
      */
     public static void setBank(int amt) {
         bank = amt;
     }
 
     /**
-     * get amount from bank
+     * get amount from bank.
      *
-     * @return
+     * @return the bank
      */
     public static int getBank() {
         return bank;

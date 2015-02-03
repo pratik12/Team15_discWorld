@@ -1,16 +1,30 @@
 package com.app;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Pratik 
+ * The Class PlayerCard.
+ *
+ * @author Pratik
  * Class of player cards that will be given out to players when the game starts
  */
 public class PlayerCard {
 	
+	/** The color. */
 	private String color;
+	
+	/** The name. */
 	private String name;
+	
+	/** The location. */
 	private String location;
 
+	/**
+	 * Instantiates a new player card.
+	 *
+	 * @param color the color
+	 * @param name the name
+	 * @param location the location
+	 */
 	public PlayerCard(String color, String name, String location){
 		
 		setColor(color);
@@ -20,6 +34,8 @@ public class PlayerCard {
 	}
 
 	/**
+	 * Gets the color.
+	 *
 	 * @return the color
 	 */
 	public String getColor() {
@@ -27,6 +43,8 @@ public class PlayerCard {
 	}
 
 	/**
+	 * Sets the color.
+	 *
 	 * @param color the color to set
 	 */
 	public void setColor(String color) {
@@ -34,6 +52,8 @@ public class PlayerCard {
 	}
 
 	/**
+	 * Gets the location.
+	 *
 	 * @return the location
 	 */
 	public String getLocation() {
@@ -41,6 +61,8 @@ public class PlayerCard {
 	}
 
 	/**
+	 * Sets the location.
+	 *
 	 * @param location the location of the player card to set
 	 * would be set to either players hand, discard pile or draw pile
 	 */
@@ -49,6 +71,8 @@ public class PlayerCard {
 	}
 
 	/**
+	 * Gets the name.
+	 *
 	 * @return the name
 	 */
 	public String getName() {
@@ -56,6 +80,8 @@ public class PlayerCard {
 	}
 
 	/**
+	 * Sets the name.
+	 *
 	 * @param name the name to set
 	 */
 	public void setName(String name) {

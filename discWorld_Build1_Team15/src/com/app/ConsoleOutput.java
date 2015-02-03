@@ -1,13 +1,19 @@
 package com.app;
 
+// TODO: Auto-generated Javadoc
 /**
  * print the output to console
- * prints out the players inventory, players status, and board status
- * @author Pratik
+ * prints out the players inventory, players status, and board status.
  *
+ * @author Pratik
  */
 public class ConsoleOutput {
 	
+	/**
+	 * Prints the out inventory.
+	 *
+	 * @param player the player
+	 */
 	public static void printOutInventory(Player player) {
 
         System.out.println(player.currentInventory());
@@ -15,7 +21,9 @@ public class ConsoleOutput {
     }
 
     /**
-     * output to the console the current status for every player
+     * output to the console the current status for every player.
+     *
+     * @param player the player
      */
     public static void printOutPlayerState(Player player) {
         System.out.println(player.toString());
@@ -23,7 +31,7 @@ public class ConsoleOutput {
     }
 
     /**
-     * This method prints out the game board state
+     * This method prints out the game board state.
      */
     public static void printOutGameBoardState() {
 

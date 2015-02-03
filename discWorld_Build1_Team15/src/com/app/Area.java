@@ -2,6 +2,7 @@ package com.app;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * Board will have 12 areas hence area is good candidate as a class
@@ -12,24 +13,45 @@ import java.util.ArrayList;
  */
 public class Area {
 
+	/** The area_name. */
 	private String area_name;
+	
+	/** The area_number. */
 	private int area_number;
+	
+	/** The cost_of_area. */
 	private int cost_of_area;
+	
+	/** The area_city_cards. */
 	private boolean area_city_cards;
+	
+	/** The trouble_markers. */
 	private boolean trouble_markers;
+	
+	/** The trouble marker area. */
 	private String troubleMarkerArea;
+	
+	/** The demons. */
 	private int demons;
+	
+	/** The trolls. */
 	private int trolls;
+	
+	/** The minions. */
 	private int minions;
+	
+	/** The buildngs. */
 	private boolean buildngs;
 	
 	// list to keep track of which players own which area
+	/** The players in this areas. */
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
 	
 	/**
-	 * constructor initializing the areas with its name cost and number
-	 * @param name
-	 * @param cost_num
+	 * constructor initializing the areas with its name cost and number.
+	 *
+	 * @param name the name
+	 * @param cost_num the cost_num
 	 */
 	public Area(String name, String cost_num){
 		
@@ -41,48 +63,71 @@ public class Area {
 	}
 	
 	/**
+	 * Gets the area name.
+	 *
 	 * @return the area_name
 	 */
 	public String getAreaName() {
 		return area_name;
 	}
+	
 	/**
-	 * @param accepts area_name which needs to be set
+	 * Sets the area name.
+	 *
+	 * @param area_name the new area name
 	 */
 	public void setAreaName(String area_name) {
 		this.area_name = area_name;
 	}
+	
 	/**
+	 * Gets the area number.
+	 *
 	 * @return the area_number
 	 */
 	public int getAreaNumber() {
 		return area_number;
 	}
+	
 	/**
+	 * Sets the area number.
+	 *
 	 * @param area_number the area_number to set
 	 */
 	public void setAreaNumber(int area_number) {
 		this.area_number = area_number;
 	}
+	
 	/**
+	 * Gets the cost of area.
+	 *
 	 * @return the cost_of_area
 	 */
 	public int getCostOfArea() {
 		return cost_of_area;
 	}
+	
 	/**
+	 * Sets the cost of area.
+	 *
 	 * @param cost_of_area the cost_of_area to set
 	 */
 	public void setCostOfArea(int cost_of_area) {
 		this.cost_of_area = cost_of_area;
 	}
+	
 	/**
+	 * Checks if is area city cards.
+	 *
 	 * @return the area_city_cards
 	 */
 	public boolean isAreaCityCards() {
 		return area_city_cards;
 	}
+	
 	/**
+	 * Sets the area city cards.
+	 *
 	 * @param area_city_cards the area_city_cards to set
 	 */
 	public void setAreaCityCards(boolean area_city_cards) {
@@ -90,6 +135,8 @@ public class Area {
 	}
 
 	/**
+	 * Checks if is trouble markers.
+	 *
 	 * @return the trouble_markers
 	 */
 	public boolean isTroubleMarkers() {
@@ -97,6 +144,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the trouble markers.
+	 *
 	 * @param trouble_markers the trouble_markers to set
 	 */
 	public void setTroubleMarkers(boolean trouble_markers) {
@@ -104,7 +153,7 @@ public class Area {
 	}
 	
 	/**
-	 * String representation of area object with its properties
+	 * String representation of area object with its properties.
 	 */
 	public void to_String(){
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.getAreaName(),
@@ -114,8 +163,9 @@ public class Area {
 	}
 
 	/**
-	 * 
-	 * @param area
+	 * Gets the minions for every player.
+	 *
+	 * @param area the area
 	 * @return the minions placed by players in any area.
 	 */
 	private String getMinionsForEveryPlayer(String area) {
@@ -140,6 +190,8 @@ public class Area {
 	}
 
 	/**
+	 * Gets the minions.
+	 *
 	 * @return the number of minions
 	 */
 	public int getMinions() {
@@ -147,6 +199,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the minions.
+	 *
 	 * @param minions the minions to set
 	 */
 	public void setMinions(int minions) {
@@ -155,6 +209,8 @@ public class Area {
 
 
 	/**
+	 * Gets the players in this areas.
+	 *
 	 * @return the playersInThisAreas
 	 */
 	public ArrayList<Player> getPlayersInThisAreas() {
@@ -166,6 +222,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the players in this areas.
+	 *
 	 * @param playersInThisAreas the playersInThisAreas to set
 	 */
 	public void setPlayersInThisAreas(Player playersInThisAreas) {
@@ -173,6 +231,8 @@ public class Area {
 	}
 
 	/**
+	 * Gets the demons.
+	 *
 	 * @return the number of demons
 	 */
 	public int getDemons() {
@@ -180,6 +240,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the demons.
+	 *
 	 * @param demons the demons to set
 	 */
 	public void setDemons(int demons) {
@@ -187,6 +249,8 @@ public class Area {
 	}
 
 	/**
+	 * Gets the trolls.
+	 *
 	 * @return the number of trolls
 	 */
 	public int getTrolls() {
@@ -194,6 +258,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the trolls.
+	 *
 	 * @param trolls the trolls to set
 	 */
 	public void setTrolls(int trolls) {
@@ -201,6 +267,8 @@ public class Area {
 	}
 
 	/**
+	 * Checks if is buildngs.
+	 *
 	 * @return if the buildngs exist in this area
 	 */
 	public boolean isBuildngs() {
@@ -208,6 +276,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the buildngs.
+	 *
 	 * @param buildngs the buildngs to set
 	 */
 	public void setBuildngs(boolean buildngs) {
@@ -215,6 +285,8 @@ public class Area {
 	}
 
 	/**
+	 * Gets the trouble marker area.
+	 *
 	 * @return the troubleMarkerArea
 	 */
 	public String getTroubleMarkerArea() {
@@ -222,6 +294,8 @@ public class Area {
 	}
 
 	/**
+	 * Sets the trouble marker area.
+	 *
 	 * @param troubleMarkerArea the troubleMarkerArea to set
 	 */
 	public void setTroubleMarkerArea(String troubleMarkerArea) {

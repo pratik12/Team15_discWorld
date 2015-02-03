@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 
+// TODO: Auto-generated Javadoc
 /**
  * Created with IntelliJ IDEA.
  * User: Mahdiye
@@ -23,9 +24,18 @@ import static javax.swing.JFileChooser.APPROVE_OPTION;
  */
 public class WorldDiscDemo {
 
+    /** The right to left. */
     public static boolean RIGHT_TO_LEFT = false;
+    
+    /** The player data. */
     static ArrayList<String> playerData = new ArrayList();
 
+    /**
+     * Adds the components to pane.
+     *
+     * @param contentPane the content pane
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public static void addComponentsToPane(final Container contentPane) throws IOException {
         final JFileChooser fc = new JFileChooser();
         fc.setMultiSelectionEnabled(true);
@@ -121,6 +131,12 @@ public class WorldDiscDemo {
         contentPane.add(buttonPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Show text areas.
+     *
+     * @param contentPane the content pane
+     * @param playersPanel the players panel
+     */
     private static void showTextAreas(Container contentPane, JPanel playersPanel) {
         int playerCount = 0;
         if (!playerData.isEmpty()) {
@@ -140,6 +156,11 @@ public class WorldDiscDemo {
         contentPane.add(playersPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the and show gui.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public static void createAndShowGUI() throws IOException {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -154,6 +175,12 @@ public class WorldDiscDemo {
     }
 
 
+    /**
+     * Identify color.
+     *
+     * @param colour the colour
+     * @return the color
+     */
     public static Color identifyColor(String colour) {
         switch (colour.trim().charAt(0)) {
             case 'R':
@@ -169,6 +196,12 @@ public class WorldDiscDemo {
         }
     }
 
+    /**
+     * Input number is valid.
+     *
+     * @param userInput the user input
+     * @return true, if successful
+     */
     public static boolean inputNumberIsValid(String userInput) {
         boolean validationResult = true;
         if ((userInput == null) || (!userInput.equals("2") && !userInput.equals("3") && !userInput.equals("4")))
@@ -176,6 +209,11 @@ public class WorldDiscDemo {
         return validationResult;
     }
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {

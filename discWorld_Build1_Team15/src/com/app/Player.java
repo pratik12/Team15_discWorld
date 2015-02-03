@@ -2,6 +2,7 @@ package com.app;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+// TODO: Auto-generated Javadoc
 /**
  * Player class holding properties of a player.
  * Board will have Players, hence Player is good candidate as a class
@@ -11,18 +12,32 @@ import java.util.HashMap;
  */
 public class Player {
 	
+	/** The player_color. */
 	private String player_color;
 	
 	// data structure to store minion data
+	/** The minions. */
 	private HashMap<String,ArrayList<String>> minions = new HashMap<String, ArrayList<String>>();
 	// data structure to hold players playing card
+	/** The players playing card. */
 	private ArrayList<PlayerCard> playersPlayingCard = new ArrayList<PlayerCard>();
 	
+	/** The minion_ quantity. */
 	private int minion_Quantity;
+	
+	/** The number_of_buildings. */
 	private int number_of_buildings;
+	
+	/** The winning_condition. */
 	private String winning_condition;
+	
+	/** The random_event_card. */
 	public String random_event_card;
+	
+	/** The player_amount. */
 	private int player_amount;
+	
+	/** The player_aid_card. */
 	private String player_aid_card;
 	
 	
@@ -32,10 +47,10 @@ public class Player {
 	 * adds a building taking into consideration all the rules for setting a building
 	 * updates the following data:
 	 * City area card vlaue from the area class
-	 * which area belongs to which player and vice versa
-	 * 
-	 * @param player
-	 * @param area_name
+	 * which area belongs to which player and vice versa.
+	 *
+	 * @param area_name the area_name
+	 * @return the string
 	 */
 	public String addBuilding(String area_name){
 		
@@ -100,8 +115,9 @@ public class Player {
 	}
 	
 	/**
-	 * 
-	 * @param area_name
+	 * Check for trouble markers.
+	 *
+	 * @param area_name the area_name
 	 * @return the current area object depending on the area name
 	 */
 	public Area checkForTroubleMarkers(String area_name) {
@@ -116,9 +132,12 @@ public class Player {
 
 	
 	// player can have many areas
+	/** The player_areas. */
 	private ArrayList<Area> player_areas = new ArrayList<Area>();
 	
 	/**
+	 * Gets the player areas.
+	 *
 	 * @return the player_areas
 	 */
 	public ArrayList<Area> getPlayerAreas() {
@@ -126,7 +145,9 @@ public class Player {
 	}
 
 	/**
-	 * @param player_areas the player_areas to set
+	 * Sets the player areas.
+	 *
+	 * @param area_of_player the new player areas
 	 */
 	public void setPlayerAreas(Area area_of_player) {
 		
@@ -136,9 +157,9 @@ public class Player {
 	}
 
 	/**
-	 * Constructor to set the properties of player
-	 * @param minion_Color
-	 * @param quantity
+	 * Constructor to set the properties of player.
+	 *
+	 * @param player_color the player_color
 	 */	
 	public Player(String player_color){
 		
@@ -151,15 +172,27 @@ public class Player {
 	
 	
 	
+	/**
+	 * Gets the minion quantity.
+	 *
+	 * @return the minion quantity
+	 */
 	public int getMinionQuantity() {
 		return minion_Quantity;
 	}
 	
+	/**
+	 * Sets the minion quantity.
+	 *
+	 * @param minion_Quantity the new minion quantity
+	 */
 	public void setMinionQuantity(int minion_Quantity) {
 		this.minion_Quantity = minion_Quantity;
 	}
 
 	/**
+	 * Gets the winning condition.
+	 *
 	 * @return the winning_condition
 	 */
 	public String getWinningCondition() {
@@ -167,6 +200,8 @@ public class Player {
 	}
 
 	/**
+	 * Sets the winning condition.
+	 *
 	 * @param winning_condition the winning_condition to set
 	 */
 	public void setWinningCondition(String winning_condition) {
@@ -174,6 +209,8 @@ public class Player {
 	}
 
 	/**
+	 * Gets the player amount.
+	 *
 	 * @return the player_amount
 	 */
 	public int getPlayerAmount() {
@@ -181,6 +218,8 @@ public class Player {
 	}
 
 	/**
+	 * Sets the player amount.
+	 *
 	 * @param d the player_amount to set
 	 */
 	public void setPlayerAmount(int d) {
@@ -188,6 +227,8 @@ public class Player {
 	}
 
 	/**
+	 * Gets the number of buildings.
+	 *
 	 * @return the number_of_buildings
 	 */
 	public int getNumberOfBuildings() {
@@ -195,6 +236,8 @@ public class Player {
 	}
 
 	/**
+	 * Sets the number of buildings.
+	 *
 	 * @param number_of_buildings the number_of_buildings to set
 	 */
 	public void setNumberOfBuildings(int number_of_buildings) {
@@ -202,6 +245,8 @@ public class Player {
 	}
 
 	/**
+	 * Gets the player color.
+	 *
 	 * @return the player_color
 	 */
 	public String getPlayerColor() {
@@ -209,6 +254,8 @@ public class Player {
 	}
 
 	/**
+	 * Sets the player color.
+	 *
 	 * @param player_color the color of players piece to set
 	 */
 	public void setPlayerColor(String player_color) {
@@ -216,6 +263,8 @@ public class Player {
 	}
 
 	/**
+	 * To string.
+	 *
 	 * @return String representation of players personality card and his color
 	 */
 	public String toString(){
@@ -226,7 +275,8 @@ public class Player {
 	}
 	
 	/**
-	 * 
+	 * Current inventory.
+	 *
 	 * @return String representation of players collection of minions, buildings, money and his color
 	 */
 	public String currentInventory(){
@@ -239,8 +289,9 @@ public class Player {
 	}
 
 	/**
-	 * 
-	 * @return city area card for each player, if the player has no buildings placed the returns "Player has placed no building" 
+	 * Gets the city area cards.
+	 *
+	 * @return city area card for each player, if the player has no buildings placed the returns "Player has placed no building"
 	 */
 	private String getCityAreaCards() {
 
@@ -256,6 +307,8 @@ public class Player {
 	}
 
 	/**
+	 * Gets the minions.
+	 *
 	 * @return the minions as Map
 	 */
 	public HashMap<String, ArrayList<String>> getMinions() {
@@ -266,8 +319,7 @@ public class Player {
     /**
      * places a minion in any location.
      *
-     * @param player
-     * @param location
+     * @param location the location
      */
     public void placeMinion(String location) {
 
@@ -283,7 +335,10 @@ public class Player {
     }
 
 	/**
-	 * @param accepts minion color and area name as location where you want to set the minion
+	 * Sets the minions.
+	 *
+	 * @param minion_color the minion_color
+	 * @param minion_location the minion_location
 	 */
 	public void setMinions(String minion_color, String minion_location) {
 		
@@ -305,6 +360,8 @@ public class Player {
 
 	
 	/**
+	 * Gets the players playing card.
+	 *
 	 * @return the playersPlayingCard
 	 */
 	public ArrayList<PlayerCard> getPlayersPlayingCard() {
@@ -312,6 +369,8 @@ public class Player {
 	}
 
 	/**
+	 * Sets the players playing card.
+	 *
 	 * @param playersPlayingCard the playersPlayingCard to set
 	 */
 	public void setPlayersPlayingCard(PlayerCard playersPlayingCard) {
