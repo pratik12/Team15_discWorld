@@ -68,7 +68,7 @@ public class BoardGame {
 	}
 
 	/**
-	 * initializing datastructure for storing 12 area names and cost
+	 * initializing data structure for storing 12 area names and cost
 	 * also initializes 7 personality cards which will be given 1 to each player.
 	 */
 	private void init() {
@@ -217,12 +217,7 @@ public class BoardGame {
 		return bank;
 	}
 
-	/**
-	 * @author Sanchit
-	 * if we can make a separate class for load and save it would be better even in the future builds (LoadSave class)
-	 * mentioned all the changes I think in the comments so that the program's current state is not impacted.
-	 * filename contains all the information about the game i.e the current status and the details about the players
-	 */
+	
 	/*
     public static void save(String filename, LoadState ls)
     {
