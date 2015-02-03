@@ -117,61 +117,12 @@ public class BoardGame {
 
 	}
 
-	/** The p1. */
-	static Player p1;
-
-	/** The p2. */
-	static Player p2;
-
-	/** The rand. */
+	/** The random object. */
 	static Random rand;
 
 	/** The game. */
 	static BoardGame game;
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	/*
-    public static void main(String[] args) throws IOException {
-
-        startGame();
-
-        p1 = new Player("R"); // creating new player
-        playersInGame.add(p1); // add the player to the store
-
-        p1.placeMinion("The Shades"); // place a minion in any area for a player
-        p1.addBuilding("The Shades");
-        p1.addBuilding("Seven Sleepers");
-        p1.addBuilding("Longwell");
-        p2 = new Player("Y");
-        playersInGame.add(p2);
-        p2.addBuilding("Dolly Sisters");
-
-        p2.addBuilding("Seven Sleepers");
-
-        assignPersonalityCards(p1); // assign the personality card to the player
-        assignPersonalityCards(p2);
-
-        p1.placeMinion("Seven Sleepers");
-        p1.placeMinion("Dragons Landing");
-        p2.placeMinion("Nap Hill");
-        p1.placeMinion("Dolly Sisters");
-        p2.placeMinion("Dolly Sisters");
-
-        ConsoleOutput.printOutPlayerState(p1);
-        ConsoleOutput.printOutPlayerState(p2);
-        ConsoleOutput.printOutGameBoardState();
-        ConsoleOutput.printOutInventory(p1);
-        ConsoleOutput.printOutInventory(p2);
-
-        FileManager.saveMap("output.txt");
-
-    }
-	 */
 	/**
 	 * takes the number of players and creates them.
 	 *
@@ -235,7 +186,7 @@ public class BoardGame {
 
 
 	/**
-	 * assigning personailty cards to a player randomly.
+	 * assigning personality cards to a player randomly.
 	 *
 	 * @param player the player
 	 */
@@ -247,8 +198,6 @@ public class BoardGame {
 		personality_cards.remove(count);
 
 	}
-
-
 
 	/**
 	 * set total amount in bank.
@@ -267,7 +216,6 @@ public class BoardGame {
 	public static int getBank() {
 		return bank;
 	}
-
 
 	/**
 	 * @author Sanchit

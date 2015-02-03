@@ -10,32 +10,48 @@ package com.testcase;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  http://java2novice.com/junit-examples/
  */
 
 public class SuitTest {
 
+    /**
+     * Game snapshot.
+     */
     @Test
     public void gameSnapshot() {
 
     }
 
+    /**
+     * Game instantiation.
+     */
     @Test
     public void gameInstantiation(){
 
     }
 
+    /**
+     * Dispense personality cards.
+     */
     @Test
     public void dispensePersonalityCards(){
 
     }
 
+   /**
+    * Control number of players.
+    */
    @Test
     public void controlNumberOfPlayers(){
 
    }
 
+    /**
+     * Load data from recorded file.
+     */
     @Test
     public void loadDataFromRecordedFile(){
 
