@@ -258,7 +258,7 @@ public class Area {
 	}
 
 	/**
-	 * Sets the trolls.
+	 * Sets the number of trolls.
 	 *
 	 * @param trolls the trolls to set
 	 */
@@ -267,7 +267,7 @@ public class Area {
 	}
 
 	/**
-	 * Checks if is buildngs.
+	 * Checks if area has buildngs.
 	 *
 	 * @return if the buildngs exist in this area
 	 */
@@ -276,7 +276,7 @@ public class Area {
 	}
 
 	/**
-	 * Sets the buildngs.
+	 * Sets the buildng variable to true/false
 	 *
 	 * @param buildngs the buildngs to set
 	 */

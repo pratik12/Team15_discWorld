@@ -10,7 +10,7 @@ package com.app;
 public class ConsoleOutput {
 	
 	/**
-	 * Prints the out inventory.
+	 * Prints the player inventory.
 	 *
 	 * @param player the player
 	 */
@@ -45,7 +45,7 @@ public class ConsoleOutput {
             // printout areas
             temp.to_String();
         }
-        System.out.println("Amount with the Bank"+BoardGame.getBank());
+        System.out.println("Amount with the Bank "+BoardGame.getBank());
 
 
     }

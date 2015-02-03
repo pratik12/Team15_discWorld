@@ -323,7 +323,7 @@ public class Player {
 	}
 
 	/**
-	 * Gets the minions.
+	 * Gets the minions hashmap for each player
 	 *
 	 * @return the minions as Map
 	 */
@@ -358,7 +358,10 @@ public class Player {
 	 */
 	public void setMinions(String minion_color, String minion_location) {
 		
-		if(!(minion_color.isEmpty() && minion_location.isEmpty()))
+		/**
+		 * we first check that if the minion belongs to any player or not
+		 */
+		if(!(minion_color.isEmpty() && minion_location.isEmpty())){
 			
 			// checking if the minions hashmap has any entries
 			if(minions.containsKey(this.getPlayerColor()))
@@ -369,7 +372,7 @@ public class Player {
 				 for(int i=0; i <12; i++)
 				 minions.get(this.getPlayerColor()).add(minion_location);
 			}
-				
+		}	
 		else
 			System.out.println("Minion color or location cannot be empty");
 	}
@@ -378,16 +381,16 @@ public class Player {
 	/**
 	 * Gets the players playing card.
 	 *
-	 * @return the playersPlayingCard
+	 * @return the playersPlayingCard arraylist
 	 */
 	public ArrayList<PlayerCard> getPlayersPlayingCard() {
 		return playersPlayingCard;
 	}
 
 	/**
-	 * Sets the players playing card.
+	 * Sets the players playing card in his own playingcard arraylist
 	 *
-	 * @param playersPlayingCard the playersPlayingCard to set
+	 * @param playersPlayingCard the playersPlayingCard object to set
 	 */
 	public void setPlayersPlayingCard(PlayerCard playersPlayingCard) {
 		if(playersPlayingCard!=null)
