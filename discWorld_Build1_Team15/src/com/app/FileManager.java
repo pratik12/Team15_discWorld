@@ -70,7 +70,7 @@ public class FileManager {
 			out.write("PLAYING CARD-"+player.getPlayersPlayingCard().get(0).getColor()+":");
 			for(int i=0 ; i<player.getPlayersPlayingCard().size(); i++){
 
-				out.write(player.getPlayersPlayingCard().get(i).getNumber()+":");
+				out.write(player.getPlayersPlayingCard().get(i).getColor()+"-"+player.getPlayersPlayingCard().get(i).getNumber()+":");
 			}
 			// player amount 
 			out.write("BANK-"+player.getPlayerAmount() + "\n");
@@ -211,10 +211,12 @@ public class FileManager {
 						if(playerInfo[index].split("-")[1].equalsIgnoreCase("green")){
 							index++;
 							if(!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank"))){
-								PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index]), "Green", " ", " ");
+								do{
+								PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index].split("-")[1]), "Green", " ", " ");
 								playerInBoardGame.setPlayersPlayingCard(p);
-
+								index++;
 								BoardGame.player_cards.remove(playerInfo[index]);
+								}while(!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank")));
 							}
 						}
 						// setting players bank account balance
