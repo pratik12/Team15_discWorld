@@ -1,6 +1,5 @@
 package com.app;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerCard.
  *
@@ -8,16 +7,16 @@ package com.app;
  * Class of player cards that will be given out to players when the game starts
  */
 public class PlayerCard {
-	
+
 	/** The color. */
 	private String color;
-	
+
 	/** The name. */
 	private String name;
-	
+
 	/** The location. */
 	private String location;
-	
+
 	/** The id of playing card **/
 	private int number;
 	/**
@@ -28,7 +27,7 @@ public class PlayerCard {
 	 * @param location the location
 	 */
 	public PlayerCard(int number, String color, String name, String location){
-		
+
 		setColor(color);
 		setLocation(location); 
 		setName(name);
@@ -105,5 +104,5 @@ public class PlayerCard {
 		this.number = number;
 	}
 
-	
+
 }

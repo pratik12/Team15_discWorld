@@ -15,38 +15,38 @@ public class Area {
 
 	/** The area_name. */
 	private String area_name;
-	
+
 	/** The area_number. */
 	private int area_number;
-	
+
 	/** The cost_of_area. */
 	private int cost_of_area;
-	
+
 	/** The area_city_cards. */
 	private boolean area_city_cards;
-	
+
 	/** The trouble_markers. */
 	private boolean trouble_markers;
-	
+
 	/** The trouble marker area. */
 	private String troubleMarkerArea;
-	
+
 	/** The demons. */
 	private int demons;
-	
+
 	/** The trolls. */
 	private int trolls;
-	
+
 	/** The minions. */
 	private int minions;
-	
+
 	/** The buildngs. */
 	private boolean buildngs;
-	
+
 	// list to keep track of which players own which area
 	/** The players in this areas. */
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
-	
+
 	/**
 	 * constructor initializing the areas with its name cost and number.
 	 *
@@ -54,14 +54,14 @@ public class Area {
 	 * @param cost_num the cost_num
 	 */
 	public Area(String name, String cost_num){
-		
+
 		String[] costNum = cost_num.split(":");
 		this.setAreaName(name);
 		this.setAreaNumber(Integer.parseInt(costNum[1]));
 		this.setCostOfArea(Integer.parseInt(costNum[0]));
 		this.setAreaCityCards(false);
 	}
-	
+
 	/**
 	 * Gets the area name.
 	 *
@@ -70,7 +70,7 @@ public class Area {
 	public String getAreaName() {
 		return area_name;
 	}
-	
+
 	/**
 	 * Sets the area name.
 	 *
@@ -79,7 +79,7 @@ public class Area {
 	public void setAreaName(String area_name) {
 		this.area_name = area_name;
 	}
-	
+
 	/**
 	 * Gets the area number.
 	 *
@@ -88,7 +88,7 @@ public class Area {
 	public int getAreaNumber() {
 		return area_number;
 	}
-	
+
 	/**
 	 * Sets the area number.
 	 *
@@ -97,7 +97,7 @@ public class Area {
 	public void setAreaNumber(int area_number) {
 		this.area_number = area_number;
 	}
-	
+
 	/**
 	 * Gets the cost of area.
 	 *
@@ -106,7 +106,7 @@ public class Area {
 	public int getCostOfArea() {
 		return cost_of_area;
 	}
-	
+
 	/**
 	 * Sets the cost of area.
 	 *
@@ -115,7 +115,7 @@ public class Area {
 	public void setCostOfArea(int cost_of_area) {
 		this.cost_of_area = cost_of_area;
 	}
-	
+
 	/**
 	 * Checks if is area city cards.
 	 *
@@ -124,7 +124,7 @@ public class Area {
 	public boolean isAreaCityCards() {
 		return area_city_cards;
 	}
-	
+
 	/**
 	 * Sets the area city cards.
 	 *
@@ -151,7 +151,7 @@ public class Area {
 	public void setTroubleMarkers(boolean trouble_markers) {
 		this.trouble_markers = trouble_markers;
 	}
-	
+
 	/**
 	 * String representation of area object with its properties.
 	 */
@@ -159,7 +159,7 @@ public class Area {
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.getAreaName(),
 				this.getMinionsForEveryPlayer(this.getAreaName()),this.isTroubleMarkers(),
 				this.isBuildngs(),this.getDemons(),this.getTrolls());
-		
+
 	}
 
 	/**
@@ -169,24 +169,24 @@ public class Area {
 	 * @return the minions placed by players in any area.
 	 */
 	private String getMinionsForEveryPlayer(String area) {
-		
+
 		String result = "";
-		
-				// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
-				for(Player p : BoardGame.playersInGame){
-					// checking for every minion location for all the players
-					for(String minion_location : p.getMinions().get(p.getPlayerColor())){
-						
-						if(minion_location.equals(area))
-							result += "  " +p.getPlayerColor();
-					}
-								
-				}
+
+		// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
+		for(Player p : BoardGame.playersInGame){
+			// checking for every minion location for all the players
+			for(String minion_location : p.getMinions().get(p.getPlayerColor())){
+
+				if(minion_location.equals(area))
+					result += "  " +p.getPlayerColor();
+			}
+
+		}
 		if(result!="none")
 			return result;
 		else
 			return "none";
-			
+
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class Area {
 	 * @return the playersInThisAreas
 	 */
 	public ArrayList<Player> getPlayersInThisAreas() {
-		
+
 		if(!this.playersInThisAreas.isEmpty())
 			return playersInThisAreas;
 		else 
