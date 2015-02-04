@@ -218,50 +218,11 @@ public class BoardGame {
 	}
 
 	
-	/*
-    
-    		try{
-
-    			fout = new FileOutputStream(filename);
-   				ObjectOutputStream objout = new ObjectOutputStream(fout);
-    			objout.writeObject(ls);
-
-    			}
-
-    		catch(Exception e) 
-
-    			{
-    				e.printStackTrace();
-    			}
-
-
-    }
+	
 
 
 
-    public static void load(String filename)
-     {
-     	LoadSave ls = null;
-     	try{
-     			FileInputStream fin = new FileInputStream(filename);
-     			ObjectInputStream objin = new ObjectInputStream(fin);
-     			Object obj = objin.readObject();
-     			if(obj instanceof LoadSave) 
-     			{
-     				ls= (LoadSave)obj; 
 
-     			}
-
-     			objin.close();
-     		}
-     	catch(Exception e)
-     		{
-     			e.printStackTrace();
-     	 	}
-
-     	 return ls;	
-     }
-	 */
 }
 
 
