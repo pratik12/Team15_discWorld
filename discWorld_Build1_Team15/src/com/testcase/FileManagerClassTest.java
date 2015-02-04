@@ -3,7 +3,7 @@ package com.testcase;
 import com.app.FileManager;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,22 +15,8 @@ import static org.junit.Assert.fail;
 public class FileManagerClassTest {
 
     @Test
-    public void checkToWriteTextFile() {
-        try {
-            FileManager.saveMap("../test.txt");
-        } catch (Exception e) {
-            fail("Should not have thrown any exception");
-        }
+    public void checkFilaNameValidity() {
+        assertFalse(FileManager.isFileNameValid(" test.txt"));
+        assertTrue(FileManager.isFileNameValid("test.txt"));
     }
-
-    @Test
-    public void checkToReadSafeTextFile() {
-        try {
-            FileManager.loadFile("../test.txt");
-        } catch (Exception e) {
-            fail("Should not have thrown any exception");
-        }
-    }
-
-
 }

@@ -21,6 +21,7 @@ public class DiscWorldClassTest {
 
     @Test
     public void checkInputNumberValidity() {
+        assertFalse(WorldDiscDemo.inputNumberIsValid("0"));
         assertFalse(WorldDiscDemo.inputNumberIsValid("1"));
         assertFalse(WorldDiscDemo.inputNumberIsValid("5"));
         assertTrue(WorldDiscDemo.inputNumberIsValid("2"));
@@ -36,4 +37,6 @@ public class DiscWorldClassTest {
             fail("Should not have thrown any exception");
         }
     }
+
+
 }
