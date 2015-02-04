@@ -219,11 +219,7 @@ public class BoardGame {
 
 	
 	/*
-    public static void save(String filename, LoadState ls)
-    {
-
-    	FileOutputStream fout ; 
-
+    
     		try{
 
     			fout = new FileOutputStream(filename);
