@@ -89,11 +89,12 @@ public class FileManager {
      * @param filePath the file path
      * @return the array list
      */
-    public static ArrayList<String> loadFile(String filePath) {
+    public static ArrayList<String> loadFile(String filePath, String fileName) {
 
         BufferedReader br = null;
+        
         ArrayList<String> playersRecords = new ArrayList<String>();
-        if (isFileNameValid(filePath)) {
+        if (isFileNameValid(fileName)) {
             try {
                 br = new BufferedReader(new FileReader(filePath));
             } catch (FileNotFoundException e) {
@@ -243,7 +244,7 @@ public class FileManager {
 
     public static boolean isFileNameValid(String fileName) {
         boolean validationResult = true;
-        if (fileName.contains(" "))
+        if (fileName.equals(" "))
             validationResult = false;
         return validationResult;
     }

@@ -25,7 +25,7 @@ public class FileManagerClassTest {
     public void checkArrayListValidity() {
         Exception thrown = null;
         try {
-            FileManager.loadFile("fake");
+            FileManager.loadFile("fake","");
         } catch (Exception e) {
             thrown = e;
         }

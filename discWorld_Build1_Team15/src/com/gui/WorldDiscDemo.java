@@ -107,7 +107,8 @@ public class WorldDiscDemo {
 				int retVal = fc.showOpenDialog(contentPane);
 				if (retVal == APPROVE_OPTION) {
 					String selectedfilePath = fc.getSelectedFile().getAbsolutePath();
-					playerData = FileManager.loadFile(selectedfilePath);
+					String fileName = fc.getSelectedFile().getName();
+					playerData = FileManager.loadFile(selectedfilePath,fileName);
 					try {
 						createAndShowGUI();
 					} catch (IOException e1) {
