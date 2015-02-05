@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
+import com.testcase.BoardGameClassTest;
+
 /**
  * The Class BoardGame.
  *
@@ -38,7 +43,7 @@ public class BoardGame {
 
 	// single static instance
 	/** The board_ game_ object. */
-	private static BoardGame board_Game_Object = new BoardGame();
+	private static BoardGame board_Game_Object = null;
 
 	// private constructor allowing creation of only 1 object
 	/**
@@ -64,6 +69,8 @@ public class BoardGame {
 	 * @return single instance of BoardGame
 	 */
 	public static BoardGame getInstance() {
+		if(board_Game_Object == null)
+			board_Game_Object = new BoardGame();
 		return board_Game_Object;
 	}
 
@@ -172,7 +179,10 @@ public class BoardGame {
 	public static void startGame() {
 
 		game = BoardGame.getInstance();
-
+		
+		JUnitCore junit = new JUnitCore();
+		Result result = junit.run(BoardGameClassTest.class);
+		System.out.println(result.wasSuccessful());
 		rand = new Random();
 
 		for (Area temp : BoardGame.board_areas) {

@@ -98,7 +98,7 @@ public class FileManager {
             try {
                 br = new BufferedReader(new FileReader(filePath));
             } catch (FileNotFoundException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                System.out.println("File Not found");  //To change body of catch statement use File | Settings | File Templates.
             }
             String line;
             try {
