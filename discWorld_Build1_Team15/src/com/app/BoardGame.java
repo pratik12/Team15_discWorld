@@ -144,10 +144,11 @@ public class BoardGame {
 			for (int i = 0; i < players; i++) {
 
 				Player player = new Player(color[i]); // creating new player
-				playersInGame.add(player); // add the player to the store
 				assignPersonalityCards(player);
+				
 				player.placeMinion("Seven Sleepers");
 				player.addBuilding("Seven Sleepers");
+				playersInGame.add(player); // add the player to the store
 				// every player will be assigned 5 playing cards..first only green ones are to be used
 				for(int j = 1; j < 6  ; j++){
 					Random rand = new Random();
@@ -163,13 +164,13 @@ public class BoardGame {
 				// temporary printing out to console from here
 
 				ConsoleOutput.printOutPlayerState(player);
-				ConsoleOutput.printOutGameBoardState();
 				ConsoleOutput.printOutInventory(player);
 
 			}
 		} else {
 			System.out.println("Player cannot be less than 2");
 		}
+		ConsoleOutput.printOutGameBoardState();
 
 	}
 

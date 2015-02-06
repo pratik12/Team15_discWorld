@@ -90,7 +90,8 @@ public class Player {
 			for(Area area : temp){
 
 				//calls for the method which will give you the object at runtime for the area where building has to be placed
-				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).isTroubleMarkers()) ){
+				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).isTroubleMarkers()) 
+					&&	!(isThisAreaWithAnyOtherPlayer(area_name)) ){
 					// setting the player to the area that he wants to place a building
 					// setting the buildings attribute for that area to be true
 					// thus setting up the dependency of WHICH PLAYER HAS BUILDING IN WHICH AREA
@@ -113,7 +114,9 @@ public class Player {
 		else{
 			// If the area does not exist with any player then just add that area object to current player 
 			for(Area area : BoardGame.board_areas){
-				if(area.getAreaName().equals(area_name) && checkForTroubleMarkers(area_name).isTroubleMarkers()==false ){
+				
+				if(area.getAreaName().equals(area_name) && checkForTroubleMarkers(area_name).isTroubleMarkers()==false 
+				&&	!(isThisAreaWithAnyOtherPlayer(area_name))	){
 					// set corresponding building attributes of player
 					this.setPlayerAreas(checkForTroubleMarkers(area_name));
 					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
@@ -123,15 +126,27 @@ public class Player {
 					checkForTroubleMarkers(area_name).setAreaCityCards(true);
 
 					// update players own amount and deposit the cost of constructing building in the bank
-					BoardGame.setBank(checkForTroubleMarkers(area_name).getCostOfArea());
+					BoardGame.setBank(BoardGame.getBank() + checkForTroubleMarkers(area_name).getCostOfArea());
 					this.setPlayerAmount(getPlayerAmount() -checkForTroubleMarkers(area_name).getCostOfArea());
 					break;
 				}
+				
 			}
 		}
 		return "";
 	}
 
+	private boolean isThisAreaWithAnyOtherPlayer(String areaName) {
+
+		
+		for(Player p : BoardGame.playersInGame){
+			
+			if(p.getCityAreaCards().split(":")[0].trim().equals(areaName)){
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * places a minion in any location.
 	 * Should be used to place a minion in any area when the game is in progress.
