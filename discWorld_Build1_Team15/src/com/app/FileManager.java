@@ -129,7 +129,8 @@ public class FileManager {
      * @param playersRecords the players records
      */
     private static void initializeGameState(ArrayList<String> playersRecords) {
-
+    	
+    	emptyAllDataStructures();
         String[] firstLine = playersRecords.get(0).split(":");
         int noOfPlayers = Integer.parseInt(firstLine[1].trim());
         playersRecords.remove(0);
@@ -144,7 +145,34 @@ public class FileManager {
         createPlayers(playersRecords);
     }
 
-    /**
+    private static void emptyAllDataStructures() {
+    	
+    	if((BoardGame.playersInGame) != null){
+    	for(Player p : BoardGame.playersInGame){
+    		// clearing players own area list
+    		p.getPlayerAreas().clear();
+    		p.getMinions().clear();
+    		p.getPlayersPlayingCard().clear();
+    	}
+    	}
+    	if((BoardGame.board_areas) != null){
+    		
+    		for(Area a : BoardGame.board_areas){
+    			if((a.getPlayersInThisAreas()!=null))
+    				a.getPlayersInThisAreas().clear();
+    		}
+    		BoardGame.board_areas.clear();
+    		BoardGame.personality_cards.clear();
+    		BoardGame.player_cards.clear();
+    		BoardGame.playersInGame.clear();
+    		// need to destroy the boardgame instance
+    		BoardGame.getInstance() = null;
+    	}
+    	
+    	
+	}
+
+	/**
      * Initialize trouble marker on game board.
      *
      * @param playersRecords - initializing troubleMarkers on the game board
@@ -213,6 +241,9 @@ public class FileManager {
                                 index++;
                                 countBuilding--;
                             } while (countBuilding != 0);
+                        }
+                        else{
+                        	index++;
                         }
                         // setting players playing cards
                         if (playerInfo[index].split("-")[1].equalsIgnoreCase("green")) {

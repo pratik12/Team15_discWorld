@@ -55,7 +55,7 @@ public class BoardGame {
 		personality_cards = new ArrayList<String>(7);
 		random_event_cards = new ArrayList<String>(12);
 		player_cards = new ArrayList<PlayerCard>(101);
-		bank = 500;
+		bank = 120;
 		init();
 
 		for (String key : area_details.keySet()) {
