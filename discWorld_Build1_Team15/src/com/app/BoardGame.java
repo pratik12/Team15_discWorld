@@ -145,9 +145,9 @@ public class BoardGame {
 
 				Player player = new Player(color[i]); // creating new player
 				assignPersonalityCards(player);
-				
-				player.placeMinion("Seven Sleepers");
-				player.addBuilding("Seven Sleepers");
+				player.placeMinion("The Shades");
+				player.placeMinion("The Scours");
+				player.placeMinion("Dolly Sisters");
 				playersInGame.add(player); // add the player to the store
 				// every player will be assigned 5 playing cards..first only green ones are to be used
 				for(int j = 1; j < 6  ; j++){
