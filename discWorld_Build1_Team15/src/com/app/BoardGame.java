@@ -55,7 +55,7 @@ public class BoardGame {
 		personality_cards = new ArrayList<String>(7);
 		random_event_cards = new ArrayList<String>(12);
 		player_cards = new ArrayList<PlayerCard>(101);
-		bank = 500;
+		bank = 120;
 		init();
 
 		for (String key : area_details.keySet()) {
@@ -144,10 +144,11 @@ public class BoardGame {
 			for (int i = 0; i < players; i++) {
 
 				Player player = new Player(color[i]); // creating new player
-				playersInGame.add(player); // add the player to the store
 				assignPersonalityCards(player);
-				player.placeMinion("Seven Sleepers");
-				player.addBuilding("Seven Sleepers");
+				player.placeMinion("The Shades");
+				player.placeMinion("The Scours");
+				player.placeMinion("Dolly Sisters");
+				playersInGame.add(player); // add the player to the store
 				// every player will be assigned 5 playing cards..first only green ones are to be used
 				for(int j = 1; j < 6  ; j++){
 					Random rand = new Random();
@@ -163,13 +164,13 @@ public class BoardGame {
 				// temporary printing out to console from here
 
 				ConsoleOutput.printOutPlayerState(player);
-				ConsoleOutput.printOutGameBoardState();
 				ConsoleOutput.printOutInventory(player);
 
 			}
 		} else {
 			System.out.println("Player cannot be less than 2");
 		}
+		ConsoleOutput.printOutGameBoardState();
 
 	}
 
@@ -182,7 +183,7 @@ public class BoardGame {
 		
 		JUnitCore junit = new JUnitCore();
 		Result result = junit.run(BoardGameClassTest.class);
-		System.out.println(result.wasSuccessful());
+		System.out.println("Are there more than 1 board in use for the current game? "+result.wasSuccessful());
 		rand = new Random();
 
 		for (Area temp : BoardGame.board_areas) {
