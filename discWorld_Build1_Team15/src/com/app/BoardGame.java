@@ -183,7 +183,7 @@ public class BoardGame {
 		
 		JUnitCore junit = new JUnitCore();
 		Result result = junit.run(BoardGameClassTest.class);
-		System.out.println(result.wasSuccessful());
+		System.out.println("Are there more than 1 board in use for the current game? "+result.wasSuccessful());
 		rand = new Random();
 
 		for (Area temp : BoardGame.board_areas) {
