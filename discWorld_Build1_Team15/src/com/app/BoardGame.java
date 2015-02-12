@@ -43,7 +43,7 @@ public class BoardGame {
 
 	// single static instance
 	/** The board_ game_ object. */
-	public static BoardGame board_Game_Object = null;
+	private static BoardGame board_Game_Object = null;
 
 	// private constructor allowing creation of only 1 object
 	/**
@@ -66,6 +66,8 @@ public class BoardGame {
 	public static void setInstance(){
 		if(BoardGame.board_Game_Object == null)
 			board_Game_Object = new BoardGame();
+		else
+			BoardGame.board_Game_Object = null;
 		
 	}
 	/**
@@ -179,7 +181,7 @@ public class BoardGame {
 	public static void start(){
 		
 		BoardGame.setInstance();
-		board_Game_Object = BoardGame.getInstance();
+//		board_Game_Object = BoardGame.getInstance();
 		startGame();
 	}
 	/**

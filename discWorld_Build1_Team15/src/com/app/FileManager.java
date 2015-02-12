@@ -159,13 +159,13 @@ public class FileManager {
     			if((a.getPlayersInThisAreas()!=null))
     				a.getPlayersInThisAreas().clear();
     		}
-    		BoardGame.getInstance().board_areas.clear();
+    		BoardGame.board_areas.clear();
     		BoardGame.personality_cards.clear();
     		BoardGame.player_cards.clear();
     		BoardGame.playersInGame.clear();
     		BoardGame.getInstance().random_event_cards.clear();
     		//BoardGame.getInstance()=null;
-    		BoardGame game = BoardGame.getInstance() ;
+    		BoardGame.setInstance();
     		
     		// BoardGame.game.setInstance();
     		// need to destroy the boardgame instance
