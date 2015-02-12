@@ -43,7 +43,7 @@ public class BoardGame {
 
 	// single static instance
 	/** The board_ game_ object. */
-	private static BoardGame board_Game_Object = null;
+	public static BoardGame board_Game_Object = null;
 
 	// private constructor allowing creation of only 1 object
 	/**
@@ -62,15 +62,19 @@ public class BoardGame {
 			board_areas.add(new Area(key.toString(), area_details.get(key)));
 		}
 	}
-
+	
+	public static void setInstance(){
+		if(BoardGame.board_Game_Object == null)
+			board_Game_Object = new BoardGame();
+		
+	}
 	/**
 	 * Gets the single instance of BoardGame.
 	 *
 	 * @return single instance of BoardGame
 	 */
 	public static BoardGame getInstance() {
-		if(board_Game_Object == null)
-			board_Game_Object = new BoardGame();
+		
 		return board_Game_Object;
 	}
 
@@ -79,7 +83,9 @@ public class BoardGame {
 	 * also initializes 7 personality cards which will be given 1 to each player.
 	 */
 	private void init() {
-
+		
+		if((area_details.isEmpty()) && (personality_cards.isEmpty())
+				&& (random_event_cards.isEmpty()) && (player_cards.isEmpty())){
 		area_details.put("Dolly Sisters", "6:1");
 		area_details.put("Unreal Estate", "18:2");
 		area_details.put("Dragons Landing", "12:3");
@@ -119,16 +125,13 @@ public class BoardGame {
 				player_cards.add(new PlayerCard(i,"Green", " ", "Deck Pile"));
 			}else{
 				player_cards.add(new PlayerCard(i, "Brown", " ", "Deck Pile"));
+				}
 			}
 		}
-
 	}
 
 	/** The random object. */
 	static Random rand;
-
-	/** The game. */
-	static BoardGame game;
 
 	/**
 	 * takes the number of players and creates them.
@@ -162,7 +165,6 @@ public class BoardGame {
 					}
 				}
 				// temporary printing out to console from here
-
 				ConsoleOutput.printOutPlayerState(player);
 				ConsoleOutput.printOutInventory(player);
 
@@ -173,20 +175,24 @@ public class BoardGame {
 		ConsoleOutput.printOutGameBoardState();
 
 	}
-
+	
+	public static void start(){
+		
+		BoardGame.setInstance();
+		board_Game_Object = BoardGame.getInstance();
+		startGame();
+	}
 	/**
 	 * start the game . connected to swings
 	 */
 	public static void startGame() {
-
-		game = BoardGame.getInstance();
 		
 		JUnitCore junit = new JUnitCore();
 		Result result = junit.run(BoardGameClassTest.class);
 		System.out.println("Are there more than 1 board in use for the current game? "+result.wasSuccessful());
 		rand = new Random();
 
-		for (Area temp : BoardGame.board_areas) {
+		for (Area temp : BoardGame.board_Game_Object.board_areas) {
 			if (temp.getAreaName().equalsIgnoreCase("The Scours") ||
 					temp.getAreaName().equalsIgnoreCase("The Shades") ||
 					temp.getAreaName().equalsIgnoreCase("Dolly Sisters")) {
