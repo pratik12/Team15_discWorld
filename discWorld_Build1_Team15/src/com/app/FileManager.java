@@ -45,12 +45,10 @@ public class FileManager {
                         for (int i = 0; i < str.size(); i++) {
                             // only taking out those names of areas where the minion is placed
                             if (!(str.get(i).equals("Players Pile"))) {
-
                                 out.write("MINION-" + str.get(i) + ":");
                             }
                         }
                     }
-
                 }
                 out.write(player.getNumberOfBuildings() + ":");
                 boolean count = false;
@@ -135,14 +133,16 @@ public class FileManager {
         int noOfPlayers = Integer.parseInt(firstLine[1].trim());
         playersRecords.remove(0);
         // initializing the board
-        BoardGame.startGame();
+        BoardGame.start();
         // creating number of players
-        System.out.println(noOfPlayers);
-        System.out.println(playersRecords.get(0));
+       // System.out.println(noOfPlayers);
+      //  System.out.println(playersRecords.get(0));
 
         initializeTroubleMarkerOnGameBoard(playersRecords);
 
         createPlayers(playersRecords);
+        
+        
     }
 
     private static void emptyAllDataStructures() {
@@ -161,12 +161,17 @@ public class FileManager {
     			if((a.getPlayersInThisAreas()!=null))
     				a.getPlayersInThisAreas().clear();
     		}
-    		BoardGame.board_areas.clear();
+    		BoardGame.board_areas.remove(null);
     		BoardGame.personality_cards.clear();
     		BoardGame.player_cards.clear();
     		BoardGame.playersInGame.clear();
+    		BoardGame.getInstance().random_event_cards.clear();
+    		//BoardGame.getInstance()=null;
+    		BoardGame.setInstance();
+    		
+    		// BoardGame.game.setInstance();
     		// need to destroy the boardgame instance
-    		BoardGame.getInstance() = null;
+    		System.gc();
     	}
     	
     	
@@ -259,8 +264,6 @@ public class FileManager {
                         }
                         // setting players bank account balance
                         playerInBoardGame.setPlayerAmount(Integer.parseInt(playerInfo[index].split("-")[1]));
-                        ConsoleOutput.printOutPlayerState(playerInBoardGame);
-                        ConsoleOutput.printOutInventory(playerInBoardGame);
 
                     }
                 }
@@ -270,7 +273,14 @@ public class FileManager {
                 BoardGame.setBank(Integer.parseInt(str.split("-")[1]));
             }
         }
+        for(Player playerInBoardGame : BoardGame.getInstance().playersInGame){
+        	      ConsoleOutput.printOutPlayerState(playerInBoardGame);
+        	      System.out.println();
+        	      ConsoleOutput.printOutInventory(playerInBoardGame);
+        	
+        }
         ConsoleOutput.printOutGameBoardState();
+        System.out.println();
     }
 
     public static boolean isFileNameValid(String fileName) {

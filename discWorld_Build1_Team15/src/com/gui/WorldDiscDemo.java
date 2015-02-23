@@ -73,7 +73,7 @@ public class WorldDiscDemo {
 				if (!inputNumberIsValid(playersNumber)) {
 					JOptionPane.showMessageDialog(null, "Entered Number Is not Valid!", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					BoardGame.startGame();
+					BoardGame.start();
 					BoardGame.initiateNumberOfPlayers(Integer.parseInt(playersNumber));
 				}
 			}
