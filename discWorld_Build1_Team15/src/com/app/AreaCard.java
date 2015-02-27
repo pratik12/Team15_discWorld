@@ -1,17 +1,12 @@
 package com.app;
 
-import java.util.ArrayList;
-
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * 
  * @author Sanchit
- * 		enum  areaCard
+ * 		enum  AreaCard
  *		representing the 12 city area cards
  */
-	public enum areaCard{
+	public enum AreaCard {
 		
 		the_Hippo("The Hippo"), 
 		the_Scours("The Scours"),  									
@@ -29,7 +24,7 @@ import java.util.List;
 	
 		
 	private String area;
-	private areaCard(String area)
+	private AreaCard(String area)
 	{
 			this.area=area;
 			
@@ -43,11 +38,11 @@ import java.util.List;
 	
 	
 	
-	private areaCard aCard;
+	private AreaCard aCard;
 	
 	
-	public areaCard addCityAreaCard(String areaname){
-		for(areaCard temp : areaCard.values() )
+	public AreaCard addCityAreaCard(String areaname){
+		for(AreaCard temp : AreaCard.values() )
 		{
 			if(temp.getarea().equals(areaname))
 					{
@@ -59,7 +54,7 @@ import java.util.List;
 		return null;
 	}
 	
-	public void executeCityAreaAction(areaCard aCard){
+	public void executeCityAreaAction(AreaCard aCard){
 		
 		switch (aCard) {
 		
