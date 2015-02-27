@@ -42,8 +42,6 @@ public class Player {
 	/** The player_areas. */
 	private ArrayList<Area> player_areas = new ArrayList<Area>();
 
-    private int playerLoan;
-
 	/**
 	 * Constructor to set the properties of player.
 	 *
@@ -208,8 +206,8 @@ public class Player {
 
 		if(!(this.getPlayersPlayingCard().isEmpty())){
 			result += this.playersPlayingCard.get(0).getColor();
-			for(PlayerCard p : this.getPlayersPlayingCard())
-				result += p.getNumber() + ",";
+			//for(PlayerCard p : this.getPlayersPlayingCard())
+			//	result += p.getNumber() + ",";
 		}
 		return result;
 	}
@@ -254,15 +252,7 @@ public class Player {
 		}
 	}
 
-    public int getPlayerLoan() {
-        return playerLoan;
-    }
-
-    public void setPlayerLoan(int playerLoan) {
-        this.playerLoan = playerLoan;
-    }
-
-    /**
+	/**
 	 * Gets the minion quantity.
 	 *
 	 * @return the minion quantity

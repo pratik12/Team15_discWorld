@@ -121,14 +121,12 @@ public class BoardGame {
 		random_event_cards.add("Explosion");
 		random_event_cards.add("Earthquake");
 		random_event_cards.add("Fire");
-
-		for(int i = 1 ; i<102;i++){
-			if(i!=48){
-				player_cards.add(new PlayerCard(i,"Green", " ", "Deck Pile"));
-			}else{
-				player_cards.add(new PlayerCard(i, "Brown", " ", "Deck Pile"));
-				}
-			}
+		
+		
+		for(PlayerCard pc : PlayerCard.values()){
+			player_cards.add(pc);
+		}
+		
 		}
 	}
 
@@ -155,16 +153,22 @@ public class BoardGame {
 				player.placeMinion("Dolly Sisters");
 				playersInGame.add(player); // add the player to the store
 				// every player will be assigned 5 playing cards..first only green ones are to be used
-				for(int j = 1; j < 6  ; j++){
-					Random rand = new Random();
-					int randInt = rand.nextInt(48);
-					if(randInt!=0){
-
-						if(BoardGame.player_cards.get(randInt).getColor().equalsIgnoreCase("green")){
-							player.setPlayersPlayingCard(BoardGame.player_cards.get(j));
-							BoardGame.player_cards.remove(j);                			
-						}
+				ArrayList<Integer> temp = new ArrayList<Integer>();
+				for(int j = 0; j < 5  ; j++){
+					
+					int randInt = shuffle(BoardGame.player_cards.size()-1);
+					
+					if(!(randInt > BoardGame.player_cards.size()-1)){
+						
+						if(BoardGame.player_cards.get(randInt).getColor().equalsIgnoreCase("green") && 
+								BoardGame.player_cards.get(randInt) != null	 ){
+							player.setPlayersPlayingCard(BoardGame.player_cards.get(randInt));
+								BoardGame.player_cards.remove(randInt);                			
+								}
 					}
+					else{
+						j--;
+						}
 				}
 				// temporary printing out to console from here
 				ConsoleOutput.printOutPlayerState(player);
@@ -178,6 +182,14 @@ public class BoardGame {
 
 	}
 	
+	private static int shuffle(int i) {
+
+		Random rand = new Random();
+		return rand.nextInt(i);
+		
+		
+	}
+
 	public static void start(){
 		
 		BoardGame.setInstance();

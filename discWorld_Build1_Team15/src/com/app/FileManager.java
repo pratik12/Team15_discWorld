@@ -1,6 +1,7 @@
 package com.app;
 
 import javax.swing.*;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -64,7 +65,8 @@ public class FileManager {
                 out.write("PLAYING CARD-" + player.getPlayersPlayingCard().get(0).getColor() + ":");
                 for (int i = 0; i < player.getPlayersPlayingCard().size(); i++) {
 
-                    out.write(player.getPlayersPlayingCard().get(i).getColor() + "-" + player.getPlayersPlayingCard().get(i).getNumber() + ":");
+                    out.write(player.getPlayersPlayingCard().get(i).getColor() + "-" + 
+                    		player.getPlayersPlayingCard().get(i).getName()+ ":");
                 }
                 // player amount
                 out.write("BANK-" + player.getPlayerAmount() + "\n");
@@ -255,10 +257,11 @@ public class FileManager {
                             index++;
                             if (!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank"))) {
                                 do {
-                                    PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index].split("-")[1]), "Green", " ", " ");
+                                    //PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index].split("-")[1]), "Green", " ", " ");
+                                	PlayerCard p = returnInstanceOfPlayerCard(playerInfo[index].split("-")[1]);
                                     playerInBoardGame.setPlayersPlayingCard(p);
                                     index++;
-                                    BoardGame.player_cards.remove(playerInfo[index]);
+                                    BoardGame.player_cards.remove(p);
                                 } while (!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank")));
                             }
                         }
@@ -283,7 +286,19 @@ public class FileManager {
         System.out.println();
     }
 
-    public static boolean isFileNameValid(String fileName) {
+    private static PlayerCard returnInstanceOfPlayerCard(String string) {
+
+    	for(PlayerCard temp : BoardGame.player_cards){
+    		
+    		if(temp.getName().equalsIgnoreCase(string)){
+    			return temp;
+    		}
+    		
+    	}
+    	return null;
+	}
+
+	public static boolean isFileNameValid(String fileName) {
         boolean validationResult = true;
         if (fileName.equals(" "))
             validationResult = false;

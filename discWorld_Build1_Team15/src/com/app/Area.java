@@ -16,9 +16,7 @@ public class Area {
 	/** The area_name. */
 	private String area_name;
 
-    private boolean adjacentToRiver;
-
-    /** The area_number. */
+	/** The area_number. */
 	private int area_number;
 
 	/** The cost_of_area. */
@@ -82,16 +80,7 @@ public class Area {
 		this.area_name = area_name;
 	}
 
-
-    public boolean isAdjacentToRiver() {
-        return adjacentToRiver;
-    }
-
-    public void setAdjacentToRiver(boolean adjacentToRiver) {
-        this.adjacentToRiver = adjacentToRiver;
-    }
-
-    /**
+	/**
 	 * Gets the area number.
 	 *
 	 * @return the area_number
