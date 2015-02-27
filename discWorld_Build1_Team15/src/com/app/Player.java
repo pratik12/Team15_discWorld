@@ -42,6 +42,8 @@ public class Player {
 	/** The player_areas. */
 	private ArrayList<Area> player_areas = new ArrayList<Area>();
 
+    private int playerLoan;
+
 	/**
 	 * Constructor to set the properties of player.
 	 *
@@ -252,7 +254,15 @@ public class Player {
 		}
 	}
 
-	/**
+    public int getPlayerLoan() {
+        return playerLoan;
+    }
+
+    public void setPlayerLoan(int playerLoan) {
+        this.playerLoan = playerLoan;
+    }
+
+    /**
 	 * Gets the minion quantity.
 	 *
 	 * @return the minion quantity
