@@ -2,6 +2,10 @@ package com.app;
 
 import javax.swing.*;
 
+import org.json.JSONException;
+
+import com.app.PlayingCardSystem.PlayerCard;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -88,8 +92,9 @@ public class FileManager {
      *
      * @param filePath the file path
      * @return the array list
+     * @throws JSONException 
      */
-    public static ArrayList<String> loadFile(String filePath, String fileName) {
+    public static ArrayList<String> loadFile(String filePath, String fileName) throws JSONException {
 
         BufferedReader br = null;
         
@@ -127,8 +132,9 @@ public class FileManager {
      * this method will initialize the game board wrt the state it reads from the file.
      *
      * @param playersRecords the players records
+     * @throws JSONException 
      */
-    private static void initializeGameState(ArrayList<String> playersRecords) {
+    private static void initializeGameState(ArrayList<String> playersRecords) throws JSONException {
     	
     	emptyAllDataStructures();
         String[] firstLine = playersRecords.get(0).split(":");
@@ -147,7 +153,7 @@ public class FileManager {
         
     }
 
-    private static void emptyAllDataStructures() {
+    private static void emptyAllDataStructures() throws JSONException {
     	
     	if((BoardGame.playersInGame) != null){
     	for(Player p : BoardGame.playersInGame){

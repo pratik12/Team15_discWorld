@@ -2,6 +2,8 @@ package com.app;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.app.PlayingCardSystem.PlayerCard;
+
 /**
  * Player class holding properties of a player.
  * Board will have Players, hence Player is good candidate as a class
@@ -367,7 +369,7 @@ public class Player {
 
 
 	/**
-	 * Sets the minions for the player when the game starts and is used to load miions when the game is loaded
+	 * Sets the minions for the player when the game starts and is used to load minions when the game is loaded
 	 * from any arbitrary state.
 	 *
 	 * @param minion_color the minion_color

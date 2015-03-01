@@ -55,10 +55,9 @@ public class Area {
 	 */
 	public Area(String name, String cost_num){
 
-		String[] costNum = cost_num.split(":");
 		this.setAreaName(name);
-		this.setAreaNumber(Integer.parseInt(costNum[1]));
-		this.setCostOfArea(Integer.parseInt(costNum[0]));
+		//this.setAreaNumber(Integer.parseInt(costNum[1]));
+		this.setCostOfArea(Integer.parseInt(cost_num));
 		this.setAreaCityCards(false);
 	}
 

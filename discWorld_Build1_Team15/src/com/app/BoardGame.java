@@ -2,11 +2,17 @@ package com.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
+import com.app.PlayingCardSystem.PlayerCard;
+import com.app.PlayingCardSystem.ScrollUtility;
 import com.testcase.BoardGameClassTest;
 
 /**
@@ -37,10 +43,8 @@ public class BoardGame {
 	/** The players in game. */
 	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
 
-	// Map of 12 areas
 	/** The area_details. */
-	public HashMap<String, String> area_details = new HashMap<String, String>();
-
+	public JSONObject areaDetails = new JSONObject();
 	// single static instance
 	/** The board_ game_ object. */
 	private static BoardGame board_Game_Object = null;
@@ -48,8 +52,9 @@ public class BoardGame {
 	// private constructor allowing creation of only 1 object
 	/**
 	 * Instantiates a new board game.
+	 * @throws JSONException 
 	 */
-	private BoardGame() {
+	private BoardGame() throws JSONException {
 
 		board_areas = new ArrayList<Area>();
 		personality_cards = new ArrayList<String>(7);
@@ -57,13 +62,16 @@ public class BoardGame {
 		player_cards = new ArrayList<PlayerCard>(101);
 		bank = 120;
 		init();
-
-		for (String key : area_details.keySet()) {
-			board_areas.add(new Area(key.toString(), area_details.get(key)));
+		
+		Iterator<?> keys = areaDetails.keys();
+		while (keys.hasNext()) {
+			String temp = getAdjacentAreaIDs(areaDetails, (String)keys.next());
+			 
+			board_areas.add(new Area( (String)keys.next(), temp.split(":")[0] ));
 		}
 	}
 	
-	public static void setInstance(){
+	public static void setInstance() throws JSONException{
 		if(BoardGame.board_Game_Object == null)
 			board_Game_Object = new BoardGame();
 		else
@@ -83,24 +91,28 @@ public class BoardGame {
 	/**
 	 * initializing data structure for storing 12 area names and cost
 	 * also initializes 7 personality cards which will be given 1 to each player.
+	 * @throws JSONException 
 	 */
-	private void init() {
+	private void init() throws JSONException {
 		
-		if((area_details.isEmpty()) && (personality_cards.isEmpty())
+		if((areaDetails.length() == 0) && (personality_cards.isEmpty())
 				&& (random_event_cards.isEmpty()) && (player_cards.isEmpty())){
-		area_details.put("Dolly Sisters", "6:1");
-		area_details.put("Unreal Estate", "18:2");
-		area_details.put("Dragons Landing", "12:3");
-		area_details.put("Small Gods", "18:4");
-		area_details.put("The Scours", "6:5");
-		area_details.put("The Hippo", "12:6");
-		area_details.put("The Shades", "6:7");
-		area_details.put("Dimwell", "6:8");
-		area_details.put("Longwell", "12:9");
-		area_details.put("Isle of Gods", "12:10");
-		area_details.put("Seven Sleepers", "18:11");
-		area_details.put("Nap Hill", "12:12");
-
+		
+		
+		areaDetails.append("Dolly Sisters",new JSONObject().put("1", "6:12:3:2"));
+		areaDetails.append("Unreal Estate",new JSONObject().put("2", "18:1:12:10:4"));
+		areaDetails.append("Dragons Landing",new JSONObject().put("3", "12:12:3:2"));
+		areaDetails.append("Small Gods",new JSONObject().put("4", "18:12:3:2"));
+		areaDetails.append("The Scours",new JSONObject().put("5", "6:12:3:2"));
+		areaDetails.append("The Hippo",new JSONObject().put("6", "12:12:3:2"));
+		areaDetails.append("The Shades",new JSONObject().put("7", "6:12:3:2"));
+		areaDetails.append("Dimwell",new JSONObject().put("8", "6:12:3:2"));
+		areaDetails.append("Longwell",new JSONObject().put("9", "12:12:3:2"));
+		areaDetails.append("Isle of Gods",new JSONObject().put("10", "12:12:3:2"));
+		areaDetails.append("Seven Sleepers",new JSONObject().put("11", "18:12:3:2"));
+		areaDetails.append("Nap Hill",new JSONObject().put("12", "12:12:3:2"));
+		
+		//getAdjacentAreaIDs(areaDetails, "Nap Hill");
 		personality_cards.add("Lord Vetinari");
 		personality_cards.add("Lord Selachii");
 		personality_cards.add("Lord Rust");
@@ -126,6 +138,7 @@ public class BoardGame {
 		for(PlayerCard pc : PlayerCard.values()){
 			player_cards.add(pc);
 		}
+		
 		
 		}
 	}
@@ -162,21 +175,32 @@ public class BoardGame {
 						
 						if(BoardGame.player_cards.get(randInt).getColor().equalsIgnoreCase("green") && 
 								BoardGame.player_cards.get(randInt) != null	 ){
+								
 							player.setPlayersPlayingCard(BoardGame.player_cards.get(randInt));
-								BoardGame.player_cards.remove(randInt);                			
+							BoardGame.player_cards.remove(randInt);                			
 								}
 					}
 					else{
 						j--;
 						}
+					
+				//player.getPlayersPlayingCard().get(0).performAction(player.getPlayersPlayingCard().get(0).getName(),player);
 				}
 				// temporary printing out to console from here
+				
+				
 				ConsoleOutput.printOutPlayerState(player);
 				ConsoleOutput.printOutInventory(player);
 
 			}
 		} else {
 			System.out.println("Player cannot be less than 2");
+		}
+		
+		// this for loop is for testing playing card enum properties only purposes only 
+		for(PlayerCard pc : PlayerCard.values()){
+			if(pc.getName().equalsIgnoreCase("boggis"))
+				ScrollUtility.TESTR.performAction(pc.getName(), BoardGame.playersInGame.get(0));
 		}
 		ConsoleOutput.printOutGameBoardState();
 
@@ -190,7 +214,7 @@ public class BoardGame {
 		
 	}
 
-	public static void start(){
+	public static void start() throws JSONException{
 		
 		BoardGame.setInstance();
 //		board_Game_Object = BoardGame.getInstance();
@@ -248,7 +272,25 @@ public class BoardGame {
 		return bank;
 	}
 
-	
+	public String getAdjacentAreaIDs(JSONObject areaJson, String areaName) throws JSONException{
+		
+		JSONArray jsonarray = areaJson.getJSONArray(areaName);
+		
+		JSONObject innerjson = jsonarray.getJSONObject(0);
+		Iterator<?> keys = innerjson.keys();
+		Object temp = null;
+		String temps = null;
+		while( keys.hasNext() ){
+			
+			 temp =  innerjson.get((String)keys.next());
+			 temps = temp.toString();
+	//		temp =  innerjson.get((String)keys.next());
+			
+			
+		}
+		return temps;
+		
+	}
 	
 
 
