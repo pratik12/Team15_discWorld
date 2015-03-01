@@ -2,20 +2,22 @@ package userInputUtility;
 
 import java.util.Scanner;
 
-import com.app.PlayingCardSystem.PlayerCard;
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.PlayingCardSystem.PlayingCardRulesInterface;
 /**
  * This class will be used everytime to prompt user for his input during the game
  * @author Pratik Bidkar
  *
  */
-public class UserInputUtility {
+public enum UserInputUtility{
 	
+	USERINPUTUTILITYENUM;
 	Scanner in = new Scanner(System.in); 
 	Scanner str = new Scanner(System.in);;
 	int choice = 0;
 	String result = null;
 	
-	public String getUserInput(PlayerCard temp,String result){
+	public String getUserInput(GreenPlayerCardEnum temp,String result){
 		
 		if(temp!=null){
 			System.out.println("Select from menu:");
@@ -49,6 +51,8 @@ public class UserInputUtility {
 		return result;
 		
 	}
+
+	
 	
 
 }
