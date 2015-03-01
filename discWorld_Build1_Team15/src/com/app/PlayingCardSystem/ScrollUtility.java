@@ -6,16 +6,16 @@ import userInputUtility.UserInputUtility;
 
 import com.app.Player;
 
-public enum ScrollUtility  {
+ public enum ScrollUtility {
 
 	TESTR;
 	UserInputUtility uiuObj;
 	
 	public void performAction(String enumName, Player currentPlayingPlayer){
 		
-		PlayerCard temp = null;
+		GreenPlayerCardEnum temp = null;
 		
-		for(PlayerCard p : currentPlayingPlayer.getPlayersPlayingCard()){
+		for(GreenPlayerCardEnum p : currentPlayingPlayer.getPlayersPlayingCard()){
 			if(p.getName().equalsIgnoreCase(enumName))
 				temp = p;
 		}
@@ -54,6 +54,7 @@ public enum ScrollUtility  {
 				}
 			}
 			System.out.println("You hae finished playing this card. Place it on discard deck");
+			// place this card on the discard pile
 			break;
 		
 		case CMOTDIBBLER:
@@ -126,17 +127,16 @@ public enum ScrollUtility  {
 		
 	}
 	
-	public static String askSymbolsInOrder(PlayerCard tempEnum, String result){
+	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result){
 		
-		UserInputUtility u = new UserInputUtility();
 		String res = "enter";
 		
-			res = u.getUserInput(tempEnum,result);
+			res = UserInputUtility.USERINPUTUTILITYENUM.getUserInput(tempEnum,result);
 			return res;
 	}
 
-	public static void main(String[] args){
-		String res = askSymbolsInOrder(PlayerCard.BOGGIS,"");	
+	public void main(String[] args){
+		String res = askSymbolsInOrder(GreenPlayerCardEnum.BOGGIS,"");	
 	}
 
 }
