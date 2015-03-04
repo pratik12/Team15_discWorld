@@ -42,7 +42,7 @@ public class BoardGame {
 	// this arraylist acts as a store of current players in the game
 	/** The players in game. */
 	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
-
+	private static ArrayList<GreenPlayerCardEnum> discardPilePlayerCards = new ArrayList<GreenPlayerCardEnum>();
 	/** The area_details. */
 	public JSONObject areaDetails = new JSONObject();
 	// single static instance
@@ -291,6 +291,23 @@ public class BoardGame {
 		return temps;
 		
 	}
+	
+	/**
+	 * @return the discardPilePlayerCards
+	 */
+	public static ArrayList<GreenPlayerCardEnum> getDiscardPilePlayerCards() {
+		return discardPilePlayerCards;
+	}
+
+	/**
+	 * @param discardPilePlayerCards the discardPilePlayerCards to set
+	 */
+	public static void setDiscardPilePlayerCards(
+			GreenPlayerCardEnum discardPilePlayerCards) {
+		if(discardPilePlayerCards!=null)
+			BoardGame.discardPilePlayerCards.add(discardPilePlayerCards);
+	}
+	
 	
 
 
