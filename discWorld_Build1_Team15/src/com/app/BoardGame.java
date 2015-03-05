@@ -65,9 +65,10 @@ public class BoardGame {
 		
 		Iterator<?> keys = areaDetails.keys();
 		while (keys.hasNext()) {
-			String temp = getAdjacentAreaIDs(areaDetails, (String)keys.next());
+			String tempArea = (String)keys.next();
+			String temp = getAdjacentAreaIDs(areaDetails, tempArea);
 			 
-			board_areas.add(new Area( (String)keys.next(), temp.split(":")[0] ));
+			board_areas.add(new Area( tempArea, temp.split(":")[0] ));
 		}
 	}
 	
