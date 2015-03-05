@@ -26,29 +26,31 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		
 		@Override
 		public void performTasks(Player currentPlayingPlayer) {
-		
 			
 		String res = askSymbolsInOrder(this ,"0");
 		
 		while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
 			(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
 			if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+				
 				PlayingCardRuleEngine.TEST.takeMoney(2, currentPlayingPlayer);
 				res = askSymbolsInOrder(this, res.split(":")[1].trim());
 			}
 			else if(res.split(":")[0].trim().equalsIgnoreCase("minion")){
 				// call appropriate function
 				String minionLocation = questionsToAsk("Enter area name where you want to place a minion? : nul");
+				// should display the current state of board
+				// print out the board state on a frmae gui
 				for(Area a : BoardGame.board_areas){
 					if(a.getAreaName().equalsIgnoreCase(minionLocation)){
 						currentPlayingPlayer.setMinions(currentPlayingPlayer.getPlayerColor(), minionLocation);
 						break;
 					}
-					else{
-						System.out.println("you have entered a wrong area name.");
-					}
+					
 				}
 			}
+			break;
 		}
 		System.out.println("You hae finished playing this card. Place it on discard deck");
 		}
@@ -57,36 +59,43 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		// place this card on the discard pile
 	},//take 2$ from all players
 	
-	BEGGARSGUILD("BEGGARSGUILD","green","DeckPile") {
+BEGGARSGUILD("BEGGARSGUILD","green","DeckPile", new String[]{"scroll","minion"} ) {
 		
-		@Override
-		public void performTasks(Player currentPlayingPlayer) {
+	@Override
+	public void performTasks(Player currentPlayingPlayer) {
 			
+		String res = askSymbolsInOrder(this ,"0");
+			
+		while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+				(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+			if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+				
 			String result = questionsToAsk("Enter the color of player you want to select (R/G/Y/B) in this format : nul");
-			Player selectedPlayer = selectPlayer(currentPlayingPlayer, result);
-			this.takePlayingCards(currentPlayingPlayer,selectedPlayer, 2);
-			
+			takePlayingCards(currentPlayingPlayer, 2);
+			res = askSymbolsInOrder(this, res.split(":")[1].trim());
 		}
-		
-		@Override
-		public void takePlayingCards(Player currrentPlayer, Player fromPlayer, int i){
-			
-			if(!(i > fromPlayer.getPlayersPlayingCard().size())){
-				while(i!=0){
-					String result = questionsToAsk("Enter the card name you want to give with no spaces");
-					for(GreenPlayerCardEnum gc : fromPlayer.getPlayersPlayingCard()){
-						if(result.equalsIgnoreCase(gc.name())){
-							currrentPlayer.setPlayersPlayingCard(gc);
-							fromPlayer.getPlayersPlayingCard().remove(gc);
-							i--;
-							break;
-						}
+			else if(res.split(":")[0].trim().equalsIgnoreCase("minion")){
+				
+				String minionLocation = questionsToAsk("Enter area name where you want to place a minion? : nul");
+				// should display the current state of board
+				// print out the board state on a frmae gui
+				for(Area a : BoardGame.board_areas){
+					if(a.getAreaName().equalsIgnoreCase(minionLocation)){
+						currentPlayingPlayer.setMinions(currentPlayingPlayer.getPlayerColor(), minionLocation);
+						break;
 					}
-					//currrentPlayer.setPlayersPlayingCard(gc);
 					
 				}
+				break;
 			}
+		break;	
 		}
+		System.out.println("You have finished playing this card");
+		// add to discard pile 
+	}
+			
+		
 	},// sleect 1 player. take 2 cards
 	
 	AMBANK("AMBANK","green","DeckPile") {
@@ -98,48 +107,144 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		}
 	}, //loan of 10$ from bank. at end payback 12$ or loose 15 points
 	
-	AMSUNSHINEDRAGONSANCTUARY("AMSUNSHINEDRAGONSANCTUARY","green","DeckPile") {
+	AMSUNSHINEDRAGONSANCTUARY("AMSUNSHINEDRAGONSANCTUARY","green","DeckPile", new String[]{"scroll,pac"}) {
+
+
+	@Override
+	public void performTasks(Player currentPlayingPlayer) throws JSONException {
 		
-		@Override
-		public void performTasks(Player currentPlayingPlayer) {
-			
+		String res = askSymbolsInOrder(this ,"0");
+		
+		while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+				(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+
+			if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
 			for(Player p : BoardGame.playersInGame){
 				if(!(p.getPlayerColor().equalsIgnoreCase(currentPlayingPlayer.getPlayerColor()))){
 					
 					Player fromPlayer = null;
-					String res = questionsToAsk("Enter Your piece color to Give him a playing card :"+
+					String res1 = questionsToAsk("Enter Your piece color to Give him a playing card :"+
 					"Enter 'curr' to Pay him 1$");
-					if(res.equalsIgnoreCase("r") || res.equalsIgnoreCase("g")
-							|| res.equalsIgnoreCase("b") || res.equalsIgnoreCase("y")){
+					if(res1.equalsIgnoreCase("r") || res1.equalsIgnoreCase("g")
+							|| res1.equalsIgnoreCase("b") || res1.equalsIgnoreCase("y")){
 						for(Player pc : BoardGame.playersInGame){
-							if(pc.getPlayerColor().equalsIgnoreCase(res))
+							if(pc.getPlayerColor().equalsIgnoreCase(res1))
 								fromPlayer = pc;
+							break;
 						}
-						takePlayingCards(currentPlayingPlayer, fromPlayer, 1);
-					}else if(res.equalsIgnoreCase("curr")){
+						takePlayingCards(currentPlayingPlayer, 1);
+					}else if(res1.equalsIgnoreCase("curr")){
 						takeMoneyFromPlayer(1, currentPlayingPlayer, fromPlayer);
 					}
 				}
 			}
+			}
+			else if(res.split(":")[0].trim().equalsIgnoreCase("pac")){
+				// call the function of playing another card
+				playAnotherCard(currentPlayingPlayer, this);
+				break;
+			}
+		}
 		}
 	}, // take 1$ from every player or one card
 	
-	ANGUA("ANGUA","green","DeckPile") {
+	ANGUA("ANGUA","green","DeckPile",new String[]{"rtm","pac"}) {
 		
 		@Override
-		public void performTasks(Player currentPlayingPlayer) {}
+		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+
+				if(res.split(":")[0].trim().equalsIgnoreCase("rtm")){
+					String areaName = questionsToAsk("Enter area name to remove trouble marker from:nul");
+					removeTroubleMarker(areaName);
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("pac")){
+					playAnotherCard(currentPlayingPlayer, this);
+				}
+			}
+			
+		}
 	},//
 	
-	AGONYAUNTS("AGONYAUNTS","green","DeckPile") {
+AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"asnate,tkmny,minion"}) {
 		
-		@Override
-		public void performTasks(Player currentPlayingPlayer) {}
+	@Override
+	public void performTasks(Player currentPlayingPlayer) {
+			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("asnate")){
+					
+					
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("tkmny")){
+					
+					String result = questionsToAsk("Enter a players piece color to give playing card to : nul");
+					Player selectedPlayer = selectPlayer(currentPlayingPlayer, result);
+					takeMoneyFromPlayer(2, currentPlayingPlayer, selectedPlayer);
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("minion")){
+					
+					String minionLocation = questionsToAsk("Enter area name where you want to place a minion? :nul");
+					// should display the current state of board
+					// print out the board state on a frmae gui
+					for(Area a : BoardGame.board_areas){
+						if(a.getAreaName().equalsIgnoreCase(minionLocation)){
+							currentPlayingPlayer.setMinions(currentPlayingPlayer.getPlayerColor(), minionLocation);
+							break;
+						}
+					}
+					
+				}
+			break;
+			}
+		}
 	},
 	
-	DYSK("DYSK","green","DeckPile") {
+DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 		
-		@Override
-		public void performTasks(Player currentPlayingPlayer) {}
+	@Override
+	public void performTasks(Player currentPlayingPlayer) {
+			
+		String res = askSymbolsInOrder(this ,"0");
+		
+		while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+				(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+		
+			if(res.split(":")[0].trim().equalsIgnoreCase("addbldg")){
+				
+				String area_name = questionsToAsk("Enter area name to place building:nul");
+				currentPlayingPlayer.addBuilding(area_name);
+				res = askSymbolsInOrder(this ,"0");
+			}
+			else if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+			
+				String minionLocation = questionsToAsk("Enter area name where you want to place a minion? :nul");
+				// should display the current state of board
+				// print out the board state on a frmae gui
+				for(Area a : BoardGame.board_areas){
+					if(a.getAreaName().equalsIgnoreCase(minionLocation)){
+						currentPlayingPlayer.setMinions(currentPlayingPlayer.getPlayerColor(), minionLocation);
+						break;
+					}
+				}
+			}
+			break;
+		}	
+			
+			
+			
+		}
 	},
 	
 	DUCKMAN("DUCKMAN","green","DeckPile") {
@@ -286,7 +391,7 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 				if(Integer.parseInt(res)!=0){
 					for(GreenPlayerCardEnum temp : currentPlayingPlayer.getPlayersPlayingCard()){
 						if(currentPlayingPlayer.getPlayersPlayingCard().contains(res)){
-							addToDiscardPile(temp);
+							addToDiscardPile(1,temp);
 							currentPlayingPlayer.getPlayersPlayingCard().remove(temp);
 							takeMoneyFromBank(2, currentPlayingPlayer);
 						}
@@ -302,7 +407,7 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 	GRYLE("GROAT","green","DeckPile") {
 		
 	},
-	HARGAHOUSEOFRIBS("GROAT","green","DeckPile") {
+	HARGAHOUSEOFRIBS("HARGAHOUSEOFRIBS","green","DeckPile") {
 	},
 	THEPEELEDNUTS("THEPEELEDNUTS","green","DeckPile") {
 	},
@@ -313,43 +418,162 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		}
 	},
 	NOBBYNOBBSS("NOBBYNOBBSS","green","DeckPile") {
+		public void performTasks(Player currentPlayer) throws JSONException{
+			
+			String result = questionsToAsk("Enter a players piece color you want to take money from : nul");
+			Player selectedPlayer = selectPlayer(currentPlayer, result);
+			takeMoneyFromPlayer(3, currentPlayer, selectedPlayer);
+			
+		}
 	},
 	MODO("MODO","green","DeckPile") {
+		public void performTasks(Player currentPlayer) throws JSONException{
+			
+		}
 	},
 	THEMENDEDDRUM("THEMENDEDDRUM","green","DeckPile") {
+		public void performTasks(Player currentPlayer) throws JSONException{
+		}
 	},
 	LIBRARIAN("LIBRARIAN","green","DeckPile") {
+		public void performTasks(Player currentPlayer) throws JSONException{
+			drawCardsFromDeck(4, currentPlayer);
+		}
 	},
 	LEONARDOFQUIRM("LEONARDOFQUIRM","green","DeckPile") {
+		// draw 4 cards from the deck
+		public void performTasks(Player currentPlayer) throws JSONException{
+			drawCardsFromDeck(4, currentPlayer);
+		}
 	},
 	SHONKYSHOP("SHONKYSHOP","green","DeckPile") {
+		
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		
+			while(currentPlayingPlayer.getPlayersPlayingCard().size()!=0){
+
+			System.out.println("Your cards as of now: ");
+			for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard())
+				System.out.print(gc.name()+", ");
+			
+			String res = questionsToAsk("Enter the card you want to discard : Hit '0' to exit");
+			if(Integer.parseInt(res)!=0){
+				for(GreenPlayerCardEnum temp : currentPlayingPlayer.getPlayersPlayingCard()){
+					if(currentPlayingPlayer.getPlayersPlayingCard().contains(res)){
+						addToDiscardPile(1,temp);
+						currentPlayingPlayer.getPlayersPlayingCard().remove(temp);
+						takeMoneyFromBank(1, currentPlayingPlayer);
+					}
+				}
+			}
+			else if(Integer.parseInt(res)==0)
+				break;
+				
+			}
+		}
 	},
 	SACHARISSACRIPSLOCK("SACHARISSACRIPSLOCK","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+			
+			for(Area a: BoardGame.board_areas){
+				if(a.isTroubleMarkers()){
+					takeMoneyFromBank(1, currentPlayingPlayer);
+				}
+			}
+		}
 	},
 	ROSIEPALM("ROSIEPALM","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+			
+			String result = questionsToAsk("Enter a players piece color you want to give card to : nul");
+			Player selectedPlayer = selectPlayer(currentPlayingPlayer, result);
+			
+			System.out.println("Your cards as of now: ");
+			for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard())
+				System.out.print(gc.name()+", ");
+
+			String res = questionsToAsk("Enter card you want to give : nul");
+			for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard()){
+				if(res.equalsIgnoreCase(gc.name())){
+					selectedPlayer.getPlayersPlayingCard().add(gc);
+					currentPlayingPlayer.getPlayersPlayingCard().remove(gc);
+					takeMoneyFromPlayer(2, currentPlayingPlayer, selectedPlayer);
+					break;
+				}
+				
+			}
+		}
 	},
 	RINCEWIND("RINCEWIND","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	THEROYALMINT("THEROYALMINT","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	QUEENMOLLY("QUEENMOLLY","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			
+			String result = questionsToAsk("Enter a players piece color you want to sleect : nul");
+			Player selectedPlayer = selectPlayer(currentPlayingPlayer, result);
+			
+			System.out.println("Your cards as of now Player " +selectedPlayer.getPlayerColor());
+			for(GreenPlayerCardEnum gc : selectedPlayer.getPlayersPlayingCard())
+				System.out.print(gc.name()+", ");
+			int num = 2;
+			while(num!=0){
+			String res = questionsToAsk("Enter card you want to give : nul");
+			for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard()){
+				if(res.equalsIgnoreCase(gc.name())){
+					
+				}
+			}
+			}
+			
+		}
 	},
 	PINKPUSSYCATCLUB("PINKPUSSYCATCLUB","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	ZORGOTHERETROPHRENOLOGIST("ZORGOTHERETROPHRENOLOGIST","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
+		
 	},
 	DRWHITEFACE("DRWHITEFACE","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	WALLACESONKY("WALLACESONKY","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	THESEAMSTRESSESGUILD("THESEAMSTRESSESGUILD","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	MRPINANDMRTULIP("MRPINANDMRTULIP","green","DeckPile") {
+		@Override
+		public void performTasks(Player currentPlayingPlayer){
+		}
 	},
 	THETHIEVESGUILD("THETHIEVESGUILD","green","DeckPile") {
 		// take 2$ from every other player
 		@Override
-		  public void performTasks(Player currentPlayingPlayer) throws JSONException{
+		  public void performTasks(Player currentPlayingPlayer){
 			
 			for(Player p : BoardGame.playersInGame){
 				if(!(p.getPlayerColor().equalsIgnoreCase(currentPlayingPlayer.getPlayerColor())))
@@ -456,25 +680,33 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		this.symbols = symbols;
 	}
 	
-	public boolean addMoney(int amount) {
-		return false;
+	@Override
+	public void takeMoneyFromBank(Player currPlayer,int amount) {
+		takeMoneyFromBank(amount, currPlayer);
 	}
 	
-	public boolean moveMinion() {
-		return false;
+	public void moveMinion() {
 	}
 	    
-	public boolean assasinate(String pieceToRemove) {
-		return false;
+	public void assasinate(String pieceToRemove) {
 	}
 	
-	    
-	public boolean playAnotherCard() {
-		return false;
+	 @Override   
+	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumType) throws JSONException {
+
+		 for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard())
+			if(!(gc.name.equalsIgnoreCase(enumType.name)))
+				System.out.println(gc.name +", ");
+		 String res = questionsToAsk("Choose which card to play:nul");
+		 for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard())
+				if((gc.name.equalsIgnoreCase(enumType.name))){
+					gc.performTasks(currentPlayingPlayer);
+					break;
+				}
+			
 	}
 	@Override    
-	public boolean interrupt() {
-		return false;
+	public void interrupt() {
 	}
 
 	@Override
@@ -502,9 +734,41 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		
 		return true;
 	}
-
+	
 	@Override
-	public void takePlayingCards(Player currrentPlayer , Player fromPlayer, int number) {}
+	public void givePlayingCards(Player currrentPlayer , int number) {
+		
+		String result = questionsToAsk("Enter a players piece color to give playing card to : nul");
+		Player selectedPlayer = selectPlayer(currrentPlayer, result);
+		
+		while(number!=0){
+			
+			System.out.println("Your cards as of now player "+currrentPlayer.getPlayerColor());
+			for(GreenPlayerCardEnum gc : currrentPlayer.getPlayersPlayingCard())
+				System.out.print(gc.name()+", ");
+			
+			playingCardsAction(selectedPlayer,currrentPlayer,number);
+			number--;
+		}
+		
+	}
+	
+	@Override
+	public void takePlayingCards(Player currrentPlayer , int number) {
+		
+		String result = questionsToAsk("Enter a players piece color to take playing card from : nul");
+		Player selectedPlayer = selectPlayer(currrentPlayer, result);
+		
+		while(number!=0){
+		System.out.println("Your cards as of now player "+selectedPlayer.getPlayerColor());
+		for(GreenPlayerCardEnum gc : currrentPlayer.getPlayersPlayingCard())
+			System.out.print(gc.name()+", ");
+
+		playingCardsAction(currrentPlayer,selectedPlayer,number);
+		number--;
+		}
+		
+	}
 
 	@Override
 	public Player selectPlayer(Player currentPlayer, String playerToSelect) {
@@ -533,7 +797,7 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		String[] temp = qns.split(":"); 
 
 		for(int i = 0 ; i < temp.length ; i++){
-			if(!temp[i].equalsIgnoreCase("nul"))
+			if(!temp[i].trim().equalsIgnoreCase("nul"))
 			System.out.println(temp[i] + ", ");
 		}
 		result = in.nextLine();
@@ -573,7 +837,14 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 
 	@Override
 	public void payMoneyToBank(int amt, Player currentPlayer) {
-		// TODO Auto-generated method stub
+		
+		if(amt!=0 && !(currentPlayer.equals(null))){
+			currentPlayer.setPlayerAmount(currentPlayer.getPlayerAmount() - amt);
+			BoardGame.setBank(BoardGame.getBank() + amt);
+		}
+		else{
+			System.out.println("Amt cannot be zero or ");
+		}
 		
 	}
 
@@ -685,12 +956,14 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 	 * Adds the specified players playing cards to the discard pile list on the board
 	 */
 	@Override
-	public void addToDiscardPile(GreenPlayerCardEnum gc) {
+	public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
 		
-		if(gc instanceof GreenPlayerCardEnum)
-			BoardGame.setDiscardPilePlayerCards(gc);
-		else
-			System.out.println("Unsupported playercard. Verify the type of cardbeing passed");
+		while(num!=0){
+			if(gc instanceof GreenPlayerCardEnum)
+				BoardGame.setDiscardPilePlayerCards(gc);
+			else
+				System.out.println("Unsupported playercard. Verify the type of cardbeing passed");
+		}
 	}
 
 	/**
@@ -714,6 +987,35 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 			}
 			
 			
+		}
+		
+	}
+
+	@Override
+	public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+			int count) {
+
+		String res = questionsToAsk("Enter card name : nul");
+		for(GreenPlayerCardEnum gc : currentPlayer.getPlayersPlayingCard()){
+			if(res.equalsIgnoreCase(gc.name())){
+				currentPlayer.getPlayersPlayingCard().add(gc);
+				fromPlayer.getPlayersPlayingCard().remove(gc);
+				break;
+			}
+			
+		}
+	}
+
+	@Override
+	public void removeTroubleMarker(String areaName) {
+		
+		for(Area a : BoardGame.board_areas){
+			if(areaName.equalsIgnoreCase(a.getAreaName())){
+				if(a.isTroubleMarkers()){
+					a.setTroubleMarkers(false);
+				}
+			}
+		break;
 		}
 		
 	}
