@@ -20,10 +20,12 @@ public interface PlayingCardRulesInterface {
 	public String questionsToAsk(String qns);
 	
 	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result);
-	public boolean moveMinion();
-	public boolean assasinate(String pieceToRemove);
-	public boolean playAnotherCard();
-	public boolean interrupt();
+	public void moveMinion();
+	public void assasinate(String pieceToRemove);
+	public void removeTroubleMarker(String areaName);
+	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp) throws JSONException;
+	public void takeMoneyFromBank(Player currPlayer,int amount);
+	public void interrupt();
 	
 	public boolean takeMoneyFromPlayer(int amt, Player currentPlayingPlayer, Player fromPlayer);
 	public void takeLoanFromBank(int amt, Player currentPlayer);
@@ -36,10 +38,12 @@ public interface PlayingCardRulesInterface {
 	public void moveMinionToOtherArea(Player currentPlayer, Player fromPlayer, String toLocation) throws JSONException;
 	// remove minion from an area
 
-	public void takePlayingCards(Player currrentPlayer, Player fromPlayer, int number);
+	public void takePlayingCards(Player currrentPlayer, int number);
+	public void playingCardsAction(Player currentPlayer, Player fromPlayer, int count);
+	public void givePlayingCards(Player currrentPlayer , int number);
 	public Player selectPlayer(Player currentPlayer,String playerToSelect);
 	public int rollDie();
-	public void addToDiscardPile(GreenPlayerCardEnum gc);
+	public void addToDiscardPile(int num, GreenPlayerCardEnum gc);
 	
 	public void getMoneyForMinionsinArea(int amt, Player currentplayer, String areaName);
 	
