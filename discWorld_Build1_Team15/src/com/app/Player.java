@@ -157,13 +157,21 @@ public class Player {
 	 */
 	public void placeMinion(String location) {
 
-		if (!(location.isEmpty())) {
-
+		if (!(location.isEmpty()) && !(location.equalsIgnoreCase("Players Pile"))) {
+			for(ArrayList<String> str : this.getMinions().values()){
+				for(String s : str){
+						this.setMinions(this.getPlayerColor(), location);
+						break;
+				}
+				break;
+			}
+		} else if(!(location.isEmpty())){
 			this.setMinions(this.getPlayerColor(), location);
 			// updating PLAYERS minions quantity
 			this.setMinionQuantity(this.getMinionQuantity() - 1);
-		} else {
-			System.out.println("Provide location for minion to be placed");
+		}
+		else{
+			System.out.println("Provide a minion location");
 		}
 
 	}
@@ -383,8 +391,18 @@ public class Player {
 		if(!(minion_color.isEmpty() && minion_location.isEmpty())){
 
 			// checking if the minions hashmap has any entries
-			if(minions.containsKey(this.getPlayerColor()))
-				minions.get(this.getPlayerColor()).add(minion_location);
+			if(minions.containsKey(this.getPlayerColor())){
+				for(ArrayList<String> s : minions.values()){
+					for(String str : s){
+						if(str.equalsIgnoreCase("Players Pile")){
+							minions.get(this.getPlayerColor()).add(minion_location);
+							minions.remove(s);
+							break;
+						}
+					}
+					break;
+				}
+				}
 			else{ // initializing each player with 12 minions
 
 				minions.put(this.getPlayerColor(), new ArrayList<String>());
