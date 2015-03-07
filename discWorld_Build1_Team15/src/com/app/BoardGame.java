@@ -34,9 +34,6 @@ public class BoardGame {
 	/** The board_areas. */
 	public static ArrayList<Area> board_areas;
 
-	/** The player_cards. */
-	public static ArrayList<PlayerCard> player_cards;
-
 	/** The bank. */
 	private static int bank;
 	// this arraylist acts as a store of current players in the game
