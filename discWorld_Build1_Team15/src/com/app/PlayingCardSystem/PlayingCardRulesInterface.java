@@ -21,7 +21,7 @@ public interface PlayingCardRulesInterface {
 	
 	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result);
 	public void moveMinion();
-	public void assasinate(String pieceToRemove);
+	public void assasinate(Player ps);
 	public void removeTroubleMarker(String areaName);
 	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp) throws JSONException;
 	public void takeMoneyFromBank(Player currPlayer,int amount);
@@ -49,17 +49,4 @@ public interface PlayingCardRulesInterface {
 	
 	public void removeBuilding(Player currentPlayer, Player fromPlayer);
 	public void drawCardsFromDeck(int num , Player currentPlayer);
-
-	public void removeoneTroubleMarker(Player currentPlayer);
-	
-	public void ignoreRandomEvent(Player currentPlayer);
-	public void placeTroubleMarker(Player currentPlayer, String areaLocation)throws JSONException;
-	public void discardCard(Player currentPlayer);
-	void placeoneMinion(Player currentPlayer,int num,String areaLocation);
-
-
-
 }
-
-
-
