@@ -17,7 +17,7 @@ public class LordVetinari implements WinningCircumstances {
         int numberOfPlayers = BoardGame.playersInGame.size();
         Player currentPlayer = null;
         for (Player player : BoardGame.playersInGame) {
-            if (player.getWinningCondition().equals("")) {
+            if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(2))) {
                 currentPlayer = player;
             }
         }
