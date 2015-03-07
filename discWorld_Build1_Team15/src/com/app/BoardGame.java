@@ -134,7 +134,7 @@ public class BoardGame {
 		random_event_cards.add("Fire");
 		
 		
-		for(PlayerCard pc : PlayerCard.values()){
+		for(GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()){
 			player_cards.add(pc);
 		}
 		
