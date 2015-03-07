@@ -307,7 +307,17 @@ public class BoardGame {
 			BoardGame.discardPilePlayerCards.add(discardPilePlayerCards);
 	}
 	
-	
+	public static void displayAdjacentAreas(String result) {
+
+		String[] temp = result.split(":");
+		System.out.println("Adjacent areas ");
+		for(int i=0; i<temp.length; i++){
+			for(Area a: BoardGame.board_areas){
+				if(a.getAreaNumber()==Integer.parseInt(temp[i])){
+					System.out.print(a.getAreaName()+", ");
+				}
+			}
+		}
 
 
 
