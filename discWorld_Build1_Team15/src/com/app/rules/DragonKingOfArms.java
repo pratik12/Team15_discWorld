@@ -1,7 +1,6 @@
 package com.app.rules;
 
-import com.app.Area;
-import com.app.BoardGame;
+import com.app.common.Utility;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,11 +14,8 @@ public class DragonKingOfArms implements WinningCircumstances {
     @Override
     public Boolean isWinner() {
         int numberOfTroubleMarkers = 0;
-        for (Area area : BoardGame.board_areas) {
-            if (area.isTroubleMarkers())
-                numberOfTroubleMarkers++;
-
-        }
+        Utility utility = new Utility();
+        numberOfTroubleMarkers = utility.calculateNumberOfTroubleMarkers();
         if (numberOfTroubleMarkers == 8)
             return Boolean.TRUE;
         else
