@@ -1020,4 +1020,43 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 		
 	}
 
+	
+	
+	@Override
+	public void addToDiscardPile(GreenPlayerCardEnum gc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeoneTroubleMarker(Player currentPlayer) {
+				
+	}
+
+	
+
+	@Override
+	public void ignoreRandomEvent(Player currentPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void placeTroubleMarker(Player currentPlayer, String areaLocation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void discardCard(Player currentPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void placeoneMinion(Player currentPlayer,int num,String areaLocation)
+	{
+		
+	}
+
 }

@@ -49,4 +49,17 @@ public interface PlayingCardRulesInterface {
 	
 	public void removeBuilding(Player currentPlayer, Player fromPlayer);
 	public void drawCardsFromDeck(int num , Player currentPlayer);
+
+	public void removeoneTroubleMarker(Player currentPlayer);
+	
+	public void ignoreRandomEvent(Player currentPlayer);
+	public void placeTroubleMarker(Player currentPlayer, String areaLocation)throws JSONException;
+	public void discardCard(Player currentPlayer);
+	void placeoneMinion(Player currentPlayer,int num,String areaLocation);
+
+
+
 }
+
+
+
