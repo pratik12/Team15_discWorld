@@ -8,6 +8,10 @@ import com.app.common.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Mahdiye
@@ -30,7 +34,26 @@ public enum RandomEventCard implements Actions {
     Earthquake(11),
     Fire(12);
 
-    private RandomEventCard(int number) {
+    private static final Map<Integer, String> lookup
+            = new HashMap<Integer, String>();
+
+    static {
+        for (RandomEventCard s : EnumSet.allOf(RandomEventCard.class))
+            lookup.put(s.getCode(), s.name());
+    }
+
+    private int code;
+
+    private RandomEventCard(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public static String get(int code) {
+        return lookup.get(code);
     }
 
     public Boolean doTheTasks() {
