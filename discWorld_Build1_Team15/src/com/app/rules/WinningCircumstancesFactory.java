@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class WinningCircumstancesFactory {
 
-    enum PersonalityCards {
+    public enum PersonalityCards {
         LordDeWorde(1),
         LordVetinari(2),
         LordSelachii(3),
