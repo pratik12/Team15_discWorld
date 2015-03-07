@@ -1,19 +1,17 @@
 package com.app;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.PlayingCardSystem.ScrollUtility;
+import com.testcase.BoardGameClassTest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
-import com.app.PlayingCardSystem.PlayerCard;
-import com.app.PlayingCardSystem.ScrollUtility;
-import com.testcase.BoardGameClassTest;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * The Class BoardGame.
@@ -197,7 +195,7 @@ public class BoardGame {
 		}
 		
 		// this for loop is for testing playing card enum properties only purposes only 
-		for(PlayerCard pc : PlayerCard.values()){
+		for(GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()){
 			if(pc.getName().equalsIgnoreCase("boggis"))
 				ScrollUtility.TESTR.performAction(pc.getName(), BoardGame.playersInGame.get(0));
 		}
@@ -322,6 +320,7 @@ public class BoardGame {
 
 
 
+}
 }
 
 
