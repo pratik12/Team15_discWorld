@@ -13,6 +13,7 @@ public class CommanderVimes implements WinningCircumstances {
 
     @Override
     public Boolean isWinner() {
+        //you win if nobody else wins by the time the draw pile has been exhausted
         return BoardGame.player_cards.isEmpty();
     }
 }
