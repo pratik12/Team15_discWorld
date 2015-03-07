@@ -42,6 +42,7 @@ public class BoardGame {
 	// this arraylist acts as a store of current players in the game
 	/** The players in game. */
 	public static ArrayList<Player> playersInGame = new ArrayList<Player>();
+	public static ArrayList<GreenPlayerCardEnum> player_cards;
 	private static ArrayList<GreenPlayerCardEnum> discardPilePlayerCards = new ArrayList<GreenPlayerCardEnum>();
 	/** The area_details. */
 	public JSONObject areaDetails = new JSONObject();
