@@ -73,6 +73,9 @@ public enum RandomEventCard implements Actions {
             case Flood: {
                 int firstAreaNumber = utility.rollDie();
                 int secondAreaNumber = utility.rollDie();
+                Area firstArea = utility.getAreaByNumber(firstAreaNumber);
+                Area secondArea = utility.getAreaByNumber(secondAreaNumber);
+
                 if ((firstAreaNumber != 3) && (firstAreaNumber != 6) && (firstAreaNumber != 9)) {
                     //todo: It can not move to secondArea
                     moveMinion();
