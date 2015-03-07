@@ -10,7 +10,6 @@ import org.json.JSONException;
 import com.app.Player;
 import com.app.Area;
 import com.app.BoardGame;
-import com.app.PlayerCard;
 import com.app.PlayingCardSystem.*;
 
 /**
@@ -21,7 +20,7 @@ import com.app.PlayingCardSystem.*;
  * CityAreaCards representing an Area owned by a player
  */
 
-@SuppressWarnings("unused")
+
 public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	// All the 12 areas represented on the map
@@ -37,6 +36,56 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			this.takeLoanFromBank(+2,currentPlayer); 
 		
 		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
+		}
 	}, 
 	
 	
@@ -48,13 +97,60 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		{
 			System.out.println("Player discards one card..");
 			this.discardCard(currentPlayer);
-			//this.addToDiscardPile(gc);
-			//discardOneCard(currentPlayer);
-			
 			
 			System.out.println("Taking $2 from bank.."); 
 			this.takeLoanFromBank(+2,currentPlayer); 
 			 
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	},  					
 	
@@ -64,6 +160,56 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer)
 		{
+			
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
 			
 		}
 	}, 
@@ -77,7 +223,57 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		{
 			System.out.println("Taking $2 from bank.."); 
 			 this.takeLoanFromBank(+2,currentPlayer); 
-		
+		//GreenPlayerCardEnum.TEST.takeMoneyFromBank(2, currentPlayer);
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -86,13 +282,63 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	UNREALESTATE("UNREALESTATE")
 	{
 		@Override
-		public void performTasks(Player currentPlayer,int num) 
+		public void performTasks(Player currentPlayer) 
 		{
 			System.out.println("Player draws one card..");
-			this.drawCardsFromDeck(num, currentPlayer);
+			GreenPlayerCardEnum.TEST.drawCardsFromDeck(1, currentPlayer);
 			
 			System.out.println("Player discards one card..");
 			this.discardCard(currentPlayer);
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -102,13 +348,63 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	{
 
 		@Override
-		public void performTasks(Player currentPlayer,int num , String areaLocation) 
+		public void performTasks(Player currentPlayer ) throws JSONException 
 		{
 			System.out.println("Paying $3 to bank.."); 
 			this.takeLoanFromBank(-3,currentPlayer); 
-		
-			System.out.println("Placing a minion..");
-			placeoneMinion(currentPlayer, num, "Dolly Sisters");
+			//GreenPlayerCardEnum.TEST.payMoneyToBank(3, currentPlayer);
+			
+			placeoneMinion(currentPlayer, "Dolly Sisters");
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -121,7 +417,57 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		{
 			System.out.println("Taking $1 from bank..");  
 			this.takeLoanFromBank(+1,currentPlayer); 
-		
+		//	 GreenPlayerCardEnum.TEST.takeMoneyFromBank(1, currentPlayer);
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -134,7 +480,57 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		{
 			 System.out.println("Taking $3 from bank.."); 
 			 this.takeLoanFromBank(+3,currentPlayer); 
-		
+//			 GreenPlayerCardEnum.TEST.takeMoneyFromBank(3, currentPlayer);
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	},
 	
@@ -143,16 +539,67 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	ISLEOFGODS("ISLEOFGODS")	
 	{
 		@Override
-		public void performTasks(Player currentPlayer, Area maparea) 
+		public void performTasks(Player currentPlayer) 
 		{
 			
 			System.out.println("Paying $2 to bank..");  
 			this.takeLoanFromBank(-2,currentPlayer); 
+		//	GreenPlayerCardEnum.TEST.payMoneyToBank(2, currentPlayer);
 			
 			System.out.println("Removing troublemarker from board..");
-			this.removeoneTroubleMarker(currentPlayer);
-		
-			 	
+			// show to user where trouble markers are
+			String areaName = questionsToAsk("Enter area name to remove trouble marker from:nul");
+			GreenPlayerCardEnum.TEST.removeTroubleMarker(areaName);
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -165,7 +612,57 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		{
 			System.out.println("Taking $1 from bank.."); 
 			this.takeLoanFromBank(+1,currentPlayer); 
-		
+		//	GreenPlayerCardEnum.TEST.takeMoneyFromBank(1, currentPlayer);
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -174,13 +671,62 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	DIMWELL("DIMWELL")
 	{
 		@Override
-		public void performTasks(Player currentPlayer,int num,String areaLocation) 
+		public void performTasks(Player currentPlayer) throws JSONException 
 		{
 			System.out.println("Paying $3 to bank.."); 
 			this.takeLoanFromBank(-3,currentPlayer); 
-		
-			System.out.println("Placing a minion..");
-			placeoneMinion(currentPlayer, num, "Dimwell");
+	//	GreenPlayerCardEnum.TEST.payMoneyToBank(3, currentPlayer);
+			placeoneMinion(currentPlayer, "Dimwell");
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
+			
 		}
 	}, 
 	
@@ -188,10 +734,60 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	//place one troublemarker in the Shades or adjacent area
 	THESHADES("THESHADES")
 	{
-		public void performTasks(Player currentPlayer,String location) throws JSONException
+		public void performTasks(Player currentPlayer) throws JSONException
 		{
-			System.out.println("Placing troublemarker..");
+			
 			this.placeTroubleMarker(currentPlayer,"The Shades");
+			
+		}
+
+		@Override
+		public void assasinate(Player ps) {
+			  
+			
+		}
+
+		@Override
+		public void removeTroubleMarker(String areaName) {
+			  
+			
+		}
+
+		@Override
+		public void playAnotherCard(Player currentPlayingPlayer,
+				GreenPlayerCardEnum enumTemp) throws JSONException {
+			  
+			
+		}
+
+		@Override
+		public void takeMoneyFromBank(Player currPlayer, int amount) {
+			  
+			
+		}
+
+		@Override
+		public void takePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
+				int count) {
+			  
+			
+		}
+
+		@Override
+		public void givePlayingCards(Player currrentPlayer, int number) {
+			  
+			
+		}
+
+		@Override
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
+			  
 			
 		}
 	}; 
@@ -208,20 +804,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 	}
 	
-	public void performTasks(Player currentPlayer, int num, String areaLocation) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public void performTasks(Player currentPlayer, int num) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void performTasks(Player currentPlayer, Area maparea) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public String getareaName()
 	{
@@ -284,56 +867,47 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	@Override
 	public void placeTroubleMarker(Player currentPlayer , String areaLocation) throws JSONException
 	{
+		String res = questionsToAsk("WHere do you want to palce trouble marker. 1. "+areaLocation
+				+"2. Adjacent Areas" +":nul");
+		if(res.equalsIgnoreCase("1")){
 			
-		if((!(currentPlayer.equals(null))))
-		{
-			for(Area maparea : currentPlayer.getPlayerAreas())
+			for(Area maparea : BoardGame.board_areas)
 			{
 				if(areaLocation.trim().equalsIgnoreCase(maparea.getAreaName()))
 				{
-					if(!(maparea.isTroubleMarkers()))
-					{
 						//maparea.getTroubleMarkerArea();
 						maparea.setTroubleMarkers(true);
-					}
 					maparea.setTroubleMarkerArea(maparea.getTroubleMarkerArea());
-					break;
 				}
-					
-			
-			else
-			{
+				break;
+			}		
+		}
+			else if(res.equalsIgnoreCase("2")){
 			
 			String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.getInstance().areaDetails, areaLocation);
-			String[] temp = result.split(":");
-			System.out.println("Adjacent areas ");
-			for(int i=0; i<temp.length; i++)
+			
+			BoardGame.displayAdjacentAreas(result);
+			
+			String res1 = questionsToAsk("Enter area adjacent to place the troublemarker");
+			if(!res1.equals(null))
 			{
-				for(Area a: BoardGame.board_areas)
+				for(Area maparea : BoardGame.board_areas)
 				{
-					if(a.getAreaNumber()==Integer.parseInt(temp[i]))
+					if(res1.trim().equalsIgnoreCase(maparea.getAreaName()))
 					{
-						System.out.print(a.getAreaName()+", ");
+							//maparea.getTroubleMarkerArea();
+							maparea.setTroubleMarkers(true);
+						maparea.setTroubleMarkerArea(maparea.getTroubleMarkerArea());
 					}
-				}
-				
-			}
-			
-			String res = questionsToAsk("Enter area adjacent  to place the troublemarker");
-			if(!res.equals(null))
-			{
-				//placing the troublemarker in adjacent area
-			}
-			
-				else
-				{
-					System.out.println("Something wrong..");
 					break;
 				}
+			}else{
+					System.out.println("Area name cannot be empty");
+				}
 			}
-		  }
-		}
-	}
+		  
+}
+	
 		
 	
 	@Override
@@ -346,50 +920,46 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	@Override
 	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result) {
-		// TODO Auto-generated method stub
+		  
 		return null;
 	}
 
 	@Override
-	public boolean moveMinion() {
-		// TODO Auto-generated method stub
-		return false;
+	public void moveMinion() {
+		  
 	}
 
 	@Override
-	public boolean assasinate(String pieceToRemove) {
-		// TODO Auto-generated method stub
-		return false;
+	public void assasinate(Player ps) {
+		  
 	}
 
 	@Override
-	public boolean playAnotherCard() {
-		// TODO Auto-generated method stub
-		return false;
+	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp) throws JSONException{
+		  
 	}
 
 	@Override
-	public boolean interrupt() {
-		// TODO Auto-generated method stub
-		return false;
+	public void interrupt() {
+		  
 	}
 	
 	@Override
 	public void takeMoneyFromBank(int amt, Player currentPlayer)
 	 {
-		// TODO Auto-generated method stub
+		  
 		
 	}
 
 	@Override
-	public void takePlayingCards(Player currrentPlayer, Player fromPlayer, int number) {
-		// TODO Auto-generated method stub
+	public void takePlayingCards(Player currrentPlayer, int number) {
+		  
 		
 	}
 
 	@Override
 	public Player selectPlayer(Player currentPlayer, String playerToSelect) {
-		// TODO Auto-generated method stub
+		  
 		return null;
 	}
 
@@ -398,7 +968,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	@Override
 	public boolean takeMoneyFromPlayer(int amt, Player currentPlayingPlayer,
 			Player fromPlayer) {
-		// TODO Auto-generated method stub
+		  
 		return false;
 	}
 
@@ -418,26 +988,26 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	@Override
 	public void payMoneyToBank(int amt, Player currentPlayer) {
-		// TODO Auto-generated method stub
+		  
 		
 	}
 
 	@Override
 	public void removeMinion(int num, Player currentPlayer) {
-		// TODO Auto-generated method stub
+		  
 		
 	}
 
 	@Override
 	public void removeMinionOFAnotherPlayer(int num, Player currentPlayer,
 			Player fromPlayer) {
-		// TODO Auto-generated method stub
+		  
 		
 	}
 
 	@Override
 	public void removeMinionOFYourOwn(int num, Player currentPlayer) {
-		// TODO Auto-generated method stub
+		  
 		
 		
 	}
@@ -445,21 +1015,20 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	@Override
 	public void moveMinionToOtherArea(Player currentPlayer, Player fromPlayer,
 			String toLocation) throws JSONException {
-		// TODO Auto-generated method stub
+		  
 		
 	}
 
 
 	@Override
 	public int rollDie() {
-		// TODO Auto-generated method stub
+		  
 		return 0;
 	}
 
 	
 	@Override
-	
-		public void addToDiscardPile(GreenPlayerCardEnum gc) {
+	public void addToDiscardPile(int num,GreenPlayerCardEnum gc) {
 			
 			if(gc instanceof GreenPlayerCardEnum)
 				BoardGame.setDiscardPilePlayerCards(gc);
@@ -471,17 +1040,15 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	@Override
 	public void getMoneyForMinionsinArea(int amt, Player currentplayer,
 			String areaName) {
-		// TODO Auto-generated method stub
+		  
 		
 	}
 
 	@Override
 	public void removeBuilding(Player currentPlayer, Player fromPlayer) {
-		// TODO Auto-generated method stub
+		  
 		
 	}
-
-	
 
 	@Override
 	public void removeoneTroubleMarker(Player currentPlayer) {
@@ -514,12 +1081,13 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		String playercardname = questionsToAsk("Enter playercard name to discard");
 		@SuppressWarnings("rawtypes")
 		Iterator it = currentPlayer.getPlayersPlayingCard().iterator();
-		ArrayList<PlayerCard> playcard = null ;
+		GreenPlayerCardEnum temp =null;
 		int i=0;
 		while(it.hasNext())
 		{
 			if (currentPlayer.getPlayersPlayingCard().get(i).equals(playercardname))
 			{
+				temp = currentPlayer.getPlayersPlayingCard().get(i);
 				currentPlayer.resetPlayersPlayingCard(i);
 			}
 			else
@@ -528,61 +1096,30 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			}
 			i++;
 		}
-		//addToDiscardPile(gc);
-		BoardGame.getDiscardPilePlayerCards();
-		BoardGame.setDiscardPilePlayerCards(GreenPlayerCardEnum.valueOf(playercardname));
+		addToDiscardPile(1,temp);
 		
 	}
 
 		
 	@Override
 	public void drawCardsFromDeck(int num , Player currentPlayer) {
-		
-		/*while(num!=0){
-			Random rand = new Random();
-			int n = rand.nextInt(BoardGame.player_cards.size()-1);
-			if(BoardGame.player_cards.get(n) instanceof GreenPlayerCardEnum)
-				currentPlayer.getPlayersPlayingCard().add(BoardGame.player_cards.get(n));
-			else
-				System.out.println("Not sufficient player cards are remaining in the deck");
-		}
-	*/	
+	
 	}
 	
 	@Override
-	public void placeoneMinion(Player currentPlayer,int num,String areaLocation)
+	public void placeoneMinion(Player currentPlayer,String areaLocation) throws JSONException
 	{
-		if((!(currentPlayer.equals(null))))
-		{
-			for(Area maparea : currentPlayer.getPlayerAreas())
-			{
-				if(areaLocation.trim().equalsIgnoreCase(maparea.getAreaName()))
-				{
-					while(num!=0)
-					{	
-						for(ArrayList<String> str : currentPlayer.getMinions().values())
-						{
-							for(String temp : str)
-							{
-								if(areaLocation.equalsIgnoreCase(temp))
-								{	
-									currentPlayer.getMinions().values().add(str);
-									currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity()-1);
-									break;
-								}
-							}
-							break;
-						}	
-							num--;
+		String res = questionsToAsk("WHere do you want to palce minion. 1. " +areaLocation
+				+"2. Adjacent Areas" +":nul");
 		
-					}
-					
-				}
-				
-			}
-		
-		}	
-		
+		if(res.equalsIgnoreCase("1")){
+				System.out.println("Placing a minion..");
+				currentPlayer.placeMinion(areaLocation);
+		}
+		else{
+			String temp = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.getInstance().areaDetails, areaLocation);
+			//
+		}		
 	}
 }
 
