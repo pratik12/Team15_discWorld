@@ -1,8 +1,9 @@
 package com.app;
+
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.app.PlayingCardSystem.PlayerCard;
 
 /**
  * Player class holding properties of a player.
@@ -21,7 +22,7 @@ public class Player {
 	private HashMap<String,ArrayList<String>> minions = new HashMap<String, ArrayList<String>>();
 	// data structure to hold players playing card
 	/** The players playing card. */
-	private ArrayList<PlayerCard> playersPlayingCard = new ArrayList<PlayerCard>();
+	private ArrayList<GreenPlayerCardEnum> playersPlayingCard = new ArrayList<GreenPlayerCardEnum>();
 
 	/** The minion_ quantity. */
 	private int minion_Quantity;
@@ -43,6 +44,8 @@ public class Player {
 
 	/** The player_areas. */
 	private ArrayList<Area> player_areas = new ArrayList<Area>();
+
+    private int playerLoan;
 
 	/**
 	 * Constructor to set the properties of player.
@@ -420,7 +423,7 @@ public class Player {
 	 *
 	 * @return the playersPlayingCard arraylist
 	 */
-	public ArrayList<PlayerCard> getPlayersPlayingCard() {
+	public ArrayList<GreenPlayerCardEnum> getPlayersPlayingCard() {
 		return playersPlayingCard;
 	}
 
@@ -429,7 +432,7 @@ public class Player {
 	 *
 	 * @param playersPlayingCard the playersPlayingCard object to set
 	 */
-	public void setPlayersPlayingCard(PlayerCard playersPlayingCard) {
+	public void setPlayersPlayingCard(GreenPlayerCardEnum playersPlayingCard) {
 		if(playersPlayingCard!=null)
 			this.playersPlayingCard.add(playersPlayingCard);
 		else
@@ -449,4 +452,12 @@ public class Player {
 	public void setPlayer_aid_card(String player_aid_card) {
 		this.player_aid_card = player_aid_card;
 	}
+
+    public int getPlayerLoan() {
+        return playerLoan;
+    }
+
+    public void setPlayerLoan(int playerLoan) {
+        this.playerLoan = playerLoan;
+    }
 }
