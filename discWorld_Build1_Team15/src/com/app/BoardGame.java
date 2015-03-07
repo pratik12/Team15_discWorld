@@ -1,17 +1,19 @@
 package com.app;
 
-import com.app.PlayingCardSystem.GreenPlayerCardEnum;
-import com.app.PlayingCardSystem.ScrollUtility;
-import com.testcase.BoardGameClassTest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import com.app.PlayingCardSystem.PlayerCard;
+import com.app.PlayingCardSystem.ScrollUtility;
+import com.testcase.BoardGameClassTest;
 
 /**
  * The Class BoardGame.
@@ -40,7 +42,7 @@ public class BoardGame {
 	public static ArrayList<GreenPlayerCardEnum> player_cards;
 	private static ArrayList<GreenPlayerCardEnum> discardPilePlayerCards = new ArrayList<GreenPlayerCardEnum>();
 	/** The area_details. */
-	public static JSONObject areaDetails = new JSONObject();
+	public JSONObject areaDetails = new JSONObject();
 	// single static instance
 	/** The board_ game_ object. */
 	private static BoardGame board_Game_Object = null;
@@ -224,7 +226,7 @@ public class BoardGame {
 		
 		JUnitCore junit = new JUnitCore();
 		Result result = junit.run(BoardGameClassTest.class);
-		System.out.println("Are there more than 1 board in use for the current game? " + result.wasSuccessful());
+		System.out.println("Are there more than 1 board in use for the current game? "+result.wasSuccessful());
 		rand = new Random();
 
 		for (Area temp : BoardGame.board_Game_Object.board_areas) {
@@ -269,15 +271,7 @@ public class BoardGame {
 		return bank;
 	}
 
-    public static JSONObject getAreaDetails() {
-        return areaDetails;
-    }
-
-    public void setAreaDetails(JSONObject areaDetails) {
-        this.areaDetails = areaDetails;
-    }
-
-    public static String getAdjacentAreaIDs(JSONObject areaJson, String areaName) throws JSONException{
+	public String getAdjacentAreaIDs(JSONObject areaJson, String areaName) throws JSONException{
 		
 		JSONArray jsonarray = areaJson.getJSONArray(areaName);
 		
