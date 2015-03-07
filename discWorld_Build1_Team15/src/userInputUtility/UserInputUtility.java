@@ -19,7 +19,7 @@ public enum UserInputUtility{
 	
 	public String getUserInput(GreenPlayerCardEnum temp,String result){
 		
-		if(temp!=null){
+		if(temp!=null ){
 			System.out.println("Select from menu:");
 			
 				for(int i = 1 ; i<= temp.getSymbols().length;i++){
@@ -30,12 +30,13 @@ public enum UserInputUtility{
 				if(choice!=temp.getSymbols().length+1 && choice>Integer.parseInt(result))
 					
 					return temp.getSymbols()[choice-1]+":"+Integer.toString(choice);
-				else
+				else{
+					System.out.println("You have finished palying this card");
 					return "exit";
-			
+				}
 		}
 		else{
-			System.out.println("Please enter one of following choices");
+			System.out.println("Choose what is written on your card");
 			System.out.println("1. Selecting a player.");
 			System.out.println("2. Select something else");
 			choice = in.nextInt();
