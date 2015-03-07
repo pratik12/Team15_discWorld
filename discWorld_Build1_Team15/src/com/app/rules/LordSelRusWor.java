@@ -20,7 +20,8 @@ public class LordSelRusWor implements WinningCircumstances {
         int numberOfPlayers = BoardGame.playersInGame.size();
         Player currentPlayer = null;
         for (Player player : BoardGame.playersInGame) {
-            if (player.getWinningCondition().equals("")) {
+            if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(1)) || player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(3)) ||
+                    player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(7))) {
                 currentPlayer = player;
             }
         }
@@ -33,7 +34,7 @@ public class LordSelRusWor implements WinningCircumstances {
                 checkControlledAreas(currentPlayer, 4);
             }
         }
-        return true;
+        return Boolean.FALSE;
     }
 
     private Boolean checkControlledAreas(Player currentPlayer, int numberOfAreaTocheck) {
