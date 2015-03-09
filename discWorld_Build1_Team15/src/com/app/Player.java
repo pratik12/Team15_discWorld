@@ -459,4 +459,8 @@ public class Player {
     public void setPlayerLoan(int playerLoan) {
         this.playerLoan = playerLoan;
 	}
+    
+    public void resetPlayersPlayingCard(int i ){
+		playersPlayingCard.remove(i);
+	}
 }
