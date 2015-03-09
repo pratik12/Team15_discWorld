@@ -46,8 +46,6 @@ public class Player {
 
     private int playerLoan;
 
-    private int points;
-
 	/**
 	 * Constructor to set the properties of player.
 	 *
@@ -461,14 +459,6 @@ public class Player {
     public void setPlayerLoan(int playerLoan) {
         this.playerLoan = playerLoan;
 	}
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
     
     public void resetPlayersPlayingCard(int i ){
 		playersPlayingCard.remove(i);
