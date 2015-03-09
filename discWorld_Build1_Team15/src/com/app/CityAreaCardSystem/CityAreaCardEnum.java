@@ -1,8 +1,6 @@
 package com.app.CityAreaCardSystem;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Scanner;
 
 import org.json.JSONException;
@@ -38,55 +36,37 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		}
 
 		@Override
-		public void assasinate(Player ps) {
-			  
-			
-		}
-
-		@Override
 		public void removeTroubleMarker(String areaName) {
-			  
-			
-		}
-
-		@Override
-		public void playAnotherCard(Player currentPlayingPlayer,
-				GreenPlayerCardEnum enumTemp) throws JSONException {
-			  
+			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void takeMoneyFromBank(Player currPlayer, int amount) {
-			  
-			
-		}
-
-		@Override
-		public void takePlayingCards(Player currrentPlayer, int number) {
-			  
+			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void playingCardsAction(Player currentPlayer, Player fromPlayer,
 				int count) {
-			  
+			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void givePlayingCards(Player currrentPlayer, int number) {
-			  
+			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
-	}, 
+
+			}, 
 	
 	
 	// discard one card and take $2 from bank
@@ -147,9 +127,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	},  					
@@ -207,9 +189,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -270,9 +254,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -335,9 +321,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -401,9 +389,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -464,9 +454,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -527,9 +519,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	},
@@ -596,9 +590,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -659,9 +655,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -723,9 +721,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}, 
@@ -785,9 +785,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			
 		}
 
+		
+
 		@Override
-		public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-			  
+		public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
+			// TODO Auto-generated method stub
 			
 		}
 	}; 
@@ -1028,12 +1030,9 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	
 	@Override
-	public void addToDiscardPile(int num,GreenPlayerCardEnum gc) {
+	public void addToDiscardPile(int num,GreenPlayerCardEnum gc,Player p) {
 			
-			if(gc instanceof GreenPlayerCardEnum)
-				BoardGame.setDiscardPilePlayerCards(gc);
-			else
-				System.out.println("Unsupported playercard. Verify the type of cardbeing passed");
+			
 		}
 		
 	
@@ -1096,7 +1095,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			}
 			i++;
 		}
-		addToDiscardPile(1,temp);
+		addToDiscardPile(1,temp,currentPlayer);
 		
 	}
 
