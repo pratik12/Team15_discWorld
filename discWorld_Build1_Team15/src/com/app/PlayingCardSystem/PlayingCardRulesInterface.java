@@ -43,10 +43,21 @@ public interface PlayingCardRulesInterface {
 	public void givePlayingCards(Player currrentPlayer , int number);
 	public Player selectPlayer(Player currentPlayer,String playerToSelect);
 	public int rollDie();
-	public void addToDiscardPile(int num, GreenPlayerCardEnum gc);
+	public void addToDiscardPile(int num, GreenPlayerCardEnum gc,Player p);
 	
 	public void getMoneyForMinionsinArea(int amt, Player currentplayer, String areaName);
-	
+	public void drawCardsFromDiscardPile(int num, Player player);
 	public void removeBuilding(Player currentPlayer, Player fromPlayer);
 	public void drawCardsFromDeck(int num , Player currentPlayer);
+	
+	public void placeTroubleMarker(Player currentPlayer , String areaLocation) throws JSONException;
+	public void ignoreRandomEvent(Player currentPlayer);
+	public void removeoneTroubleMarker(Player currentPlayer);
+	public void discardCard(Player currentPlayer);
+	public void placeoneMinion(Player currentPlayer,String areaLocation) throws JSONException;
+	public void placeMinionActionPlayerCard(Player currentPlayingPlayer);
+	
+	public void discardCardsPerYourWish(Player currentPlayingPlayer, GreenPlayerCardEnum gc, int amt);
+	public void takeMoneyExchangeCardsFromAnotherPlayer(Player currentPlayingPlayer,
+			int amt);
 }

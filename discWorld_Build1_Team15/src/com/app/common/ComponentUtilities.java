@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.app.Area;
 import com.app.Player;
 
-public class MinionUtilities {
+public class ComponentUtilities {
 	
 	
 	public void displayMinionsOfotherPlayer(Player selectedPlayer){
@@ -18,8 +18,15 @@ public class MinionUtilities {
 		}
 	}
 	
-	public ArrayList<Area> getMinionsForAnArea(){
-		return null;
+	public int getMinionsOnBoardForPlayer(Player player){
+		
+		return (12-player.getMinionQuantity());
+		
+	}
+	
+	public int getBuildingsOnBoardForPlayer(Player player){
+		
+		return (6-player.getNumberOfBuildings());
 		
 	}
 
