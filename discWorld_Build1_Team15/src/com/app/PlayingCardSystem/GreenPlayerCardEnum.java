@@ -12,6 +12,7 @@ import userInputUtility.UserInputUtility;
 import com.app.Area;
 import com.app.BoardGame;
 import com.app.Player;
+import com.app.common.MinionUtilities;
 
 /**
  * The Class PlayerCard.
@@ -21,6 +22,7 @@ import com.app.Player;
  */
 public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 	
+	TEST("self","green","deckpile",new String[]{}){},
 	
 	BOGGIS("BOGGIS","green","DeckPile", new String[]{"scroll","minion"} ){
 		
@@ -53,6 +55,7 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 			break;
 		}
 		System.out.println("You hae finished playing this card. Place it on discard deck");
+		addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 		
 		
@@ -92,7 +95,7 @@ BEGGARSGUILD("BEGGARSGUILD","green","DeckPile", new String[]{"scroll","minion"} 
 		break;	
 		}
 		System.out.println("You have finished playing this card");
-		// add to discard pile 
+		addToDiscardPile(1, this, currentPlayingPlayer);
 	}
 			
 		
@@ -138,6 +141,7 @@ BEGGARSGUILD("BEGGARSGUILD","green","DeckPile", new String[]{"scroll","minion"} 
 					}
 				}
 			}
+			res = askSymbolsInOrder(this, res.split(":")[1].trim());
 			}
 			else if(res.split(":")[0].trim().equalsIgnoreCase("pac")){
 				// call the function of playing another card
@@ -145,10 +149,11 @@ BEGGARSGUILD("BEGGARSGUILD","green","DeckPile", new String[]{"scroll","minion"} 
 				break;
 			}
 		}
+		addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 	}, // take 1$ from every player or one card
 	
-	ANGUA("ANGUA","green","DeckPile",new String[]{"rtm","pac"}) {
+	ANGUA("ANGUA","green","DeckPile",new String[]{"Remove Trouble Marker","pac"}) {
 		
 		@Override
 		public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -158,7 +163,8 @@ BEGGARSGUILD("BEGGARSGUILD","green","DeckPile", new String[]{"scroll","minion"} 
 			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
 					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
 
-				if(res.split(":")[0].trim().equalsIgnoreCase("rtm")){
+				if(res.split(":")[0].trim().equalsIgnoreCase("Remove Trouble Marker")){
+					// show to user where trouble markers are
 					String areaName = questionsToAsk("Enter area name to remove trouble marker from:nul");
 					removeTroubleMarker(areaName);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim());
@@ -167,11 +173,11 @@ BEGGARSGUILD("BEGGARSGUILD","green","DeckPile", new String[]{"scroll","minion"} 
 					playAnotherCard(currentPlayingPlayer, this);
 				}
 			}
-			
+			addToDiscardPile(1, this, currentPlayingPlayer);	
 		}
 	},//
 	
-AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"asnate,tkmny,minion"}) {
+AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"asnate,take money,minion"}) {
 		
 	@Override
 	public void performTasks(Player currentPlayingPlayer) {
@@ -182,15 +188,12 @@ AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"asnate,tkmny,minion"})
 					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
 			
 				if(res.split(":")[0].trim().equalsIgnoreCase("asnate")){
-					
-					
+					assasinate(currentPlayingPlayer);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim());
 				}
-				else if(res.split(":")[0].trim().equalsIgnoreCase("tkmny")){
+				else if(res.split(":")[0].trim().equalsIgnoreCase("take money")){
 					
-					String result = questionsToAsk("Enter a players piece color to give playing card to : nul");
-					Player selectedPlayer = selectPlayer(currentPlayingPlayer, result);
-					takeMoneyFromPlayer(2, currentPlayingPlayer, selectedPlayer);
+					takeMoneyFromBank(2, currentPlayingPlayer);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim());
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase("minion")){
@@ -208,6 +211,7 @@ AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"asnate,tkmny,minion"})
 				}
 			break;
 			}
+			addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 	},
 	
@@ -242,54 +246,157 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 			break;
 		}	
 			
-			
+		addToDiscardPile(1, this, currentPlayingPlayer);
 			
 		}
 	},
 	
-	DUCKMAN("DUCKMAN","green","DeckPile") {
+	DUCKMAN("DUCKMAN","green","DeckPile",new String[]{"scroll"}) {
 		
 		@Override
-		public void performTasks(Player currentPlayingPlayer) {}
+		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+					String result = questionsToAsk("Enter a players piece color to give playing card to : nul");
+					Player selectedPlayer = selectPlayer(currentPlayingPlayer, result);
+					MinionUtilities mu = new MinionUtilities();
+					mu.displayMinionsOfotherPlayer(selectedPlayer);
+					String toLocation = questionsToAsk("Enter area name:nul");
+					moveMinionToOtherArea(currentPlayingPlayer, selectedPlayer, toLocation);
+				}
+			}
+			addToDiscardPile(1, this, currentPlayingPlayer);
+		}
 	},
 	
-	DRUMKNOTT("DRUMKNOTT","green","DeckPile") {
+	DRUMKNOTT("DRUMKNOTT","green","DeckPile",new String[]{"scroll"}) {
 		
 		@Override
-		public void performTasks(Player currentPlayingPlayer){}
+		public void performTasks(Player currentPlayingPlayer){
+			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+				}
+			}
+		addToDiscardPile(1, this, currentPlayingPlayer);	
+		}
 	},
-	CMOTDIBBLER("CMOTDIBBLER","green","DeckPile") {
+	CMOTDIBBLER("CMOTDIBBLER","green","DeckPile",new String[]{"scroll","pac"}) {
 		// roll die. if 7 take 4 from bank. if 1 pay 2$ to bank or remove 1 YOUR minion.
 		@Override
-		public void performTasks(Player currentPlayingPlayer) {
-			int res = rollDie();
-			if(res==7){
-				takeMoneyFromBank(4, currentPlayingPlayer);
-			}
-			else if(res==1){
-				String result = questionsToAsk("Hit 'p' to pay money to bank : Hit 'rem' to remove your minion");
-				if(result.trim().equalsIgnoreCase("p")){
-					payMoneyToBank(2, currentPlayingPlayer);
+		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+					
+					int num = rollDie();
+					if(num==7){
+						takeMoneyFromBank(4, currentPlayingPlayer);
+					}
+					else if(num==1){
+						String result = questionsToAsk("Hit 'p' to pay money to bank : Hit 'rem' to remove your minion");
+						if(result.trim().equalsIgnoreCase("p")){
+							payMoneyToBank(2, currentPlayingPlayer);
+						}
+						else if(result.trim().equalsIgnoreCase("rem")){
+							removeMinionOFYourOwn(1,currentPlayingPlayer);
+						}
+					}
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
 				}
-				else if(result.trim().equalsIgnoreCase("rem")){
-					removeMinionOFYourOwn(1,currentPlayingPlayer);
+				else if(res.split(":")[0].trim().equalsIgnoreCase("pac")){
+					playAnotherCard(currentPlayingPlayer, this);
+					break;
 				}
-			}
+		}
+			addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 	},
-	DRCRUCES("DRCRUCES","green","DeckPile") {
+	DRCRUCES("DRCRUCES","green","DeckPile",new String[]{"asnate","take money"}) {
 		@Override
 		public void performTasks(Player currentPlayingPlayer) {
 			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("asnate")){
+					assasinate(currentPlayingPlayer);
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("take money")){
+					takeLoanFromBank(3, currentPlayingPlayer);
+				}
+				}
+			addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 	},
-	CAPTAINCARROT("CAPTAINCARROT","green","DeckPile") {
+	CAPTAINCARROT("CAPTAINCARROT","green","DeckPile",new String[]{"minion","Remove Trouble Marker","take money"}) {
 		@Override
-		public void performTasks(Player currentPlayingPlayer) {}
+		public void performTasks(Player currentPlayingPlayer) {
+			
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("minion")){
+					
+					String minionLocation = questionsToAsk("Enter area name where you want to place a minion? :nul");
+					currentPlayingPlayer.placeMinion(minionLocation);
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("Remove Trouble Marker")){
+					
+					String result = questionsToAsk("Enter area anme to remove marker form : nul");
+					removeTroubleMarker(result);
+					res = askSymbolsInOrder(this, res.split(":")[1].trim());
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("take money")){
+					takeMoneyFromBank(1, currentPlayingPlayer);
+				}
+			
+			}
+			addToDiscardPile(1, this, currentPlayingPlayer);
+		}
 	},
-	MRSCAKE("MRSCAKE","green","DeckPile") {
+	MRSCAKE("MRSCAKE","green","DeckPile",new String[]{"scroll","take money","add building"}) {
 		@Override
-		public void performTasks(Player currentPlayingPlayer) {}
+		public void performTasks(Player currentPlayingPlayer) {
+		
+			String res = askSymbolsInOrder(this ,"0");
+			
+			while(!(res.split(":")[0].trim().equalsIgnoreCase("exit")) || 
+					(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
+			
+				if(res.split(":")[0].trim().equalsIgnoreCase("scroll")){
+					// implement scroll
+				}
+				
+				else if(res.split(":")[0].trim().equalsIgnoreCase("take money")){
+					takeMoneyFromBank(2, currentPlayingPlayer);
+				}
+				else if(res.split(":")[0].trim().equalsIgnoreCase("add building")){
+					String area_name = questionsToAsk("Enter area name to add building into:nul");
+					currentPlayingPlayer.addBuilding(area_name);
+				}
+				}
+			
+		}
 	},
 	MRBENT("MRBENT","green","DeckPile") {
 		@Override
@@ -391,8 +498,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 				if(Integer.parseInt(res)!=0){
 					for(GreenPlayerCardEnum temp : currentPlayingPlayer.getPlayersPlayingCard()){
 						if(currentPlayingPlayer.getPlayersPlayingCard().contains(res)){
-							addToDiscardPile(1,temp);
-							currentPlayingPlayer.getPlayersPlayingCard().remove(temp);
+							addToDiscardPile(1,temp, currentPlayingPlayer);
 							takeMoneyFromBank(2, currentPlayingPlayer);
 						}
 					}
@@ -461,8 +567,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 			if(Integer.parseInt(res)!=0){
 				for(GreenPlayerCardEnum temp : currentPlayingPlayer.getPlayersPlayingCard()){
 					if(currentPlayingPlayer.getPlayersPlayingCard().contains(res)){
-						addToDiscardPile(1,temp);
-						currentPlayingPlayer.getPlayersPlayingCard().remove(temp);
+						addToDiscardPile(1,temp, currentPlayingPlayer);
 						takeMoneyFromBank(1, currentPlayingPlayer);
 					}
 				}
@@ -594,6 +699,8 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 	private String name;
 
 	private String[] symbols;
+	
+	private GreenPlayerCardEnum(){}
 	/** The id of playing card **/
 	/**
 	 * Instantiates a new player card.
@@ -609,6 +716,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 		setName(name);
 		setSymbols(symbols);
 	}
+	
 	
 	/**
 	 * Gets the color.
@@ -881,15 +989,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 
 		if(!(fromPlayer.equals(null))){
 			String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.getInstance().areaDetails, toLocation);
-			String[] temp = result.split(":");
-			System.out.println("Adjacent areas ");
-			for(int i=0; i<temp.length; i++){
-				for(Area a: BoardGame.board_areas){
-					if(a.getAreaNumber()==Integer.parseInt(temp[i])){
-						System.out.print(a.getAreaName()+", ");
-					}
-				}
-			}
+			BoardGame.displayAdjacentAreas(result);
 			String res = questionsToAsk("Enter area name to whose adjacent area you need to move minion to : nul");
 			// record the result and place the opposite players minion there
 			if(!res.equals(null)){
@@ -956,11 +1056,13 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 	 * Adds the specified players playing cards to the discard pile list on the board
 	 */
 	@Override
-	public void addToDiscardPile(int num, GreenPlayerCardEnum gc) {
-		
+	public void addToDiscardPile(int num, GreenPlayerCardEnum gc,Player ps) {
 		while(num!=0){
-			if(gc instanceof GreenPlayerCardEnum)
+			if(gc instanceof GreenPlayerCardEnum){
+				System.out.println("Card being added to discard Pile");
+				ps.getPlayersPlayingCard().remove(gc);
 				BoardGame.setDiscardPilePlayerCards(gc);
+				}
 			else
 				System.out.println("Unsupported playercard. Verify the type of cardbeing passed");
 		}
@@ -1020,42 +1122,56 @@ DYSK("DYSK","green","DeckPile",new String[]{"addbldg","scroll"}) {
 		
 	}
 
-	
-	
+
 	@Override
-	public void addToDiscardPile(GreenPlayerCardEnum gc) {
-		// TODO Auto-generated method stub
+	public void assasinate(Player ps) {
+		
+		for(Area a : BoardGame.board_areas){
+			if(a.isTroubleMarkers()){
+				for(Player p  : a.getPlayersInThisAreas()){
+					if(!(p.getPlayerColor().equalsIgnoreCase(ps.getPlayerColor()))){
+						System.out.println("Minions for Playr "+p.getPlayerColor());
+					for(ArrayList<String> arr : p.getMinions().values()){
+						for(String str : arr){
+							System.out.print(" "
+									+str);
+						}
+					}
+					}
+				}
+		String playerToSelect = questionsToAsk("Enter players Piece Color:nul");
+		Player player = selectPlayer(ps, playerToSelect);
+		removeMinionOFAnotherPlayer(1, ps, player);
+				
+			}
+		}
 		
 	}
-
 	@Override
-	public void removeoneTroubleMarker(Player currentPlayer) {
-				
+	public void placeTroubleMarker(Player currentPlayer, String areaLocation)
+			throws JSONException {
+		   
+		
 	}
-
-	
-
 	@Override
 	public void ignoreRandomEvent(Player currentPlayer) {
-		// TODO Auto-generated method stub
+		   
 		
 	}
-
 	@Override
-	public void placeTroubleMarker(Player currentPlayer, String areaLocation) {
-		// TODO Auto-generated method stub
+	public void removeoneTroubleMarker(Player currentPlayer) {
+		   
 		
 	}
-
 	@Override
 	public void discardCard(Player currentPlayer) {
-		// TODO Auto-generated method stub
+		   
 		
 	}
-
 	@Override
-	public void placeoneMinion(Player currentPlayer,int num,String areaLocation)
-	{
+	public void placeoneMinion(Player currentPlayer, String areaLocation)
+			throws JSONException {
+		   
 		
 	}
 
