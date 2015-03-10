@@ -1,8 +1,11 @@
 package com.app;
+
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Player class holding properties of a player.
@@ -45,7 +48,9 @@ public class Player {
 	private ArrayList<Area> player_areas = new ArrayList<Area>();
 
     private int playerLoan;
+    private int points;
 
+    private ArrayList<CityAreaCardEnum> cityAreaCardsStore = new ArrayList<CityAreaCardEnum>();
 	/**
 	 * Constructor to set the properties of player.
 	 *
@@ -54,7 +59,7 @@ public class Player {
 	public Player(String player_color){
 
 		setPlayerColor(player_color);
-		setMinions(getPlayerColor(), "Players Pile");
+		setMinions(getPlayerColor(), "");
 		setMinionQuantity(12);
 		setPlayerAmount(100);
 		setNumberOfBuildings(6);
@@ -103,7 +108,7 @@ public class Player {
 					checkForTroubleMarkers(area_name).setBuildngs(true);
 					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
 					checkForTroubleMarkers(area_name).setAreaCityCards(true);
-
+					this.setCityAreaCardsStore(this.getCityReaCardFromAreaName(area_name));
 					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
 					// update players own amount and deposit the cost of constructing building in the bank
 					BoardGame.setBank(BoardGame.getBank() + checkForTroubleMarkers(area_name).getCostOfArea());
@@ -128,7 +133,7 @@ public class Player {
 					checkForTroubleMarkers(area_name).setBuildngs(true);
 					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
 					checkForTroubleMarkers(area_name).setAreaCityCards(true);
-
+					this.setCityAreaCardsStore(this.getCityReaCardFromAreaName(area_name));
 					// update players own amount and deposit the cost of constructing building in the bank
 					BoardGame.setBank(BoardGame.getBank() + checkForTroubleMarkers(area_name).getCostOfArea());
 					this.setPlayerAmount(getPlayerAmount() -checkForTroubleMarkers(area_name).getCostOfArea());
@@ -159,7 +164,7 @@ public class Player {
 	 */
 	public void placeMinion(String location) {
 
-		if (!(location.isEmpty()) && !(location.equalsIgnoreCase("Players Pile"))) {
+		if (!(location.isEmpty()) ) {
 			for(ArrayList<String> str : this.getMinions().values()){
 				for(String s : str){
 						this.setMinions(this.getPlayerColor(), location);
@@ -169,8 +174,7 @@ public class Player {
 			}
 		} else if(!(location.isEmpty())){
 			this.setMinions(this.getPlayerColor(), location);
-			// updating PLAYERS minions quantity
-			this.setMinionQuantity(this.getMinionQuantity() - 1);
+
 		}
 		else{
 			System.out.println("Provide a minion location");
@@ -270,7 +274,12 @@ public class Player {
 	 * @return the minion quantity
 	 */
 	public int getMinionQuantity() {
-		return minion_Quantity;
+		int temp = 0;
+		for(ArrayList<String> str : minions.values())
+			for(String s : str)
+				if(!(s.equalsIgnoreCase("")))
+					temp++;
+		return temp;
 	}
 
 	/**
@@ -390,17 +399,17 @@ public class Player {
 		/**
 		 * we first check that if the minion belongs to any player or not
 		 */
-		if(!(minion_color.isEmpty() && minion_location.isEmpty())){
+		if(!(minion_color.isEmpty())){
 
 			// checking if the minions hashmap has any entries
 			if(minions.containsKey(this.getPlayerColor())){
 				for(ArrayList<String> s : minions.values()){
 					for(String str : s){
-						if(str.equalsIgnoreCase("Players Pile")){
+							s.remove(str);
 							minions.get(this.getPlayerColor()).add(minion_location);
-							minions.remove(s);
+							this.setMinionQuantity(this.getMinionQuantity()-1);
 							break;
-						}
+
 					}
 					break;
 				}
@@ -415,7 +424,6 @@ public class Player {
 		else
 			System.out.println("Minion color or location cannot be empty");
 	}
-
 
 	/**
 	 * Gets the players playing card.
@@ -459,8 +467,50 @@ public class Player {
     public void setPlayerLoan(int playerLoan) {
         this.playerLoan = playerLoan;
 	}
-    
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public void resetPlayersPlayingCard(int i ){
 		playersPlayingCard.remove(i);
 	}
+
+    public void exchangePersonalityCard(){
+
+		Random ran = new Random();
+		int n = ran.nextInt(BoardGame.getInstance().personality_cards.size()-1);
+		this.setWinningCondition(BoardGame.getInstance().personality_cards.get(n));
+}
+/**
+ * @return the cityAreaCardsStore
+ */
+public ArrayList<CityAreaCardEnum> getCityAreaCardsStore() {
+	return cityAreaCardsStore;
+}
+/**
+ * @param cityAreaCardsStore the cityAreaCardsStore to set
+ */
+public void setCityAreaCardsStore(CityAreaCardEnum cityAreaCardsStore) {
+
+	this.cityAreaCardsStore.add(cityAreaCardsStore);
+}
+
+public CityAreaCardEnum getCityReaCardFromAreaName(String areaName){
+
+	CityAreaCardEnum cacard = null;
+	for(CityAreaCardEnum a : CityAreaCardEnum.values()){
+		if(a.getareaName().equalsIgnoreCase(areaName.trim())){
+			cacard = a;
+			break;
+		}
+
+	}
+	return cacard;
+}
+
 }
