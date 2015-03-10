@@ -2,6 +2,10 @@ package com.app.common;
 
 import com.app.Area;
 import com.app.BoardGame;
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
+import com.app.Player;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -33,9 +37,31 @@ public class Utility {
         return null;
     }
 
-    //todo: gameDescription page 6 of 8 last paragraph be completed and used in general controller class
-    public Boolean isWinningConditionChecked() {
-        return Boolean.FALSE;
+    public void doFinalPointsCalculation() {
+        int eachPlayerTotalPoints = 0;
+        for (Player player : BoardGame.playersInGame) {
+            eachPlayerTotalPoints += player.getMinionQuantity() * 5;
+            for (Area area : player.getPlayerAreas()) {
+                if (!area.isAreaCityCards())
+                    eachPlayerTotalPoints += area.getCostOfArea();
+                if (area.getDemons() > 0)
+                    eachPlayerTotalPoints = 0;
+            }
+            if (player.getPlayerAmount() > player.getPlayerLoan()) {
+                player.setPlayerAmount(player.getPlayerAmount() - player.getPlayerLoan());
+                eachPlayerTotalPoints += player.getPlayerAmount();
+            } else
+                eachPlayerTotalPoints += (player.getPlayerAmount() - 15);
+            player.setPoints(eachPlayerTotalPoints);
+        }
+    }
+
+    public void announceWinner() {
+        doFinalPointsCalculation();
+        System.out.println("**************GAME IS OVER**************");
+        for (Player player : BoardGame.playersInGame) {
+            System.out.println("******" + player.getPlayerColor() + "**********" + player.getPoints() + "POINTS");
+        }
     }
 
     public int calculateNumberOfTroubleMarkers() {
@@ -47,8 +73,37 @@ public class Utility {
         return numberOfTroubleMarkers;
     }
 
-    public Boolean giveTurnToleft(){
-       return Boolean.TRUE;
+    public void giveTurnToleft() {
+        String player = CityAreaCardEnum.GLOBAL.questionsToAsk("Enter the player in your left (r/g/b/y)?");
+        System.out.println("It is player with color " + player + "torn");
+        return;
+    }
+
+
+    public void moveMinion(String areaName) {
+        JSONObject areaDetails = BoardGame.getInstance().getAreaDetails();
+
+        try {
+            String temp = BoardGame.getInstance().getAdjacentAreaIDs(areaDetails, areaName);
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    public int getNumberOfMinions(String areaName){
+        int result = 0;
+
+        // iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA.
+        for(Player p : BoardGame.playersInGame){
+            // checking for every minion location for all the players
+            for(String minion_location : p.getMinions().get(p.getPlayerColor())){
+
+                if(minion_location.equals(areaName))
+                    ++result;
+            }
+
+        }
+        return result;
     }
 
 
