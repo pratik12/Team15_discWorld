@@ -1,17 +1,17 @@
 package com.app;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.rules.RandomEventCard;
+import com.testcase.BoardGameClassTest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
-import com.app.PlayingCardSystem.GreenPlayerCardEnum;
-import com.testcase.BoardGameClassTest;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * The Class BoardGame.
@@ -35,7 +35,10 @@ public class BoardGame {
 	/** The player_cards. */
 	public static ArrayList<GreenPlayerCardEnum> player_cards;
 	private static ArrayList<GreenPlayerCardEnum> discardPilePlayerCards = new ArrayList<GreenPlayerCardEnum>();
-	/** The bank. */
+
+    private static ArrayList<RandomEventCard> discardedRandomEventCards = new ArrayList<RandomEventCard>();
+
+    /** The bank. */
 	private static int bank;
 	// this arraylist acts as a store of current players in the game
 	/** The players in game. */
@@ -358,7 +361,13 @@ public class BoardGame {
         this.areaDetails = areaDetails;
     }
 
-    
+    public static ArrayList<RandomEventCard> getDiscardedRandomEventCards() {
+        return discardedRandomEventCards;
+    }
+
+    public static void setDiscardedRandomEventCards(RandomEventCard discardedRandomEventCards) {
+        BoardGame.discardedRandomEventCards.add(discardedRandomEventCards);
+    }
 
 }
 
