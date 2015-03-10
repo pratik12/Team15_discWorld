@@ -53,10 +53,11 @@ public class Area {
 	 * @param name the name
 	 * @param cost_num the cost_num
 	 */
-	public Area(String name, String cost_num){
+	public Area(String name, int areaNumber, String cost_num){
 
 		this.setAreaName(name);
 		//this.setAreaNumber(Integer.parseInt(costNum[1]));
+		this.setAreaNumber(areaNumber);
 		this.setCostOfArea(Integer.parseInt(cost_num));
 		this.setAreaCityCards(false);
 	}
@@ -300,5 +301,21 @@ public class Area {
 	public void setTroubleMarkerArea(String troubleMarkerArea) {
 		this.troubleMarkerArea = troubleMarkerArea;
 		this.trouble_markers = true;
+	}
+	
+public void removeBuilding(String areaName){
+		
+		for(Player p : BoardGame.playersInGame){
+			for(Area a : p.getPlayerAreas()){
+				if(a.getAreaName().equalsIgnoreCase(areaName)){
+					a.setBuildngs(false);
+					p.getPlayerAreas().remove(a);
+					p.getCityAreaCardsStore().remove(p.getCityReaCardFromAreaName(areaName));
+					break;
+				}
+				break;
+			}
+		}
+		
 	}
 }

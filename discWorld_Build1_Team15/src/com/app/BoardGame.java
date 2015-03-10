@@ -67,9 +67,16 @@ public class BoardGame {
 		Iterator<?> keys = areaDetails.keys();
 		while (keys.hasNext()) {
 			String tempArea = (String)keys.next();
+			
+			JSONArray jsonarray = BoardGame.getAreaDetails().getJSONArray(tempArea);
+			
+			JSONObject innerjson = jsonarray.getJSONObject(0);
+			Iterator<?> it = innerjson.keys();
+			
+			int areaNumber = Integer.parseInt((it.next()).toString());
 			String temp = getAdjacentAreaIDs(areaDetails, tempArea);
 			 
-			board_areas.add(new Area(tempArea, temp.split(":")[0] ));
+			board_areas.add(new Area(tempArea,areaNumber, temp.split(":")[0] ));
 		}
 		/*for(Iterator iterator = areaDetails.keys().iterator(); iterator.hasNext();) {
 		    String key = (String) iterator.next();
@@ -367,6 +374,15 @@ public class BoardGame {
 
     public static void setDiscardedRandomEventCards(RandomEventCard discardedRandomEventCards) {
         BoardGame.discardedRandomEventCards.add(discardedRandomEventCards);
+    }
+    
+    public int getIndexOfPlayer(String plyerColor){
+    	int temp = 0 ;
+    	for(int i = 0; i <BoardGame.playersInGame.size(); i++){
+    		if(BoardGame.playersInGame.get(i).getPlayerColor().equalsIgnoreCase(plyerColor))
+    			temp = i;
+    	}
+    	return temp;
     }
 
 }

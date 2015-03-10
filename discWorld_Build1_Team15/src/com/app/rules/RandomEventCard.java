@@ -115,26 +115,10 @@ public enum RandomEventCard {
             }
 
             case Fire: {
-                int areaNumber = utility.rollDie();
-                Area area = utility.getAreaByNumber(areaNumber);
-                JSONObject jsonObject = BoardGame.getInstance().getAreaDetails();
-                String adjacentAreaStr = null;
-                int secondTime = 0;
-                do {
-                    if (area.isAreaCityCards()) {
-                        area.setBuildngs(Boolean.FALSE);
-                    }
-                    secondTime = utility.rollDie();
-                    try {
-                        adjacentAreaStr = BoardGame.getInstance().getAdjacentAreaIDs(jsonObject, area.getAreaName());
-                    } catch (JSONException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-
-                } while (adjacentAreaStr.contains(Integer.toString(secondTime)) && area.isBuildngs());
-                if (!area.isBuildngs()) {
-                    return Boolean.TRUE;
-                }
+            	 int areaNumber = utility.rollDie();
+                 Area initiateAreaOnFire = utility.getAreaByNumber(areaNumber);
+                 performFireAction(initiateAreaOnFire);
+                 
             }
             case Fog: {
 
@@ -269,4 +253,21 @@ public enum RandomEventCard {
         }
 
     }
+    
+    private void performFireAction(Area initialArea) throws JSONException {
+
+		Utility utility = new Utility();
+		if(initialArea.isBuildngs()){
+			initialArea.removeBuilding(initialArea.getAreaName());
+			Area secondAreaObj = utility.getAreaByNumber(utility.rollDie());
+			for(Area a : BoardGame.getAdjacentAreasForAnArea(initialArea.getAreaName())){
+				if(secondAreaObj.getAreaName().equalsIgnoreCase(a.getAreaName())){
+					performFireAction(secondAreaObj);
+				}
+			}
+		}
+		else{
+			System.out.println("Fire spreading has stopped..");
+		}
+	}
 }

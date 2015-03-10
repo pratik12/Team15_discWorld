@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.json.JSONException;
 
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.common.Utility;
 import com.app.rules.WinningCircumstancesFactory;
 
 public class StartPlayingGame {
@@ -12,30 +13,24 @@ public class StartPlayingGame {
 	public int currentPlayer = 0;
 	//WinningCircumstancesFactory factoryObj = new WinningCircumstancesFactory();
 	Scanner in = new Scanner(System.in);
+	Utility playerTurn = new Utility();
+	
 	public void start() throws JSONException{
 		
+		int currTurn = BoardGame.shuffle(BoardGame.playersInGame.size()-1);
 		
-		if(BoardGame.player_cards.size()!=0 || !(checkWinningConditionEveryPlayer()) ){
+		do{
+			displayPlayerInstructions(BoardGame.playersInGame.get(currTurn));
+			String res = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter the card name you want to play:nul");
+			PlayerCardUtility.getEnumInstance(res).performTasks(BoardGame.playersInGame.get(currTurn));
+			System.out.println("Next Players Turn....");
+			currTurn = BoardGame.getInstance().getIndexOfPlayer(playerTurn.giveTurnToleft());
 			
-			// start playing cards
-			// at the end of his turn pass turn to another player
-			for(int i=0; i<BoardGame.playersInGame.size();i++ ){
-				System.out.println("Player "+BoardGame.playersInGame.get(i).getPlayerColor()+
-						". Its is your turn to play");
-				//displayPersonalityCard(BoardGame.playersInGame.get(i));
-				
-				displayPlayerInstructions(BoardGame.playersInGame.get(i));
-				String res = in.nextLine();
-				PlayerCardUtility.getEnumInstance(res).performTasks(BoardGame.playersInGame.get(i));
-		}
-			
-		}
-		else{
+		}while(BoardGame.player_cards.size()!=0 || !(checkWinningConditionEveryPlayer()));
+		
 		//	System.out.println("Player playing with"+BoardGame.playersInGame.get(i).getPlayerColor()+" has won");
 			System.out.println("Hope you all enjoyed!!!!!!!!!!!!!!!");
 			System.exit(0);
-		}
-		
 		
 	}
 	
