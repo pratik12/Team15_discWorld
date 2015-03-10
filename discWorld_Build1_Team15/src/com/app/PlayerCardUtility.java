@@ -30,7 +30,7 @@ public abstract class PlayerCardUtility {
 				temp  = gc;
 				break;
 			}
-			break;
+			
 		}
 		return temp;
 	}

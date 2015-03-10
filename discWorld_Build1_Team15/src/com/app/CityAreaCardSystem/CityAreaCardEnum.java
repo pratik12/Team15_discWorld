@@ -23,7 +23,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	// All the 12 areas represented on the map
 	
-	
+	GLOBAL("self"){},
 	//take $2 from bank
 	THEHIPPO("THE HIPPO")	
 	{
