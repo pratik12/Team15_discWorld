@@ -1,9 +1,9 @@
 package com.app.rules;
 
-import com.app.Actions;
 import com.app.Area;
 import com.app.BoardGame;
 import com.app.Player;
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 import com.app.common.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,8 +19,8 @@ import java.util.Map;
  * Time: 7:03 PM
  * To change this template use File | Settings | File Templates.
  */
-public enum RandomEventCard implements Actions {
-
+public enum RandomEventCard {
+    GLOBALOBJ(0),
     Flood(1),
     TheDragon(2),
     MysteriousMurders(3),
@@ -33,6 +33,19 @@ public enum RandomEventCard implements Actions {
     Explosion(10),
     Earthquake(11),
     Fire(12);
+
+    public RandomEventCard getShuffledRandomEventCard() {
+
+        RandomEventCard rc = null;
+        for (RandomEventCard rec : RandomEventCard.values()) {
+            for (RandomEventCard temp : BoardGame.getDiscardedRandomEventCards()) {
+                if (!(temp.name().equals(rec.name())))
+                    rc = rec;
+
+            }
+        }
+        return rc;
+    }
 
     private static final Map<Integer, String> lookup
             = new HashMap<Integer, String>();
@@ -56,8 +69,9 @@ public enum RandomEventCard implements Actions {
         return lookup.get(code);
     }
 
-    public Boolean doTheTasks() {
+    public Boolean doTheTasks(Player currentPlayer, RandomEventCard rc, GreenPlayerCardEnum tempGreenPlayerCard) {
         Utility utility = new Utility();
+
         switch (this) {
             case TheDragon: {
                 int areaNumber = utility.rollDie();
@@ -71,18 +85,31 @@ public enum RandomEventCard implements Actions {
             }
 
             case Flood: {
+                //todo: check it later to be exact and correct
                 int firstAreaNumber = utility.rollDie();
                 int secondAreaNumber = utility.rollDie();
                 Area firstArea = utility.getAreaByNumber(firstAreaNumber);
                 Area secondArea = utility.getAreaByNumber(secondAreaNumber);
+                JSONObject areaDetails = BoardGame.getInstance().getAreaDetails();
 
                 if ((firstAreaNumber != 3) && (firstAreaNumber != 6) && (firstAreaNumber != 9)) {
-                    //todo: It can not move to secondArea
-                    moveMinion();
+                    try {
+                        BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, firstArea.getAreaName()));
+                        GreenPlayerCardEnum.GLOBALOBJ.removeMinionOFYourOwn(1, currentPlayer);
+                        GreenPlayerCardEnum.GLOBALOBJ.placeMinionActionPlayerCard(currentPlayer, secondArea.getAreaName());
+                    } catch (JSONException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
                 }
+
                 if ((secondAreaNumber != 3) && (secondAreaNumber != 6) && (secondAreaNumber != 9)) {
-                    //todo: It can not move to firstArea
-                    moveMinion();
+                    try {
+                        BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, secondArea.getAreaName()));
+                        GreenPlayerCardEnum.GLOBALOBJ.removeMinionOFYourOwn(1, currentPlayer);
+                        GreenPlayerCardEnum.GLOBALOBJ.placeMinionActionPlayerCard(currentPlayer, firstArea.getAreaName());
+                    } catch (JSONException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
                 }
                 return Boolean.TRUE;
             }
@@ -90,14 +117,16 @@ public enum RandomEventCard implements Actions {
             case Fire: {
                 int areaNumber = utility.rollDie();
                 Area area = utility.getAreaByNumber(areaNumber);
-                JSONObject jsonObject = BoardGame.getAreaDetails();
+                JSONObject jsonObject = BoardGame.getInstance().getAreaDetails();
                 String adjacentAreaStr = null;
                 int secondTime = 0;
                 do {
-                    area.setBuildngs(Boolean.FALSE);
+                    if (area.isAreaCityCards()) {
+                        area.setBuildngs(Boolean.FALSE);
+                    }
                     secondTime = utility.rollDie();
                     try {
-                        adjacentAreaStr = BoardGame.getAdjacentAreaIDs(jsonObject, area.getAreaName());
+                        adjacentAreaStr = BoardGame.getInstance().getAdjacentAreaIDs(jsonObject, area.getAreaName());
                     } catch (JSONException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
@@ -108,41 +137,35 @@ public enum RandomEventCard implements Actions {
                 }
             }
             case Fog: {
-                //todo:remove five playercards
+
+                GreenPlayerCardEnum.GLOBALOBJ.discardCardsPerYourWish(currentPlayer, tempGreenPlayerCard, 5);
                 return Boolean.TRUE;
             }
             case Riots: {
                 int totalNumTroubleMarkers = utility.calculateNumberOfTroubleMarkers();
                 if (totalNumTroubleMarkers >= 8)
-                    utility.isWinningConditionChecked();
+                    utility.announceWinner();
             }
 
             case Explosion: {
                 int areaNumber = utility.rollDie();
                 Area area = utility.getAreaByNumber(areaNumber);
-                area.setBuildngs(Boolean.FALSE);
+                if (area.isAreaCityCards()) {
+                    area.setBuildngs(Boolean.FALSE);
+                }
                 return Boolean.TRUE;
             }
             case MysteriousMurders: {
                 int counter = 0;
+
                 do {
                     int areaNumber = utility.rollDie();
                     Area area = utility.getAreaByNumber(areaNumber);
-                    int playerCounter = 0;
-                    Player[] players = new Player[12];
-
-                    for (Player p : area.getPlayersInThisAreas()) {
-                        //todo: count other playes in the area
-                        players[playerCounter] = p;
-                        playerCounter++;
-                    }
-                    int numberOfPlayer = utility.getRandNum(playerCounter);
-                    int numberOfMinions = players[numberOfPlayer].getMinionQuantity();
-                    numberOfMinions--;
-                    players[numberOfPlayer].setMinionQuantity(numberOfMinions);
+                    int numberOfMinions = utility.getNumberOfMinions(area.getAreaName());
+                    currentPlayer.setMinionQuantity(--numberOfMinions);
                     utility.giveTurnToleft();
                     counter++;
-                } while (counter <= 4);
+                } while (counter <= BoardGame.playersInGame.size());
 
             }
             case DemonsFromTheDungeonDimensions: {
@@ -153,7 +176,7 @@ public enum RandomEventCard implements Actions {
                 Area firstArea = utility.getAreaByNumber(firstAreaNumber);
                 Area secondArea = utility.getAreaByNumber(secondAreaNumber);
                 Area thirdArea = utility.getAreaByNumber(thirdAreaNumber);
-                Area fourthArea = utility.getAreaByNumber(thirdAreaNumber);
+                Area fourthArea = utility.getAreaByNumber(fourthAreaNumber);
                 int demonNum = firstArea.getDemons();
                 demonNum++;
                 firstArea.setDemons(demonNum);
@@ -172,7 +195,6 @@ public enum RandomEventCard implements Actions {
                 demonNum++;
                 fourthArea.setDemons(demonNum);
                 fourthArea.setTroubleMarkers(Boolean.TRUE);
-                //todo: any building there, has a value of Zero
                 return Boolean.TRUE;
 
 
@@ -200,14 +222,12 @@ public enum RandomEventCard implements Actions {
             case BloodyStupidJohnson: {
                 int areaNumber = utility.rollDie();
                 Area area = utility.getAreaByNumber(areaNumber);
-                //todo: be sure area is the one belongs to player
                 for (Player player : BoardGame.playersInGame) {
                     for (Area tempArea : player.getPlayerAreas()) {
                         if (tempArea.equals(area)) {
                             int minionNumber = player.getMinionQuantity();
                             minionNumber--;
                             player.setMinionQuantity(minionNumber);
-                            //todo: control below line it should be wiped out
                             area.setAreaCityCards(Boolean.FALSE);
                         }
                     }
@@ -248,43 +268,5 @@ public enum RandomEventCard implements Actions {
                 return Boolean.FALSE;
         }
 
-    }
-
-    public static void main(String[] args) {
-        for (RandomEventCard p : RandomEventCard.values()) {
-            System.out.println("******" + p);
-            p.doTheTasks();
-        }
-    }
-
-
-    @Override
-    public boolean addMoney(int amount) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean moveMinion() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean assasinate(String pieceToRemove) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean scroll() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean playAnotherCard() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean interrupt() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
