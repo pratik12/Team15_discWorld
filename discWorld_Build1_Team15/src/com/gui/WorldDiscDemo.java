@@ -2,8 +2,11 @@ package com.gui;
 
 import com.app.BoardGame;
 import com.app.FileManager;
+import com.app.StartPlayingGame;
 
 import javax.swing.*;
+
+import org.json.JSONException;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,8 +76,19 @@ public class WorldDiscDemo {
 				if (!inputNumberIsValid(playersNumber)) {
 					JOptionPane.showMessageDialog(null, "Entered Number Is not Valid!", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					BoardGame.start();
-					BoardGame.initiateNumberOfPlayers(Integer.parseInt(playersNumber));
+					try {
+						BoardGame.start(Integer.parseInt(playersNumber));
+						
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						//BoardGame.initiateNumberOfPlayers(Integer.parseInt(playersNumber));
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
 				}
 			}
 		});
@@ -108,7 +122,12 @@ public class WorldDiscDemo {
 				if (retVal == APPROVE_OPTION) {
 					String selectedfilePath = fc.getSelectedFile().getAbsolutePath();
 					String fileName = fc.getSelectedFile().getName();
-					playerData = FileManager.loadFile(selectedfilePath,fileName);
+					try {
+						playerData = FileManager.loadFile(selectedfilePath,fileName);
+					} catch (JSONException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 					try {
 						createAndShowGUI();
 					} catch (IOException e1) {

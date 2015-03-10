@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import org.json.JSONException;
 
-import com.app.PlayingCardSystem.PlayerCard;
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -141,7 +141,7 @@ public class FileManager {
         int noOfPlayers = Integer.parseInt(firstLine[1].trim());
         playersRecords.remove(0);
         // initializing the board
-        BoardGame.start();
+        BoardGame.start(noOfPlayers);
         // creating number of players
        // System.out.println(noOfPlayers);
       //  System.out.println(playersRecords.get(0));
@@ -264,7 +264,7 @@ public class FileManager {
                             if (!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank"))) {
                                 do {
                                     //PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index].split("-")[1]), "Green", " ", " ");
-                                	PlayerCard p = returnInstanceOfPlayerCard(playerInfo[index].split("-")[1]);
+                                	GreenPlayerCardEnum p = returnInstanceOfPlayerCard(playerInfo[index].split("-")[1]);
                                     playerInBoardGame.setPlayersPlayingCard(p);
                                     index++;
                                     BoardGame.player_cards.remove(p);
@@ -292,9 +292,9 @@ public class FileManager {
         System.out.println();
     }
 
-    private static PlayerCard returnInstanceOfPlayerCard(String string) {
+    private static GreenPlayerCardEnum returnInstanceOfPlayerCard(String string) {
 
-    	for(PlayerCard temp : BoardGame.player_cards){
+    	for(GreenPlayerCardEnum temp : BoardGame.player_cards){
     		
     		if(temp.getName().equalsIgnoreCase(string)){
     			return temp;
