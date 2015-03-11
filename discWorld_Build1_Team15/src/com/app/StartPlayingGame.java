@@ -17,9 +17,11 @@ public class StartPlayingGame {
 	
 	public void start() throws JSONException{
 		
+		System.out.println("Choosing a random player....");
 		int currTurn = BoardGame.shuffle(BoardGame.playersInGame.size()-1);
-		
+		System.out.println("Random player chosen....");
 		do{
+			System.out.println("GAME STARTED");
 			Player currPlayer = BoardGame.playersInGame.get(currTurn);
 			System.out.println("PLAYERS INVENTORY BEFORE PLAYING TURN...");
 			ConsoleOutput.printOutPlayerState(currPlayer);
