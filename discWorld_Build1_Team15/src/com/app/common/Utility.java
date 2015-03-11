@@ -4,8 +4,6 @@ import com.app.Area;
 import com.app.BoardGame;
 import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.Player;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -73,32 +71,21 @@ public class Utility {
         return numberOfTroubleMarkers;
     }
 
-    public void giveTurnToleft() {
+    public String giveTurnToleft() {
         String player = CityAreaCardEnum.GLOBAL.questionsToAsk("Enter the player in your left (r/g/b/y)?");
-        System.out.println("It is player with color " + player + "torn");
-        return;
+        System.out.println("It is player with color " + player + "turn");
+        return player;
     }
 
-
-    public void moveMinion(String areaName) {
-        JSONObject areaDetails = BoardGame.getInstance().getAreaDetails();
-
-        try {
-            String temp = BoardGame.getInstance().getAdjacentAreaIDs(areaDetails, areaName);
-        } catch (JSONException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-    public int getNumberOfMinions(String areaName){
+    public int getNumberOfMinions(String areaName) {
         int result = 0;
 
         // iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA.
-        for(Player p : BoardGame.playersInGame){
+        for (Player p : BoardGame.playersInGame) {
             // checking for every minion location for all the players
-            for(String minion_location : p.getMinions().get(p.getPlayerColor())){
+            for (String minion_location : p.getMinions().get(p.getPlayerColor())) {
 
-                if(minion_location.equals(areaName))
+                if (minion_location.equals(areaName))
                     ++result;
             }
 
