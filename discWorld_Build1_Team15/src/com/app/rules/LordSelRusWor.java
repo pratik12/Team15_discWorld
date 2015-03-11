@@ -40,33 +40,28 @@ public class LordSelRusWor implements WinningCircumstances {
     private Boolean checkControlledAreas(Player currentPlayer, int numberOfAreaTocheck) {
         int currentTotalProperty = 0;
         int totalPieces = 0;
-        int controlledAreCounter = 0;
-        int countedCurrentArealength = 0;
+        int controlledAreaCounter = 0;
+        int countedCurrentAreaLength = 0;
 
-        //todo: page 8 from 8 Demons from the Dungeon Dimensions
-        if (Boolean.TRUE) {
-            return Boolean.FALSE;
+        while (controlledAreaCounter < numberOfAreaTocheck && countedCurrentAreaLength <= currentPlayer.getPlayerAreas().size()) {
 
-        } else {
-            while (controlledAreCounter < numberOfAreaTocheck && countedCurrentArealength <= currentPlayer.getPlayerAreas().size()) {
-
-                ArrayList<Area> areas = currentPlayer.getPlayerAreas();
-                for (Player p : areas.get(countedCurrentArealength).getPlayersInThisAreas()) {
-
-                    if (!(p.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor()))) {
-                        currentTotalProperty += p.getNumberOfBuildings() + p.getMinionQuantity();
-                        totalPieces += currentPlayer.getNumberOfBuildings() + currentPlayer.getMinionQuantity();
-                    } else {
-                        controlledAreCounter++;
-                    }
-
-                    if (totalPieces > currentTotalProperty)
-                        controlledAreCounter++;
-                    countedCurrentArealength++;
+            ArrayList<Area> areas = currentPlayer.getPlayerAreas();
+            for (Player p : areas.get(countedCurrentAreaLength).getPlayersInThisAreas()) {
+                currentTotalProperty = 0;
+                totalPieces = 0;
+                if (!(p.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor()))) {
+                    currentTotalProperty += p.getNumberOfBuildings() + p.getMinionQuantity();
+                    totalPieces += currentPlayer.getNumberOfBuildings() + currentPlayer.getMinionQuantity();
+                } else {
+                    controlledAreaCounter++;
                 }
 
-                return controlledAreCounter >= numberOfAreaTocheck;
+                if (totalPieces > currentTotalProperty && totalPieces > areas.get(countedCurrentAreaLength).getTrolls() && areas.get(countedCurrentAreaLength).getDemons() == 0)
+                    controlledAreaCounter++;
+                countedCurrentAreaLength++;
             }
+
+            return controlledAreaCounter >= numberOfAreaTocheck;
         }
         return Boolean.TRUE;
     }
