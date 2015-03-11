@@ -102,7 +102,7 @@ public String addBuilding(String area_name){
 
 				//calls for the method which will give you the object at runtime for the area where building has to be placed
 				if(!(area.getAreaName().equalsIgnoreCase(area_name)) && !(getAreaInstanceFromAreaName(area_name).isTroubleMarkers()) 
-					&&	!(isThisAreaWithAnyOtherPlayer(area_name)) 
+					&&	!(isThisAreaWithAnyOtherPlayer(this,area_name)) 
 					&& doYouHaveMinionInThisArea(this,area_name)){
 					// setting the player to the area that he wants to place a building
 					// setting the buildings attribute for that area to be true
@@ -130,7 +130,7 @@ public String addBuilding(String area_name){
 			for(Area area : BoardGame.board_areas){
 				
 				if(area.getAreaName().equalsIgnoreCase(area_name) && getAreaInstanceFromAreaName(area_name).isTroubleMarkers()==false 
-				&&	!(isThisAreaWithAnyOtherPlayer(area_name))	
+				&&	!(isThisAreaWithAnyOtherPlayer(this,area_name))	
 				&& doYouHaveMinionInThisArea(this,area_name) ){
 					// set corresponding building attributes of player
 					this.setPlayerAreas(getAreaInstanceFromAreaName(area_name));
@@ -161,17 +161,25 @@ public void displayAreasWithPlayersMinion(Player player) {
 		}
 	}
 }
-private boolean isThisAreaWithAnyOtherPlayer(String areaName) {
-
+public boolean isThisAreaWithAnyOtherPlayer(Player pl , String areaName) {
+	
+	ArrayList<String> temp = new ArrayList<String>();
+	
 	for(Player p : BoardGame.playersInGame){
-		
-		if(p.getCityAreaCards().split(":")[0].trim().equals(areaName)){
+		if(!(p.getPlayerColor().equalsIgnoreCase(pl.getPlayerColor()))){
+			String[] t = p.getCityAreaCards().split(":");
+			for(int i =0 ; i < t.length ; i++)
+				temp.add(t[i]);
+		}
+	}
+	
+	for(String str : temp){
+		if(str.equalsIgnoreCase(areaName)){
 			return true;
 		}
 	}
 	return false;
-}
-/**
+}/**
  * places a minion in any location.
  * Should be used to place a minion in any area when the game is in progress.
  *
