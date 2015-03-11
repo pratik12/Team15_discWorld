@@ -119,6 +119,7 @@ public enum RandomEventCard {
                  Area initiateAreaOnFire = utility.getAreaByNumber(areaNumber);
                 try {
                     performFireAction(initiateAreaOnFire);
+                    return BOOLEAN.TRUE;
                 } catch (JSONException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
