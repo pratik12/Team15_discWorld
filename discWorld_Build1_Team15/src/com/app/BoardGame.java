@@ -169,10 +169,16 @@ public class BoardGame {
             random_event_cards.add(RandomEventCard.get(12));
 
 
-            for (GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()) {
-                player_cards.add(pc);
-            }
-
+            for(GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()){
+    			if(!(pc.getName().equalsIgnoreCase("self")))
+    			player_cards.add(pc);
+    		}
+    		
+    		for(CityAreaCardEnum city : CityAreaCardEnum.values()){
+    			if(!(city.getareaName().equalsIgnoreCase("self")))
+    			cityAreaCardRepo.add(city);
+    		}
+    		
 
         }
     }
@@ -409,6 +415,30 @@ public class BoardGame {
         }
         return temp;
     }
+    
+    public static ArrayList<CityAreaCardEnum> getCityAreaCardRepo() {
+		return cityAreaCardRepo;
+	}
+
+	/**
+	 * @param cityAreaCardRepo the cityAreaCardRepo to set
+	 */
+	public static void setCityAreaCardRepo(CityAreaCardEnum cityAreaCardRepo) {
+		BoardGame.cityAreaCardRepo.add(cityAreaCardRepo);
+	}
+	
+	public static void displayMinionsForPlayerOnBoard(Player currentPlayingPlayer) throws JSONException{
+	
+		for(ArrayList<String> str : currentPlayingPlayer.getMinions().values()){
+		for(String s : str){
+			if(!(s.equalsIgnoreCase(""))){
+				String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, s);
+				BoardGame.displayAdjacentAreas(result);
+			}
+		}
+	}
+	}
+
 
 }
 
