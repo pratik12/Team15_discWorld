@@ -117,8 +117,12 @@ public enum RandomEventCard {
             case Fire: {
             	 int areaNumber = utility.rollDie();
                  Area initiateAreaOnFire = utility.getAreaByNumber(areaNumber);
-                 performFireAction(initiateAreaOnFire);
-                 
+                try {
+                    performFireAction(initiateAreaOnFire);
+                } catch (JSONException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+
             }
             case Fog: {
 
