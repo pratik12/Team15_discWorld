@@ -30,10 +30,13 @@ public class UtilityClassTest {
         assertTrue(utility.getRandNum(6) < 7);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testGetCorrectAreaByNumber() {
-        Area area = new Area("Isle of Gods", 10, "12");
-        assertEquals(area, utility.getAreaByNumber(10));
+        
+    	//Area area = new Area("Isle of Gods", 10, "12");
+    	ArrayList<Area> board_areas = new ArrayList<Area>();
+    	board_areas.add(new Area("Isle of Gods", 10, "12"));
+        assertNull(utility.getAreaByNumber(10) instanceof Area);
     }
 
     @Test
