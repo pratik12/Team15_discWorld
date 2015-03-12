@@ -42,6 +42,11 @@ public class UtilityClassTest {
     }
 
     @Test
+    public void testTroubleMarkerCalculation() {
+        assertNotNull(utility.calculateNumberOfTroubleMarkers());
+    }
+
+    @Test
     public void testNumberOfMinions() {
         assertEquals(0, utility.getNumberOfMinions("Isle of Gods"));
     }
@@ -49,7 +54,7 @@ public class UtilityClassTest {
     @Test
     public void testGetNextPlayer() {
         System.out.println("Enter player color");
-        assertTrue( utility.giveTurnToleft() instanceof String);
+        assertTrue(utility.giveTurnToleft() instanceof String);
     }
 
     @Test
@@ -59,13 +64,13 @@ public class UtilityClassTest {
         personalityCardType = "LordDeWorde";
         assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordSelRusWor);
         personalityCardType = "LordVetinari";
-        assertTrue( WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordVetinari);
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordVetinari);
         personalityCardType = "LordSelachii";
         assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordSelRusWor);
         personalityCardType = "DragonKingOfArms";
         assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof DragonKingOfArms);
         personalityCardType = "Chrysoprase";
-        assertTrue( WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof Chrysoprase);
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof Chrysoprase);
         personalityCardType = "CommanderVimes";
         assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof CommanderVimes);
     }
