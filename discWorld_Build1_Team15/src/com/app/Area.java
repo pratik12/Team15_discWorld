@@ -42,7 +42,7 @@ public class Area {
 
 	/** The buildngs. */
 	private boolean buildngs;
-
+	private ArrayList<String> minionColor = new ArrayList<String>();
 	// list to keep track of which players own which area
 	/** The players in this areas. */
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
@@ -310,12 +310,26 @@ public void removeBuilding(String areaName){
 				if(a.getAreaName().equalsIgnoreCase(areaName)){
 					a.setBuildngs(false);
 					p.getPlayerAreas().remove(a);
+					BoardGame.setCityAreaCardRepo(p.getCityReaCardFromAreaName(areaName));
 					p.getCityAreaCardsStore().remove(p.getCityReaCardFromAreaName(areaName));
 					break;
 				}
-				break;
+				
 			}
 		}
 		
 	}
+
+public ArrayList<String> getMinionColor() {
+	return minionColor;
+}
+
+/**
+ * Sets the minions.
+ *
+ * @param minions the minions to set
+ */
+public void setMinionColor(String minions) {
+	this.minionColor.add(minions);
+}
 }

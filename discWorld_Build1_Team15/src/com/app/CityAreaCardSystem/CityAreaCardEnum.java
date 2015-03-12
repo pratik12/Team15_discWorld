@@ -1,7 +1,6 @@
 package com.app.CityAreaCardSystem;
 
 import java.util.Iterator;
-import java.util.Scanner;
 
 import org.json.JSONException;
 
@@ -22,8 +21,8 @@ import com.app.PlayingCardSystem.*;
 public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	// All the 12 areas represented on the map
-	
 	GLOBAL("self"){},
+	
 	//take $2 from bank
 	THEHIPPO("THE HIPPO")	
 	{
@@ -207,8 +206,8 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	private String areaName;
 	private CityAreaCardEnum(String area)
 	{
-			setareaName(areaName);
-			
+			setareaName(area);
+			//setIsActive(true);
 	}
 	
 
@@ -532,6 +531,8 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		     
 		
 	}
+	@Override
+	public void placeMinionActionPlayerCard(Player currentPlayingPlayer,String s){};
 
 }
 

@@ -61,7 +61,7 @@ public class Player {
 		setPlayerColor(player_color);
 		setMinions(getPlayerColor(), "");
 		setMinionQuantity(12);
-		setPlayerAmount(100);
+		setPlayerAmount(10);
 		setNumberOfBuildings(6);
 	}
 	/**
@@ -76,8 +76,10 @@ public class Player {
 	 * @param area_name the area_name
 	 * @return the string
 	 */
-	public String addBuilding(String area_name){
-
+public String addBuilding(String area_name){
+		
+		Scanner in = new Scanner(System.in);
+		displayAreasWithPlayersMinion(this);
 		ArrayList<Area> temp = new ArrayList<Area>();
 		// check if for the area there already exists a building
 
@@ -99,24 +101,27 @@ public class Player {
 			for(Area area : temp){
 
 				//calls for the method which will give you the object at runtime for the area where building has to be placed
-				if(!(area.getAreaName().equals(area_name)) && !(checkForTroubleMarkers(area_name).isTroubleMarkers()) 
-					&&	!(isThisAreaWithAnyOtherPlayer(area_name)) ){
+				if(!(area.getAreaName().equalsIgnoreCase(area_name)) && !(getAreaInstanceFromAreaName(area_name).isTroubleMarkers()) 
+					&&	!(isThisAreaWithAnyOtherPlayer(this,area_name)) 
+					&& doYouHaveMinionInThisArea(this,area_name)){
 					// setting the player to the area that he wants to place a building
 					// setting the buildings attribute for that area to be true
 					// thus setting up the dependency of WHICH PLAYER HAS BUILDING IN WHICH AREA
-					this.setPlayerAreas(checkForTroubleMarkers(area_name));
-					checkForTroubleMarkers(area_name).setBuildngs(true);
-					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
-					checkForTroubleMarkers(area_name).setAreaCityCards(true);
+					this.setPlayerAreas(getAreaInstanceFromAreaName(area_name));
+					getAreaInstanceFromAreaName(area_name).setBuildngs(true);
+					getAreaInstanceFromAreaName(area_name).setPlayersInThisAreas(this);
+					getAreaInstanceFromAreaName(area_name).setAreaCityCards(true);
+					BoardGame.getCityAreaCardRepo().remove(this.getCityReaCardFromAreaName(area_name));
 					this.setCityAreaCardsStore(this.getCityReaCardFromAreaName(area_name));
-					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
+					this.setNumberOfBuildings(getNumberOfBuildings()-1);
 					// update players own amount and deposit the cost of constructing building in the bank
-					BoardGame.setBank(BoardGame.getBank() + checkForTroubleMarkers(area_name).getCostOfArea());
-					this.setPlayerAmount(getPlayerAmount() - checkForTroubleMarkers(area_name).getCostOfArea());
+					BoardGame.setBank(BoardGame.getBank() + getAreaInstanceFromAreaName(area_name).getCostOfArea());
+					this.setPlayerAmount(getPlayerAmount() - getAreaInstanceFromAreaName(area_name).getCostOfArea());
 
 				}
 				else{
-					return "Cannot place a building";
+					System.out.println("You cannot place a building here.Maybe you dont have a minion yet OR there is trouble marker here.");
+					return "";
 				}
 			}
 		}
@@ -124,63 +129,81 @@ public class Player {
 			// If the area does not exist with any player then just add that area object to current player 
 			for(Area area : BoardGame.board_areas){
 				
-				if(area.getAreaName().equals(area_name) && checkForTroubleMarkers(area_name).isTroubleMarkers()==false 
-				&&	!(isThisAreaWithAnyOtherPlayer(area_name))	){
+				if(area.getAreaName().equalsIgnoreCase(area_name) && getAreaInstanceFromAreaName(area_name).isTroubleMarkers()==false 
+				&&	!(isThisAreaWithAnyOtherPlayer(this,area_name))	
+				&& doYouHaveMinionInThisArea(this,area_name) ){
 					// set corresponding building attributes of player
-					this.setPlayerAreas(checkForTroubleMarkers(area_name));
-					this.setNumberOfBuildings(this.getNumberOfBuildings()-1);
+					this.setPlayerAreas(getAreaInstanceFromAreaName(area_name));
+					this.setNumberOfBuildings(getNumberOfBuildings()-1);
 					// set area's building attribute
-					checkForTroubleMarkers(area_name).setBuildngs(true);
-					checkForTroubleMarkers(area_name).setPlayersInThisAreas(this);
-					checkForTroubleMarkers(area_name).setAreaCityCards(true);
+					getAreaInstanceFromAreaName(area_name).setBuildngs(true);
+					getAreaInstanceFromAreaName(area_name).setPlayersInThisAreas(this);
+					getAreaInstanceFromAreaName(area_name).setAreaCityCards(true);
 					this.setCityAreaCardsStore(this.getCityReaCardFromAreaName(area_name));
 					// update players own amount and deposit the cost of constructing building in the bank
-					BoardGame.setBank(BoardGame.getBank() + checkForTroubleMarkers(area_name).getCostOfArea());
-					this.setPlayerAmount(getPlayerAmount() -checkForTroubleMarkers(area_name).getCostOfArea());
+					BoardGame.setBank(BoardGame.getBank() + getAreaInstanceFromAreaName(area_name).getCostOfArea());
+					this.setPlayerAmount(getPlayerAmount() -getAreaInstanceFromAreaName(area_name).getCostOfArea());
 					break;
 				}
 				
 			}
 		}
+		System.out.println("You cannot place a building here. Maybe you dont have a minion yet OR there is trouble marker here.");
 		return "";
 	}
 
-	private boolean isThisAreaWithAnyOtherPlayer(String areaName) {
+public void displayAreasWithPlayersMinion(Player player) {
 
+	System.out.println("You can place a building in either of these areas: ");
+	for(Area a : BoardGame.board_areas){
+		if(doYouHaveMinionInThisArea(this, a.getAreaName())){
+			System.out.printf("%-8s",a.getAreaName());
+		}
+	}
+}
+public boolean isThisAreaWithAnyOtherPlayer(Player pl , String areaName) {
+	
+	ArrayList<String> temp = new ArrayList<String>();
+	
+	for(Player p : BoardGame.playersInGame){
+		if(!(p.getPlayerColor().equalsIgnoreCase(pl.getPlayerColor()))){
+			String[] t = p.getCityAreaCards().split(":");
+			for(int i =0 ; i < t.length ; i++)
+				temp.add(t[i]);
+		}
+	}
+	
+	for(String str : temp){
+		if(str.equalsIgnoreCase(areaName)){
+			return true;
+		}
+	}
+	return false;
+}/**
+ * places a minion in any location.
+ * Should be used to place a minion in any area when the game is in progress.
+ *
+ * @param location the location
+ */
+public void placeMinion(String location) {
+
+	if (!(location.isEmpty()) ) {
+		for(ArrayList<String> str : this.getMinions().values()){
+			for(String s : str){
+					this.setMinions(this.getPlayerColor(), location);
+					break;
+			}
+			break;
+		}
+	} else if(!(location.isEmpty())){
+		this.setMinions(this.getPlayerColor(), location);
 		
-		for(Player p : BoardGame.playersInGame){
-			
-			if(p.getCityAreaCards().split(":")[0].trim().equals(areaName)){
-				return true;
-			}
-		}
-		return false;
 	}
-	/**
-	 * places a minion in any location.
-	 * Should be used to place a minion in any area when the game is in progress.
-	 *
-	 * @param location the location
-	 */
-	public void placeMinion(String location) {
-
-		if (!(location.isEmpty()) ) {
-			for(ArrayList<String> str : this.getMinions().values()){
-				for(String s : str){
-						this.setMinions(this.getPlayerColor(), location);
-						break;
-				}
-				break;
-			}
-		} else if(!(location.isEmpty())){
-			this.setMinions(this.getPlayerColor(), location);
-
-		}
-		else{
-			System.out.println("Provide a minion location");
-		}
-
+	else{
+		System.out.println("Provide a minion location");
 	}
+
+}
 	/**
 	 * Check for trouble markers and if you find a troublemarker in that area
 	 * this method will return you that areas object reference.
@@ -188,14 +211,14 @@ public class Player {
 	 * @param area_name the area_name
 	 * @return the current area object depending on the area name
 	 */
-	public Area checkForTroubleMarkers(String area_name) {
+public Area getAreaInstanceFromAreaName(String area_name) {
 
-		for(Area a : BoardGame.board_areas)
-			if(a.getAreaName().equals(area_name)){
-				return a;
-			}
-		return null;
-	}
+	for(Area a : BoardGame.board_areas)
+		if(a.getAreaName().equalsIgnoreCase(area_name)){
+			return a;
+		}
+	return null;
+}
 
 
 	/**
@@ -206,11 +229,11 @@ public class Player {
 	public String currentInventory(){
 
 		return  "Player (" +getPlayerColor()+") current Inventory - " + "\n" 
-				+ Integer.toString(getMinionQuantity()) + " Minion's , " + 
+				+ Integer.toString(12-getMinionQuantity()) + " Minion's , " + 
 				Integer.toString(getNumberOfBuildings()) + " Building's , " + 
 				Double.toString(getPlayerAmount()) + " Ankh-Morph Dollars " + "\n" +
-				"City Area Cards : " + "\n" + getCityAreaCards() + "\n" +
-				"Players Playing Cards :" + "\n" + getPlayingCards();
+				"City Area Cards : " + "\n" + getCityAreaCards() + "\n" ;
+				
 	}
 
 	/**
@@ -512,5 +535,29 @@ public CityAreaCardEnum getCityReaCardFromAreaName(String areaName){
 	}
 	return cacard;
 }
+public boolean doYouHaveMinionInThisArea(Player cuurPlayer, String areaName){
+	 
+	 for(ArrayList<String> str : cuurPlayer.getMinions().values()){
+		 for(String s : str){
+			 if(!(s.equalsIgnoreCase(""))){
+				 if(areaName.equalsIgnoreCase(s))
+					 return Boolean.TRUE;
+			 }
+		 }
+	 }
+	 
+	 return Boolean.FALSE;
+}
+
+public int totalMinionsInAreaForAllPlayers(String areaName){
+	 int temp =0;
+	 for(Area a : BoardGame.board_areas){
+		 if(a.getAreaName().equalsIgnoreCase(areaName)){
+			 return a.getMinionColor().size();
+		 }
+	 }
+	 return temp;
+}
+
 
 }

@@ -17,12 +17,22 @@ public class StartPlayingGame {
 	
 	public void start() throws JSONException{
 		
+		System.out.println("Choosing a random player....");
 		int currTurn = BoardGame.shuffle(BoardGame.playersInGame.size()-1);
-		
+		System.out.println("Random player chosen....");
 		do{
-			displayPlayerInstructions(BoardGame.playersInGame.get(currTurn));
+			System.out.println("GAME STARTED");
+			Player currPlayer = BoardGame.playersInGame.get(currTurn);
+			System.out.println("PLAYERS INVENTORY BEFORE PLAYING TURN...");
+			ConsoleOutput.printOutPlayerState(currPlayer);
+			ConsoleOutput.printOutInventory(currPlayer);
+			displayPlayerInstructions(currPlayer);
 			String res = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter the card name you want to play:nul");
-			PlayerCardUtility.getEnumInstance(res).performTasks(BoardGame.playersInGame.get(currTurn));
+			GreenPlayerCardEnum gec = PlayerCardUtility.getEnumInstance(res);
+			gec.performTasks(currPlayer);
+			System.out.println("PLAYERS INVENTORY AFTER PLAYING TURN...");
+			ConsoleOutput.printOutPlayerState(currPlayer);
+			ConsoleOutput.printOutInventory(currPlayer);
 			System.out.println("Next Players Turn....");
 			currTurn = BoardGame.getInstance().getIndexOfPlayer(playerTurn.giveTurnToleft());
 			
