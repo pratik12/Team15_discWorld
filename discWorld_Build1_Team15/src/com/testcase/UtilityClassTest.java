@@ -5,6 +5,8 @@ import com.app.common.Utility;
 import com.app.rules.*;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 
@@ -32,53 +34,40 @@ public class UtilityClassTest {
 
     @Test(expected = NullPointerException.class)
     public void testGetCorrectAreaByNumber() {
-        
-    	//Area area = new Area("Isle of Gods", 10, "12");
-    	ArrayList<Area> board_areas = new ArrayList<Area>();
-    	board_areas.add(new Area("Isle of Gods", 10, "12"));
+
+        //Area area = new Area("Isle of Gods", 10, "12");
+        ArrayList<Area> board_areas = new ArrayList<Area>();
+        board_areas.add(new Area("Isle of Gods", 10, "12"));
         assertNull(utility.getAreaByNumber(10) instanceof Area);
     }
 
     @Test
-    public void testPointCalculation() {
-        utility.announceWinner();
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testTroubleMarkerCalculation() {
-        utility.calculateNumberOfTroubleMarkers();
-    }
-
-    @Test(expected = NullPointerException.class)
     public void testNumberOfMinions() {
-        utility.getNumberOfMinions("Isle of Gods");
-    	}catch(NullPointerException e){
-    		thrown = true;
-    	}
-    	assertTrue(thrown);
+        assertEquals(0, utility.getNumberOfMinions("Isle of Gods"));
     }
 
     @Test
     public void testGetNextPlayer() {
-        utility.giveTurnToleft();
+        System.out.println("Enter player color");
+        assertTrue( utility.giveTurnToleft() instanceof String);
     }
 
     @Test
     public void testCheckWinningCondition() {
         String personalityCardType = "LordRust";
-        assertEquals(new LordSelRusWor(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordSelRusWor);
         personalityCardType = "LordDeWorde";
-        assertEquals(new LordSelRusWor(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordSelRusWor);
         personalityCardType = "LordVetinari";
-        assertEquals(new LordVetinari(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue( WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordVetinari);
         personalityCardType = "LordSelachii";
-        assertEquals(new LordSelRusWor(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof LordSelRusWor);
         personalityCardType = "DragonKingOfArms";
-        assertEquals(new DragonKingOfArms(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof DragonKingOfArms);
         personalityCardType = "Chrysoprase";
-        assertEquals(new Chrysoprase(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue( WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof Chrysoprase);
         personalityCardType = "CommanderVimes";
-        assertEquals(new CommanderVimes(), WinningCircumstancesFactory.getWinningCircumstance(personalityCardType));
+        assertTrue(WinningCircumstancesFactory.getWinningCircumstance(personalityCardType) instanceof CommanderVimes);
     }
 
 }
