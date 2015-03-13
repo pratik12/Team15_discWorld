@@ -1,11 +1,13 @@
 package com.testcase;
 
+import java.util.ArrayList;
+
 import com.app.Area;
+import com.app.BoardGame;
 import com.app.common.Utility;
 import com.app.rules.*;
-import org.junit.Test;
 
-import java.util.ArrayList;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
@@ -21,6 +23,11 @@ public class UtilityClassTest {
     Utility utility = new Utility();
 
     @Test
+        public void testTroubleMarkerCalculation() {
+            assertNotNull(utility.calculateNumberOfTroubleMarkers());
+        }
+    
+    @Test
     public void testRandomNumber() {
         assertTrue(utility.rollDie() >= 1);
         assertTrue(utility.rollDie() < 13);
@@ -34,16 +41,11 @@ public class UtilityClassTest {
 
     @Test(expected = NullPointerException.class)
     public void testGetCorrectAreaByNumber() {
-
-        //Area area = new Area("Isle of Gods", 10, "12");
-        ArrayList<Area> board_areas = new ArrayList<Area>();
-        board_areas.add(new Area("Isle of Gods", 10, "12"));
+        
+    	//Area area = new Area("Isle of Gods", 10, "12");
+    	ArrayList<Area> board_areas = new ArrayList<Area>();
+    	board_areas.add(new Area("Isle of Gods", 10, "12"));
         assertNull(utility.getAreaByNumber(10) instanceof Area);
-    }
-
-    @Test
-    public void testTroubleMarkerCalculation() {
-        assertNotNull(utility.calculateNumberOfTroubleMarkers());
     }
 
     @Test
@@ -53,7 +55,7 @@ public class UtilityClassTest {
 
     @Test
     public void testGetNextPlayer() {
-        System.out.println("Enter player color");
+    	System.out.println("Enter player color");
         assertTrue(utility.giveTurnToleft() instanceof String);
     }
 

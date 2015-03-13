@@ -14,7 +14,7 @@ public class BoardGameClassTest {
 	public void testSingletonCreation() {
 		
 		assertEquals(null,BoardGame.getInstance());
-		
+		assertEquals(-1, BoardGame.shuffle(-5));
 	}
 
 }

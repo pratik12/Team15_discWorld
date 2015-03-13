@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  * To change this template use File | Settings | File Templates.
  */
 public class PlayerTest {
-
+	
     @Test(expected=NullPointerException.class)
     public void checkTroubleMarkerValidity() {
         Player playerObject = new Player("K");
@@ -26,10 +26,10 @@ public class PlayerTest {
         assertEquals(null, playerObject.getAreaInstanceFromAreaName(" "));
         assertNotNull(playerObject);
         try{
-            playerObject.setPlayerAreas(null);
+        	playerObject.setPlayerAreas(null);
         }
         catch(NullPointerException e){
-            thrown = true;
+        	thrown = true;
         }
         assertTrue(thrown);
     }

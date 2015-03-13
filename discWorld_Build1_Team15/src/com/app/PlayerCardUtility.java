@@ -1,7 +1,12 @@
 package com.app;
 
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
-
+/**
+ * Class that is responsible to display player cards name, actions on each card.
+ * Also contains methods to get GreenPlayerCardEnum instance based on string green player card enum Name
+ * @author p_bidkar
+ *
+ */
 public abstract class PlayerCardUtility {
 	
 	

@@ -12,7 +12,9 @@ import org.junit.runners.Suite;
 import org.junit.runner.RunWith;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({PlayerTest.class, FileManagerClassTest.class, DiscWorldClassTest.class, UtilityClassTest.class, RandomEventCardTest.class, GreenPlayerClassTest.class})
+@Suite.SuiteClasses({PlayerTest.class, FileManagerClassTest.class, DiscWorldClassTest.class,
+	UtilityClassTest.class, RandomEventClassTest.class, GreenPlayerEnumTest.class,
+	 FileManagerClassTest.class,WinningConditionTest.class})
 public class TestSuite {
 
 }

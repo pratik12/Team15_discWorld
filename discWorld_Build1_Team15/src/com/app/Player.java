@@ -503,6 +503,9 @@ public Area getAreaInstanceFromAreaName(String area_name) {
 		playersPlayingCard.remove(i);
 	}
 
+    /**
+     * thos method will exchange the personality card for a player
+     */
     public void exchangePersonalityCard(){
 
 		Random ran = new Random();
@@ -522,7 +525,11 @@ public void setCityAreaCardsStore(CityAreaCardEnum cityAreaCardsStore) {
 
 	this.cityAreaCardsStore.add(cityAreaCardsStore);
 }
-
+/**
+ * returns the city area card instance from  area name inputted in string format
+ * @param areaName
+ * @return
+ */
 public CityAreaCardEnum getCityReaCardFromAreaName(String areaName){
 
 	CityAreaCardEnum cacard = null;
@@ -535,6 +542,12 @@ public CityAreaCardEnum getCityReaCardFromAreaName(String areaName){
 	}
 	return cacard;
 }
+/**
+ * Method that retruns true or false to check if a player has a minion in this area
+ * @param cuurPlayer
+ * @param areaName
+ * @return
+ */
 public boolean doYouHaveMinionInThisArea(Player cuurPlayer, String areaName){
 	 
 	 for(ArrayList<String> str : cuurPlayer.getMinions().values()){
@@ -548,6 +561,11 @@ public boolean doYouHaveMinionInThisArea(Player cuurPlayer, String areaName){
 	 
 	 return Boolean.FALSE;
 }
+/**
+ * returns the total number of minions in an area for all players
+ * @param areaName
+ * @return
+ */
 
 public int totalMinionsInAreaForAllPlayers(String areaName){
 	 int temp =0;

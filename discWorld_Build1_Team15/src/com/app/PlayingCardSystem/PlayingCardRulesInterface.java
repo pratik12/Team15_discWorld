@@ -21,7 +21,7 @@ public interface PlayingCardRulesInterface {
 	
 	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result);
 	public void moveMinion();
-	public void assasinate(Player ps);
+	public void assasinate(Player ps) throws JSONException;
 	public void removeTroubleMarker(String areaName);
 	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp) throws JSONException;
 	public void takeMoneyFromBank(Player currPlayer,int amount);
@@ -32,12 +32,13 @@ public interface PlayingCardRulesInterface {
 	public void takeMoneyFromBank(int amt, Player currentPlayer);
 	public void payMoneyToBank(int amt, Player currentPlayer);
 	public void removeMinion(int num, Player currentPlayer);
-	public void removeMinionOFAnotherPlayer(int num, Player currentPlayer, Player fromPlayer);
+	public boolean removeMinionOFAnotherPlayer(int num, Player currentPlayer, Player fromPlayer) throws JSONException;
 	public void removeMinionOFYourOwn(int num, Player currentPlayer);
 	//moveminion of OTHER player from an area to adjacent area
 	public void moveMinionToOtherArea(Player currentPlayer, Player fromPlayer, String toLocation) throws JSONException;
 	// remove minion from an area
 
+	public void fillYourHandWIthPlayerCard(int i, Player ps);
 	public void takePlayingCards(Player currrentPlayer, int number);
 	public void playingCardsAction(Player currentPlayer, Player fromPlayer, int count);
 	public void givePlayingCards(Player currrentPlayer , int number);
@@ -55,9 +56,9 @@ public interface PlayingCardRulesInterface {
 	public void removeoneTroubleMarker(Player currentPlayer);
 	public void discardCard(Player currentPlayer);
 	public void placeoneMinion(Player currentPlayer,String areaLocation) throws JSONException;
-	public void placeMinionActionPlayerCard(Player currentPlayingPlayer);
-	
-	public void discardCardsPerYourWish(Player currentPlayingPlayer, GreenPlayerCardEnum gc, int amt);
+	public void placeMinionActionPlayerCard(Player currentPlayingPlayer) throws JSONException;
+	public void placeMinionActionPlayerCard(Player currentPlayingPlayer,String s);
+	public String discardCardsPerYourWish(Player currentPlayingPlayer, GreenPlayerCardEnum gc, int amt);
 	public void takeMoneyExchangeCardsFromAnotherPlayer(Player currentPlayingPlayer,
 			int amt);
 }

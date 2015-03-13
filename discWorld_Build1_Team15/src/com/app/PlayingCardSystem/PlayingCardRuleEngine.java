@@ -8,7 +8,7 @@ public enum PlayingCardRuleEngine {
 	TEST;
 	
 	public void takeMoney(int amt, Player currentPlayingPlayer){
-		
+		System.out.println("Take money from every player...");
 		for(Player temp : BoardGame.playersInGame){
 			
 			if(!(temp.getPlayerColor().toLowerCase().equals(currentPlayingPlayer.getPlayerColor().toLowerCase()))
