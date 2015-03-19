@@ -158,10 +158,17 @@ public class Area {
 	public void to_String(){
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.getAreaName(),
 				this.getMinionsForEveryPlayer(this.getAreaName()),this.isTroubleMarkers(),
-				this.isBuildngs(),this.getDemons(),this.getTrolls());
+				this.getPlayersColorInthisArea(),this.getDemons(),this.getTrolls());
 
 	}
-
+	
+	private String getPlayersColorInthisArea() {
+		
+		if(this.getPlayersInThisAreas()!=null)
+			return this.getPlayersInThisAreas().get(0).getPlayerColor().toUpperCase();
+		else
+			return "none";
+	}
 	/**
 	 * Gets the minions for every player.
 	 *
@@ -214,11 +221,11 @@ public class Area {
 	 * @return the playersInThisAreas
 	 */
 	public ArrayList<Player> getPlayersInThisAreas() {
-
+		ArrayList<Player> temp = null;
 		if(!this.playersInThisAreas.isEmpty())
-			return playersInThisAreas;
+			temp = playersInThisAreas;
 		else 
-			return null;
+			return temp;
 	}
 
 	/**
