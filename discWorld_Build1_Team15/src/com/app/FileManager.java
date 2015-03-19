@@ -108,7 +108,7 @@ public class FileManager {
             String line;
             try {
                 while ((line = br.readLine()) != null) {
-                    System.out.println(line);
+                   // System.out.println(line);
                     playersRecords.add(line);
                 }
             } catch (IOException e) {
@@ -146,9 +146,9 @@ public class FileManager {
        // System.out.println(noOfPlayers);
       //  System.out.println(playersRecords.get(0));
 
-     //   initializeTroubleMarkerOnGameBoard(playersRecords);
 
         createPlayers(playersRecords);
+      //  initializeTroubleMarkerOnGameBoard(playersRecords);
         
         
     }
@@ -194,9 +194,8 @@ public class FileManager {
      * @param playersRecords - initializing troubleMarkers on the game board
      */
     private static void initializeTroubleMarkerOnGameBoard(String[] playersRecords) {
-
         
-        for (String str : tempTroubleMarker) {
+        for (String str : playersRecords) {
             String areaName = str.split("-")[1];
             for (Area a : BoardGame.board_areas) {
                 if (a.getAreaName().equalsIgnoreCase(areaName)) {
@@ -205,7 +204,6 @@ public class FileManager {
                 }
             }
         }
-        playersRecords.remove(0);
     }
 
     /**
@@ -218,6 +216,7 @@ public class FileManager {
     	
     	String[] tempTroubleMarker = null;
         tempTroubleMarker = playersRecords.get(0).split(":");
+        playersRecords.remove(0);
         String[] playerInfo = null;
         for (String str : playersRecords) {
             if (!str.startsWith("BankAmount")) {
@@ -228,7 +227,7 @@ public class FileManager {
                 player.setWinningCondition(playerInfo[1]); // setting personality card
                 player.setMinionQuantity(Integer.parseInt(playerInfo[2])); // setting number of minions
                 int index = 3;
-                int countMinion = 12 - player.getMinionQuantity();
+                int countMinion = 12 - Integer.parseInt(playerInfo[2]);
                 // setting minions in respective areas
                 if (countMinion != 0) {
 
@@ -254,7 +253,7 @@ public class FileManager {
                         if (countBuilding != 0) {
 
                             do {
-                                playerInBoardGame.addBuilding(playerInfo[index].split("-")[1]);
+                            	playerInBoardGame.addBuilding(playerInfo[index].split("-")[1]);
                                 index++;
                                 countBuilding--;
                             } while (countBuilding != 0);
@@ -269,7 +268,7 @@ public class FileManager {
                                 do {
                                     //PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index].split("-")[1]), "Green", " ", " ");
                                 	GreenPlayerCardEnum p = returnInstanceOfPlayerCard(playerInfo[index].split("-")[1]);
-                                    playerInBoardGame.setPlayersPlayingCard(p);
+                                	playerInBoardGame.setPlayersPlayingCard(p);
                                     index++;
                                     BoardGame.player_cards.remove(p);
                                 } while (!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank")));
@@ -287,10 +286,9 @@ public class FileManager {
             }
         }
         initializeTroubleMarkerOnGameBoard(tempTroubleMarker);
-        
+        intializeBoardGameDataStructures();
         for(Player playerInBoardGame : BoardGame.getInstance().playersInGame){
         	      ConsoleOutput.printOutPlayerState(playerInBoardGame);
-        	      System.out.println();
         	      ConsoleOutput.printOutInventory(playerInBoardGame);
         	
         }
@@ -298,7 +296,13 @@ public class FileManager {
         System.out.println();
     }
 
-    private static GreenPlayerCardEnum returnInstanceOfPlayerCard(String string) {
+    private static void intializeBoardGameDataStructures() {
+		
+    	
+		
+	}
+
+	private static GreenPlayerCardEnum returnInstanceOfPlayerCard(String string) {
 
     	for(GreenPlayerCardEnum temp : BoardGame.player_cards){
     		
