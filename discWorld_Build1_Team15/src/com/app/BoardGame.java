@@ -252,17 +252,19 @@ public class BoardGame {
 
     public static int shuffle(int i) {
 
-        Random rand = new Random();
-        return rand.nextInt(i);
-
-
+    	if(!(i<0) || !(i == Integer.valueOf(i))){
+    		Random rand = new Random();
+    		return rand.nextInt(i);
+    		}else{
+    			return -1;
+    		}
     }
 
     public static void start(int playersNumber) throws JSONException {
 
         BoardGame.setInstance();
 //		board_Game_Object = BoardGame.getInstance();
-        startGame(playersNumber);
+ //       startGame(playersNumber);
 
     }
 
@@ -363,7 +365,7 @@ public class BoardGame {
         for (int i = 0; i < temp.length; i++) {
             for (Area a : BoardGame.board_areas) {
                 if (a.getAreaNumber() == Integer.parseInt(temp[i])) {
-                    System.out.print(a.getAreaName() + ", ");
+                	System.out.printf("%-20s%-2s",a.getAreaName(),",");
                 }
             }
         }

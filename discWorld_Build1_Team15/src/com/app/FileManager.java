@@ -146,7 +146,7 @@ public class FileManager {
        // System.out.println(noOfPlayers);
       //  System.out.println(playersRecords.get(0));
 
-        initializeTroubleMarkerOnGameBoard(playersRecords);
+     //   initializeTroubleMarkerOnGameBoard(playersRecords);
 
         createPlayers(playersRecords);
         
@@ -174,6 +174,9 @@ public class FileManager {
     		BoardGame.player_cards.clear();
     		BoardGame.playersInGame.clear();
     		BoardGame.getInstance().random_event_cards.clear();
+    		BoardGame.getDiscardedRandomEventCards().clear();
+    		BoardGame.getDiscardPilePlayerCards().clear();
+    		BoardGame.getCityAreaCardRepo().clear();
     		//BoardGame.getInstance()=null;
     		BoardGame.setInstance();
     		
@@ -190,10 +193,9 @@ public class FileManager {
      *
      * @param playersRecords - initializing troubleMarkers on the game board
      */
-    private static void initializeTroubleMarkerOnGameBoard(ArrayList<String> playersRecords) {
+    private static void initializeTroubleMarkerOnGameBoard(String[] playersRecords) {
 
-        String[] tempTroubleMarker = null;
-        tempTroubleMarker = playersRecords.get(0).split(":");
+        
         for (String str : tempTroubleMarker) {
             String areaName = str.split("-")[1];
             for (Area a : BoardGame.board_areas) {
@@ -213,7 +215,9 @@ public class FileManager {
      * @param playersRecords - An arraylist that contains the records from the file for each player's data
      */
     private static void createPlayers(ArrayList<String> playersRecords) {
-
+    	
+    	String[] tempTroubleMarker = null;
+        tempTroubleMarker = playersRecords.get(0).split(":");
         String[] playerInfo = null;
         for (String str : playersRecords) {
             if (!str.startsWith("BankAmount")) {
@@ -282,6 +286,8 @@ public class FileManager {
                 BoardGame.setBank(Integer.parseInt(str.split("-")[1]));
             }
         }
+        initializeTroubleMarkerOnGameBoard(tempTroubleMarker);
+        
         for(Player playerInBoardGame : BoardGame.getInstance().playersInGame){
         	      ConsoleOutput.printOutPlayerState(playerInBoardGame);
         	      System.out.println();
