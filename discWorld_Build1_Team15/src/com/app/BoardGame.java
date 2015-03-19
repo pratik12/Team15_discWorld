@@ -133,18 +133,18 @@ public class BoardGame {
                 && (random_event_cards.isEmpty()) && (player_cards.isEmpty())) {
 
 
-            areaDetails.append("Dolly Sisters", new JSONObject().put("1", "6:12:3:2"));
-            areaDetails.append("Unreal Estate", new JSONObject().put("2", "18:1:12:10:4"));
-            areaDetails.append("Dragons Landing", new JSONObject().put("3", "12:12:3:2"));
-            areaDetails.append("Small Gods", new JSONObject().put("4", "18:12:3:2"));
-            areaDetails.append("The Scours", new JSONObject().put("5", "6:12:3:2"));
-            areaDetails.append("The Hippo", new JSONObject().put("6", "12:12:3:2"));
-            areaDetails.append("The Shades", new JSONObject().put("7", "6:12:3:2"));
-            areaDetails.append("Dimwell", new JSONObject().put("8", "6:12:3:2"));
-            areaDetails.append("Longwell", new JSONObject().put("9", "12:12:3:2"));
-            areaDetails.append("Isle of Gods", new JSONObject().put("10", "12:12:3:2"));
-            areaDetails.append("Seven Sleepers", new JSONObject().put("11", "18:12:3:2"));
-            areaDetails.append("Nap Hill", new JSONObject().put("12", "12:12:3:2"));
+        	areaDetails.append("Dolly Sisters",new JSONObject().put("1", "6:12:3:2"));
+    		areaDetails.append("Unreal Estate",new JSONObject().put("2", "18:3:1:12:10:4:11"));
+    		areaDetails.append("Dragons Landing",new JSONObject().put("3", "12:1:4"));
+    		areaDetails.append("Small Gods",new JSONObject().put("4", "18:3:6:5:2:10"));
+    		areaDetails.append("The Scours",new JSONObject().put("5", "6:10:4:6:7"));
+    		areaDetails.append("The Hippo",new JSONObject().put("6", "12:4:5:7"));
+    		areaDetails.append("The Shades",new JSONObject().put("7", "6:8:6:5"));
+    		areaDetails.append("Dimwell",new JSONObject().put("8", "6:7:5:9"));
+    		areaDetails.append("Longwell",new JSONObject().put("9", "12:8:10:11"));
+    		areaDetails.append("Isle of Gods",new JSONObject().put("10", "12:9:11:2:4:5"));
+    		areaDetails.append("Seven Sleepers",new JSONObject().put("11", "18:12:9:1:2:10"));
+    		areaDetails.append("Nap Hill",new JSONObject().put("12", "12:1:2:11"));
 
             //getAdjacentAreaIDs(areaDetails, "Nap Hill");
             personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(2));
