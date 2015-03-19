@@ -30,7 +30,7 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 	
 	GLOBALOBJ("self","green","deckpile",new String[]{}){},
 	
-	BOGGIS("BOGGIS","green","DeckPile", new String[]{"Read Scroll->Take 2$ from every player","Place minion"} ){
+	BOGGIS("Mr.BOGGIS","green","DeckPile", new String[]{"Read Scroll->Take 2$ from every player","Place minion"} ){
 		
 		@Override
 		public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -67,7 +67,7 @@ public enum GreenPlayerCardEnum implements PlayingCardRulesInterface {
 		// place this card on the discard pile
 	},//take 2$ from all players
 	
-BEGGARSGUILD("BEGGARS GUILD","green","DeckPile", new String[]{"Read scroll->Take 2 playing cards","Place minion"} ) {
+BEGGARSGUILD("The BEGGARS GUILD","green","DeckPile", new String[]{"Read scroll->Take 2 playing cards","Place minion"} ) {
 		
 	@Override
 	public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -137,7 +137,7 @@ BEGGARSGUILD("BEGGARS GUILD","green","DeckPile", new String[]{"Read scroll->Take
 		}
 	}, //loan of 10$ from bank. at end payback 12$ or loose 15 points
 	
-	AMSUNSHINEDRAGONSANCTUARY("AM SUNSHINE DRAGON SANCTUARY","green","DeckPile", new String[]{"Read scroll->Each playe rmust give you 1$ or one of their"
+	AMSUNSHINEDRAGONSANCTUARY("The Ankh Morpork Sunshine Dragon Sanctuary","green","DeckPile", new String[]{"Read scroll->Each playe rmust give you 1$ or one of their"
 			+ " cards","Play Another Card"}) {
 
 	@Override
@@ -219,7 +219,7 @@ BEGGARSGUILD("BEGGARS GUILD","green","DeckPile", new String[]{"Read scroll->Take
 		}
 	},//
 	
-AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"Assasinate","Take 2$","Place Minion"}) {
+AGONYAUNTS("The Agony Aunts","green","DeckPile", new String[]{"Assasinate","Take 2$","Place Minion"}) {
 		
 	@Override
 	public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -256,7 +256,7 @@ AGONYAUNTS("AGONYAUNTS","green","DeckPile", new String[]{"Assasinate","Take 2$",
 		}
 	},
 	
-DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
+DYSK("The Dysk","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		
 	@Override
 	public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -292,7 +292,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		}
 	},
 	
-	DUCKMAN("DUCKMAN","green","DeckPile",new String[]{"Read scroll"}) {
+	DUCKMAN("The Duckman","green","DeckPile",new String[]{"Read scroll"}) {
 		
 		@Override
 		public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -596,7 +596,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		}
 
 	},
-	FOULOLERON("Foul O leron","green","DeckPile",new String[]{"Read Scroll->","Play another card"}) {
+	FOULOLERON("Foul Ole ron","green","DeckPile",new String[]{"Read Scroll->","Play another card"}) {
 		// moveminion of OTHER player from an area to adjacent area
 		@Override
 	public void performTasks(Player currentPlayingPlayer) throws JSONException {
@@ -967,7 +967,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		}
 		
 	},
-	NOBBYNOBBSS("NOBBYNOBBSS","green","DeckPile",new String[]{"Read Scroll->Take 3$ from player of your choice","Play another card"}) {
+	NOBBYNOBBSS("NOBBY NOBBSS","green","DeckPile",new String[]{"Read Scroll->Take 3$ from player of your choice","Play another card"}) {
 		@Override
 		public void performTasks(Player currentPlayer) throws JSONException{
 			
@@ -1331,7 +1331,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 			addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 	},
-	ZORGOTHERETROPHRENOLOGIST("ZORGO THE RETRO-PHRENOLOGIST","green","DeckPile",new String[]{"Read Scroll->Exchange perosnality card","Add building"}) {
+	ZORGOTHERETROPHRENOLOGIST("ZORGO THE RETROPHRENOLOGIST","green","DeckPile",new String[]{"Read Scroll->Exchange perosnality card","Add building"}) {
 		@Override
 		public void performTasks(Player currentPlayingPlayer){
 			
@@ -1367,14 +1367,14 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 			PlayerCardUtility.getEnumInstance("The Fools Guild").performTasks(currentPlayingPlayer);
 		}
 	},
-	WALLACESONKY("WALLACESONKY","green","DeckPile") {
+	WALLACESONKY("WALLACE SONKY","green","DeckPile") {
 		@Override
 		public void performTasks(Player currentPlayingPlayer){
 			
 			
 		}
 	},
-	THESEAMSTRESSESGUILD("THESEAMSTRESSESGUILD","green","DeckPile",new String[]{"Read Scroll->Take money in exchange of cards from Another player ","Place minion"}) {
+	THESEAMSTRESSESGUILD("THE SEAMSTRESSES GUILD","green","DeckPile",new String[]{"Read Scroll->Take money in exchange of cards from Another player ","Place minion"}) {
 		@Override
 		public void performTasks(Player currentPlayingPlayer) throws JSONException{
 		
@@ -1397,7 +1397,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		addToDiscardPile(1, this, currentPlayingPlayer);
 		}
 	},
-	MRPINANDMRTULIP("MR.PIN AND MR.TULIP","green","DeckPile",new String[]{"Assasinate","Take 1$->From Bank"}) {
+	MRPINANDMRTULIP("MR.PIN & MR.TULIP","green","DeckPile",new String[]{"Assasinate","Take 1$->From Bank"}) {
 		@Override
 		public void performTasks(Player currentPlayingPlayer) throws JSONException{
 			String res = askSymbolsInOrder(this ,"0");
@@ -1421,7 +1421,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		}
 		
 	},
-	THETHIEVESGUILD("THETHIEVESGUILD","green","DeckPile",new String[]{"Read Scroll->Money will betaken from Player","Place Minion"}) {
+	THETHIEVESGUILD("THE THIEVES GUILD","green","DeckPile",new String[]{"Read Scroll->Money will betaken from Player","Place Minion"}) {
 		// take 2$ from every other player
 		@Override
 		  public void performTasks(Player currentPlayingPlayer) throws JSONException{
@@ -1452,7 +1452,7 @@ DYSK("DYSK","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 			
 		}  
 		
-	}, GIMLETDWARFDELICATESSEN("GIMLETDWARFDELICATESSEN","green","DeckPile",new String[]{"Take 3$","Place minion"}){
+	}, GIMLETDWARFDELICATESSEN("GIMLET DWARF DELICATESSEN","green","DeckPile",new String[]{"Take 3$","Place minion"}){
 		@Override
 		public void performTasks(Player currentPlayingPlayer) throws JSONException{
 			String res = askSymbolsInOrder(this ,"0");
