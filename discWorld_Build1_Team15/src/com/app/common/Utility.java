@@ -2,10 +2,10 @@ package com.app.common;
 
 import com.app.Area;
 import com.app.BoardGame;
-import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.Player;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -72,9 +72,14 @@ public class Utility {
     }
 
     public String giveTurnToleft() {
-        String player = CityAreaCardEnum.GLOBAL.questionsToAsk("Enter the player in your left (r/g/b/y)?");
-        System.out.println("It is player with color " + player + "turn");
-        return player;
+        System.out.println("Enter the player in your left (r/g/b/y)?");
+        Scanner in = new Scanner(System.in);
+
+        String result = in.nextLine();
+        if (!result.isEmpty())
+            result = result.trim();
+        System.out.println("It is player with color " + result + " turn");
+        return result;
     }
 
     public int getNumberOfMinions(String areaName) {
@@ -89,6 +94,20 @@ public class Utility {
                     ++result;
             }
 
+        }
+        return result;
+    }
+
+    public String checkInputAnswer() {
+        System.out.println();
+        String result = null;
+        Scanner in = new Scanner(System.in);
+        result = in.nextLine();
+        if (!result.isEmpty())
+            return result;
+        else {
+            System.out.println("Enter a valid input");
+            checkInputAnswer();
         }
         return result;
     }
