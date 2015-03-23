@@ -1,21 +1,16 @@
 package com.app.PlayingCardSystem;
 
+import com.app.*;
+import com.app.common.ComponentUtilities;
+import com.app.common.Utility;
+import com.app.rules.RandomEventCard;
+import com.app.rules.WinningCircumstancesFactory;
+import org.json.JSONException;
+import userInputUtility.UserInputUtility;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
-import org.json.JSONException;
-
-import userInputUtility.UserInputUtility;
-
-import com.app.Area;
-import com.app.BoardGame;
-import com.app.InterruptCard;
-import com.app.Player;
-import com.app.PlayerCardUtility;
-import com.app.common.ComponentUtilities;
-import com.app.rules.WinningCircumstancesFactory;
-import com.app.rules.RandomEventCard;
 
 /**
  * The Class PlayerCard.
@@ -1183,7 +1178,9 @@ DYSK("The Dysk","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 		public void performTasks(Player currentPlayingPlayer) throws JSONException{
 			
 			System.out.println("Compulsory action will be performed..");
-			RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayingPlayer, RandomEventCard.Fire, this);
+            //randomly select a random event card
+            Utility utility = new Utility();
+            RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayingPlayer, RandomEventCard.valueOf(RandomEventCard.get(utility.getRandNum(12-BoardGame.getDiscardedRandomEventCards().size()))), this);
 			String res = askSymbolsInOrder(this ,"0");
 			
 			while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -2168,7 +2165,7 @@ DYSK("The Dysk","green","DeckPile",new String[]{"Add building","Read Scroll"}) {
 			break;
 			}
 		}catch(Exception e){
-			throw e ;
+            e.printStackTrace();
 		}
 		System.out.println("Action completed..");
 		return "";
