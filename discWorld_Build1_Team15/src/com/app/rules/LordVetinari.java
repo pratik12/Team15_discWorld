@@ -20,6 +20,7 @@ public class LordVetinari implements WinningCircumstances {
         for (Player player : BoardGame.playersInGame) {
             if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(2))) {
                 currentPlayer = player;
+                break;
             }
         }
         if (currentPlayer != null && currentPlayer.getPlayerAreas() != null && !currentPlayer.getPlayerAreas().isEmpty()) {
@@ -35,12 +36,10 @@ public class LordVetinari implements WinningCircumstances {
             return Boolean.FALSE;
     }
 
-    private int calculateAreaOfPlayer(Player currentPlayer){
+    private int calculateAreaOfPlayer(Player currentPlayer) {
         int numberOfArea = 0;
         for (Area area : currentPlayer.getPlayerAreas()) {
-           if (area.getDemons()== 0){
-               numberOfArea++;
-           }
+            numberOfArea += area.getMinions();
         }
 
         return numberOfArea;
