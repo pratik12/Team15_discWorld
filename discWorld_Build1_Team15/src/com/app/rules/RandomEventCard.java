@@ -95,59 +95,7 @@ public enum RandomEventCard {
             }
 
             case Flood: {
-                int firstAreaNumber = utility.rollDie();
-                int secondAreaNumber = utility.rollDie();
-                Area firstArea = utility.getAreaByNumber(firstAreaNumber);
-                Area secondArea = utility.getAreaByNumber(secondAreaNumber);
-                if ((firstAreaNumber != 3) && (firstAreaNumber != 6) && (firstAreaNumber != 9)) {
-                    try {
-                        BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, firstArea.getAreaName()));
-                        String selectedAdjacentArea = utility.checkInputAnswer();
-                        if (!selectedAdjacentArea.equals(secondArea.getAreaName())) {
-                            //remove minion from destination
-                            for (ArrayList<String> minionArea : currentPlayer.getMinions().values()) {
-                                for (String temp : minionArea) {
-                                    if (firstArea.getAreaName().equalsIgnoreCase(temp)) {
-                                        currentPlayer.getMinions().remove(temp);
-                                        currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity() - 1);
-                                        currentPlayer.getAreaInstanceFromAreaName(temp).setTroubleMarkers(false);
-                                        break;
-                                    }
-                                }
-                            }
-                            currentPlayer.placeMinion(selectedAdjacentArea);
-                        } else {
-                            System.out.println("Selected Area Is An Affected Area and not acceptable");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                }
-
-                if ((secondAreaNumber != 3) && (secondAreaNumber != 6) && (secondAreaNumber != 9) && (secondAreaNumber != firstAreaNumber)) {
-                    try {
-                        BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, secondArea.getAreaName()));
-                        String selectedAdjacentArea = utility.checkInputAnswer();
-                        if (!selectedAdjacentArea.equals(firstArea.getAreaName())) {
-                            //remove minion from destination
-                            for (ArrayList<String> minionArea : currentPlayer.getMinions().values()) {
-                                for (String temp : minionArea) {
-                                    if (secondArea.getAreaName().equalsIgnoreCase(temp)) {
-                                        currentPlayer.getMinions().remove(temp);
-                                        currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity() - 1);
-                                        currentPlayer.getAreaInstanceFromAreaName(temp).setTroubleMarkers(false);
-                                        break;
-                                    }
-                                }
-                            }
-                            currentPlayer.placeMinion(selectedAdjacentArea);
-                        } else {
-                            System.out.println("Selected Area Is An Affected Area and not acceptable");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                }
+                doFloodAction(currentPlayer);
                 return Boolean.TRUE;
             }
 
@@ -199,25 +147,45 @@ public enum RandomEventCard {
                 Area secondArea = utility.getAreaByNumber(secondAreaNumber);
                 Area thirdArea = utility.getAreaByNumber(thirdAreaNumber);
                 Area fourthArea = utility.getAreaByNumber(fourthAreaNumber);
+                currentPlayer.placeMinion(firstArea.getAreaName());
                 int demonNum = firstArea.getDemons();
                 demonNum++;
                 firstArea.setDemons(demonNum);
                 firstArea.setTroubleMarkers(Boolean.TRUE);
-                firstArea.setAreaCityCards(Boolean.FALSE);
+                firstArea.setTroubleMarkerArea(firstArea.getAreaName());
+                if (firstArea.getDemons() > 0) {
+                    firstArea.setAreaCityCards(Boolean.FALSE);
+                    firstArea.setCostOfArea(0);
+                }
+                currentPlayer.placeMinion(secondArea.getAreaName());
                 demonNum = secondArea.getTrolls();
                 demonNum++;
                 secondArea.setDemons(demonNum);
                 secondArea.setTroubleMarkers(Boolean.TRUE);
-                secondArea.setAreaCityCards(Boolean.FALSE);
+                secondArea.setTroubleMarkerArea(secondArea.getAreaName());
+                if (secondArea.getDemons() > 0) {
+                    secondArea.setAreaCityCards(Boolean.FALSE);
+                    secondArea.setCostOfArea(0);
+                }
+                currentPlayer.placeMinion(thirdArea.getAreaName());
                 demonNum = thirdArea.getDemons();
                 demonNum++;
                 thirdArea.setDemons(demonNum);
                 thirdArea.setTroubleMarkers(Boolean.TRUE);
-                thirdArea.setAreaCityCards(Boolean.FALSE);
+                thirdArea.setTroubleMarkerArea(thirdArea.getAreaName());
+                if (thirdArea.getDemons() > 0) {
+                    thirdArea.setAreaCityCards(Boolean.FALSE);
+                    thirdArea.setCostOfArea(0);
+                }
+                currentPlayer.placeMinion(fourthArea.getAreaName());
                 demonNum = fourthArea.getDemons();
                 demonNum++;
                 fourthArea.setDemons(demonNum);
-                fourthArea.setTroubleMarkers(Boolean.TRUE);
+                fourthArea.setTroubleMarkerArea(fourthArea.getAreaName());
+                if (fourthArea.getDemons() > 0) {
+                    fourthArea.setTroubleMarkers(Boolean.TRUE);
+                    fourthArea.setCostOfArea(0);
+                }
                 fourthArea.setAreaCityCards(Boolean.FALSE);
                 return Boolean.TRUE;
 
@@ -267,6 +235,7 @@ public enum RandomEventCard {
                             int minionNumber = player.getMinionQuantity();
                             minionNumber--;
                             player.setMinionQuantity(minionNumber);
+                            area.getMinionColor().remove(new String(player.getPlayerColor()));
                             area.setAreaCityCards(Boolean.FALSE);
                         }
                     }
@@ -285,15 +254,24 @@ public enum RandomEventCard {
                 int trollNum = firstArea.getTrolls();
                 trollNum++;
                 firstArea.setTrolls(trollNum);
-                firstArea.setTroubleMarkers(Boolean.TRUE);
+                if (firstArea.getMinions() > 0) {
+                    firstArea.setTroubleMarkers(Boolean.TRUE);
+                    firstArea.setTroubleMarkerArea(firstArea.getAreaName());
+                }
                 trollNum = secondArea.getTrolls();
                 trollNum++;
                 secondArea.setTrolls(trollNum);
-                secondArea.setTroubleMarkers(Boolean.TRUE);
+                if (secondArea.getMinions() > 0) {
+                    secondArea.setTroubleMarkers(Boolean.TRUE);
+                    secondArea.setTroubleMarkerArea(firstArea.getAreaName());
+                }
                 trollNum = thirdArea.getTrolls();
                 trollNum++;
                 thirdArea.setTrolls(trollNum);
-                thirdArea.setTroubleMarkers(Boolean.TRUE);
+                if (thirdArea.getMinions() > 0) {
+                    thirdArea.setTroubleMarkers(Boolean.TRUE);
+                    thirdArea.setTroubleMarkerArea(firstArea.getAreaName());
+                }
                 return Boolean.TRUE;
             }
             case Earthquake: {
@@ -316,6 +294,71 @@ public enum RandomEventCard {
                 return Boolean.FALSE;
         }
 
+    }
+
+    private void doFloodAction(Player currentPlayer) {
+        Utility utility = new Utility();
+        int firstAreaNumber = utility.rollDie();
+        int secondAreaNumber = utility.rollDie();
+        Area firstArea = utility.getAreaByNumber(firstAreaNumber);
+        Area secondArea = utility.getAreaByNumber(secondAreaNumber);
+        if ((firstAreaNumber != 3) && (firstAreaNumber != 6) && (firstAreaNumber != 9)) {
+            try {
+                BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, firstArea.getAreaName()));
+                String selectedAdjacentArea = utility.checkInputAnswer();
+                if (!selectedAdjacentArea.equals(secondArea.getAreaName())) {
+                    //remove minion from destination
+                    for (ArrayList<String> minionArea : currentPlayer.getMinions().values()) {
+                        for (String temp : minionArea) {
+                            if (firstArea.getAreaName().equalsIgnoreCase(temp)) {
+                                currentPlayer.getMinions().remove(temp);
+                                currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity() - 1);
+                                currentPlayer.getAreaInstanceFromAreaName(temp).setTroubleMarkers(false);
+                                break;
+                            }
+                        }
+                    }
+                    currentPlayer.placeMinion(selectedAdjacentArea);
+                } else {
+                    System.out.println("Selected Area Is An Affected Area and not acceptable");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        if ((secondAreaNumber != 3) && (secondAreaNumber != 6) && (secondAreaNumber != 9) && (secondAreaNumber != firstAreaNumber)) {
+            try {
+                BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, secondArea.getAreaName()));
+                String selectedAdjacentArea = utility.checkInputAnswer();
+                if (!selectedAdjacentArea.equals(firstArea.getAreaName())) {
+                    //remove minion from destination
+                    for (ArrayList<String> minionArea : currentPlayer.getMinions().values()) {
+                        for (String temp : minionArea) {
+                            if (secondArea.getAreaName().equalsIgnoreCase(temp)) {
+                                currentPlayer.getMinions().remove(temp);
+                                currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity() - 1);
+                                currentPlayer.getAreaInstanceFromAreaName(temp).setTroubleMarkers(false);
+                                break;
+                            }
+                        }
+                    }
+                    currentPlayer.placeMinion(selectedAdjacentArea);
+                } else {
+                    System.out.println("Selected Area Is An Affected Area and not acceptable");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        for (int i = 0; i < BoardGame.playersInGame.size() - 1; i++) {
+            String nextPlayer = utility.giveTurnToleft();
+            for (Player player : BoardGame.playersInGame) {
+                if (player.getPlayerColor().equalsIgnoreCase(nextPlayer))
+                    doFloodAction(player);
+            }
+        }
     }
 
     private void doMurder(Player currentPlayer) {
