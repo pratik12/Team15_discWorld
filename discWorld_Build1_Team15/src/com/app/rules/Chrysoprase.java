@@ -20,6 +20,7 @@ public class Chrysoprase implements WinningCircumstances {
         for (Player player : BoardGame.playersInGame) {
             if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(5))) {
                 currentPlayer = player;
+                break;
             }
         }
         if (currentPlayer != null && currentPlayer.getPlayerAreas() != null && !currentPlayer.getPlayerAreas().isEmpty()) {
