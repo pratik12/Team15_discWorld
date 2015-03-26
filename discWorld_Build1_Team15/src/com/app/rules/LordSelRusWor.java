@@ -23,11 +23,12 @@ public class LordSelRusWor implements WinningCircumstances {
             if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(1)) || player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(3)) ||
                     player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(7))) {
                 currentPlayer = player;
+                break;
             }
         }
         if (currentPlayer != null && currentPlayer.getPlayerAreas() != null && !currentPlayer.getPlayerAreas().isEmpty()) {
             if (numberOfPlayers == 2) {
-                checkControlledAreas(currentPlayer, 7);
+        checkControlledAreas(currentPlayer, 7);
             } else if (numberOfPlayers == 3) {
                 checkControlledAreas(currentPlayer, 5);
             } else if (numberOfPlayers == 4) {
@@ -46,23 +47,25 @@ public class LordSelRusWor implements WinningCircumstances {
         while (controlledAreaCounter < numberOfAreaTocheck && countedCurrentAreaLength <= currentPlayer.getPlayerAreas().size()) {
 
             ArrayList<Area> areas = currentPlayer.getPlayerAreas();
-            for (Player p : areas.get(countedCurrentAreaLength).getPlayersInThisAreas()) {
-                currentTotalProperty = 0;
-                totalPieces = 0;
-                if (!(p.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor()))) {
-                    currentTotalProperty += p.getNumberOfBuildings() + p.getMinionQuantity();
-                    totalPieces += currentPlayer.getNumberOfBuildings() + currentPlayer.getMinionQuantity();
-                } else {
-                    controlledAreaCounter++;
+            if (!areas.isEmpty())
+                for (Player p : areas.get(countedCurrentAreaLength).getPlayersInThisAreas()) {
+                    currentTotalProperty = 0;
+                    totalPieces = 0;
+                    if (!(p.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor()))) {
+                        currentTotalProperty += p.getNumberOfBuildings() + p.getMinionQuantity();
+                        totalPieces += currentPlayer.getNumberOfBuildings() + currentPlayer.getMinionQuantity();
+                    } else {
+                        controlledAreaCounter++;
+                    }
+
+                    if (totalPieces > currentTotalProperty && totalPieces > areas.get(countedCurrentAreaLength).getTrolls() && areas.get(countedCurrentAreaLength).getDemons() == 0)
+                        controlledAreaCounter++;
+                    countedCurrentAreaLength++;
                 }
-
-                if (totalPieces > currentTotalProperty && totalPieces > areas.get(countedCurrentAreaLength).getTrolls() && areas.get(countedCurrentAreaLength).getDemons() == 0)
-                    controlledAreaCounter++;
-                countedCurrentAreaLength++;
-            }
-
-            return controlledAreaCounter >= numberOfAreaTocheck;
+            else
+                return Boolean.FALSE;
         }
-        return Boolean.TRUE;
+        return controlledAreaCounter >= numberOfAreaTocheck;
+
     }
 }
