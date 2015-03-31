@@ -21,9 +21,11 @@ public class PlayerTest {
     @Test(expected=NullPointerException.class)
     public void checkTroubleMarkerValidity() {
         Player playerObject = new Player("K");
+        
         boolean thrown = false;
         assertEquals(Area.class, playerObject.getAreaInstanceFromAreaName("Dolly Sisters"));
         assertEquals(null, playerObject.getAreaInstanceFromAreaName(" "));
+        
         assertNotNull(playerObject);
         try{
         	playerObject.setPlayerAreas(null);

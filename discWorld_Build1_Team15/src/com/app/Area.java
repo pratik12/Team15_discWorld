@@ -46,7 +46,8 @@ public class Area {
 	// list to keep track of which players own which area
 	/** The players in this areas. */
 	private ArrayList<Player> playersInThisAreas = new ArrayList<Player>();
-
+	
+	public Area(){}
 	/**
 	 * constructor initializing the areas with its name cost and number.
 	 *
@@ -60,6 +61,8 @@ public class Area {
 		this.setAreaNumber(areaNumber);
 		this.setCostOfArea(Integer.parseInt(cost_num));
 		this.setAreaCityCards(false);
+		this.setDemons(0);
+		this.setTrolls(0);
 	}
 
 	/**
@@ -155,28 +158,17 @@ public class Area {
 	/**
 	 * String representation of area object with its properties.
 	 */
+	
+	//changed the this.isBuildings to this.getBuildingsForEveryPlayer - Sanchit
 	public void to_String(){
 		System.out.printf("%-22s%-18s%-18s%-18s%-18s%s\n",this.getAreaName(),
-				this.getMinionsForEveryPlayer(this.getAreaName()),this.isTroubleMarkers(),
+				this.getMinionsFPlayer(this.getAreaName()),this.isTroubleMarkers(),
 				this.getPlayersColorInthisArea(),this.getDemons(),this.getTrolls());
 
 	}
 	
-	private String getPlayersColorInthisArea() {
+	private String getMinionsFPlayer(String areaName) {
 		
-		if(this.getPlayersInThisAreas()!=null)
-			return this.getPlayersInThisAreas().get(0).getPlayerColor().toUpperCase();
-		else
-			return "none";
-	}
-	/**
-	 * Gets the minions for every player.
-	 *
-	 * @param area the area
-	 * @return the minions placed by players in any area.
-	 */
-	private String getMinionsForEveryPlayer(String area) {
-
 		String result = "";
 
 		// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
@@ -184,8 +176,48 @@ public class Area {
 			// checking for every minion location for all the players
 			for(String minion_location : p.getMinions().get(p.getPlayerColor())){
 
-				if(minion_location.equals(area))
-					result += "  " +p.getPlayerColor();
+				if(minion_location.equalsIgnoreCase(areaName)) // changed from equals to equalsignorecase
+					result += " " +p.getPlayerColor();
+			}
+
+		}
+		if(result!="none")
+			return result;
+		else
+			return "none";
+
+	}
+	private String getPlayersColorInthisArea() {
+				
+				if(this.getPlayersInThisAreas()!=null)
+					return this.getPlayersInThisAreas().get(0).getPlayerColor().toUpperCase();
+				else
+					return "none";
+			}
+
+	 	
+		 	 
+		 	
+
+	/**
+	 * Gets the minions for every player.
+	 *
+	 * @param area the area
+	 * @return the minions placed by players in any area.
+	 */
+	public String getMinionsForEveryPlayer(String area,Player poa) {
+
+		String result = "";
+
+		// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
+		for(Player p : BoardGame.playersInGame){
+			// checking for every minion location for all the players
+			if(p.getPlayerColor().equalsIgnoreCase(poa.getPlayerColor())){
+			for(String minion_location : p.getMinions().get(p.getPlayerColor())){
+
+				if(minion_location.equalsIgnoreCase(area)) // changed from equals to equalsignorecase
+					result += " " +p.getPlayerColor();
+			}
 			}
 
 		}
@@ -221,11 +253,11 @@ public class Area {
 	 * @return the playersInThisAreas
 	 */
 	public ArrayList<Player> getPlayersInThisAreas() {
-		ArrayList<Player> temp = null;
+
 		if(!this.playersInThisAreas.isEmpty())
-			temp = playersInThisAreas;
+			return playersInThisAreas;
 		else 
-			return temp;
+			return null;
 	}
 
 	/**
@@ -236,7 +268,12 @@ public class Area {
 	public void setPlayersInThisAreas(Player playersInThisAreas) {
 		this.playersInThisAreas.add(playersInThisAreas);
 	}
-
+	
+	/* Work Around Sanchit*/
+	public void removePlayersInThisAreas(Player playersInThisAreas) {
+		this.playersInThisAreas.remove(playersInThisAreas);
+	}
+	
 	/**
 	 * Gets the demons.
 	 *
@@ -309,17 +346,30 @@ public class Area {
 		this.troubleMarkerArea = troubleMarkerArea;
 		this.trouble_markers = true;
 	}
-	
+
+	/**
+	 * Remves building only for those players who have atleast a building on the board.
+	 * Does not remove a building if there is no building for a player.
+	 * @param areaName
+	 */
 public void removeBuilding(String areaName){
 		
 		for(Player p : BoardGame.playersInGame){
 			for(Area a : p.getPlayerAreas()){
 				if(a.getAreaName().equalsIgnoreCase(areaName)){
 					a.setBuildngs(false);
+					a.getPlayersInThisAreas().remove(p);
+					a.setAreaCityCards(false);
+					
 					p.getPlayerAreas().remove(a);
 					BoardGame.setCityAreaCardRepo(p.getCityReaCardFromAreaName(areaName));
 					p.getCityAreaCardsStore().remove(p.getCityReaCardFromAreaName(areaName));
+					p.setNumberOfBuildings(p.getNumberOfBuildings()+1);
+					System.out.println("Building from "+areaName+" has been removed for Player "+p.getPlayerColor());
 					break;
+				}
+				else{
+					System.out.println("No buildings in the area "+areaName+" for Player " +p.getPlayerColor());
 				}
 				
 			}
@@ -327,16 +377,51 @@ public void removeBuilding(String areaName){
 		
 	}
 
-public ArrayList<String> getMinionColor() {
-	return minionColor;
-}
+		public ArrayList<String> getMinionColor() {
+			return minionColor;
+		}
+		
+		/**
+		 * Sets the minions.
+		 *
+		 * @param minions the minions to set
+		 */
+		public void setMinionColor(String minions) {
+			this.minionColor.add(minions);
+		}
 
-/**
- * Sets the minions.
- *
- * @param minions the minions to set
- */
-public void setMinionColor(String minions) {
-	this.minionColor.add(minions);
-}
+		
+		//created this function to print the buildings on the display -Sanchit
+	/*	public String getBuildingsForEveryPlayer(String areaname) {
+		
+			String result = "";
+		
+			// iterating over the NUMBER OF Buildings THAT PLAYER HAS PLACED IN HIS AREA. 
+			for(Player p : BoardGame.playersInGame){
+				// checking for every minion location for all the players
+				for(Area a : BoardGame.board_areas){
+					
+					if(a.area_name.equalsIgnoreCase(areaname)){
+					if(a.isBuildngs())
+					{
+						result= p.getPlayerColor();
+					}
+					else
+						result = "no";
+					
+					}		
+				}
+		
+			}
+			
+			
+			if(result!="none")
+				return result;
+			else
+				return "none";
+		
+			
+			
+		
+		}*/
 }

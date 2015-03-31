@@ -3,6 +3,7 @@ package com.app.rules;
 import com.app.Area;
 import com.app.BoardGame;
 import com.app.Player;
+import com.app.rules.WinningCircumstancesFactory.PersonalityCards;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,17 +19,23 @@ public class Chrysoprase implements WinningCircumstances {
         Player currentPlayer = null;
         int totalProperty = 0;
         for (Player player : BoardGame.playersInGame) {
-            if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(5))) {
+            if (player.getWinningCondition().equalsIgnoreCase(PersonalityCards.Chrysoprase.getName())) {
                 currentPlayer = player;
-                break;
             }
         }
         if (currentPlayer != null && currentPlayer.getPlayerAreas() != null && !currentPlayer.getPlayerAreas().isEmpty()) {
             for (Area area : currentPlayer.getPlayerAreas()) {
-                totalProperty += area.getCostOfArea();
+                if(area.getDemons() == 0)
+            	totalProperty += area.getCostOfArea();
+            }
+            if(currentPlayer.getPlayerLoan()!=0){
+            	int count = currentPlayer.getPlayerLoan() / 10;
+            	while(count!=0){
+            		if (currentPlayer.getPlayerAmount() > 10 && currentPlayer.getPlayerAmount() >= 12)
+            			currentPlayer.setPlayerAmount(currentPlayer.getPlayerAmount() - 12);
+            	}
             }
             totalProperty += currentPlayer.getPlayerAmount();
-            totalProperty -= 12 * currentPlayer.getPlayerLoan();
         }
         return totalProperty >= 50;
     }

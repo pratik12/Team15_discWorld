@@ -3,6 +3,10 @@ package com.app.rules;
 import com.app.Area;
 import com.app.BoardGame;
 import com.app.Player;
+import com.app.PlayerCardUtility;
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.rules.WinningCircumstancesFactory.PersonalityCards;
 
 import java.util.ArrayList;
 
@@ -17,55 +21,93 @@ public class LordSelRusWor implements WinningCircumstances {
 
     @Override
     public Boolean isWinner() {
+    	
+    	boolean ans = false;
         int numberOfPlayers = BoardGame.playersInGame.size();
         Player currentPlayer = null;
         for (Player player : BoardGame.playersInGame) {
-            if (player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(1)) || player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(3)) ||
-                    player.getWinningCondition().equals(WinningCircumstancesFactory.PersonalityCards.get(7))) {
+        	if(player.getWinningCondition().equals(PersonalityCards.LordSelachii.getName()) || 
+        			player.getWinningCondition().equals(PersonalityCards.LordRust.getName()) || 
+        			player.getWinningCondition().equals(PersonalityCards.LordDeWorde.getName()))
                 currentPlayer = player;
-                break;
             }
-        }
+        
         if (currentPlayer != null && currentPlayer.getPlayerAreas() != null && !currentPlayer.getPlayerAreas().isEmpty()) {
             if (numberOfPlayers == 2) {
-        checkControlledAreas(currentPlayer, 7);
+                ans = checkControlledAreas(currentPlayer, 7);
             } else if (numberOfPlayers == 3) {
-                checkControlledAreas(currentPlayer, 5);
+                ans = checkControlledAreas(currentPlayer, 5);
             } else if (numberOfPlayers == 4) {
-                checkControlledAreas(currentPlayer, 4);
+                ans = checkControlledAreas(currentPlayer, 4);
             }
         }
-        return Boolean.FALSE;
+        return ans;
     }
-
+    
+    
     private Boolean checkControlledAreas(Player currentPlayer, int numberOfAreaTocheck) {
-        int currentTotalProperty = 0;
-        int totalPieces = 0;
-        int controlledAreaCounter = 0;
-        int countedCurrentAreaLength = 0;
-
-        while (controlledAreaCounter < numberOfAreaTocheck && countedCurrentAreaLength <= currentPlayer.getPlayerAreas().size()) {
-
-            ArrayList<Area> areas = currentPlayer.getPlayerAreas();
-            if (!areas.isEmpty())
-                for (Player p : areas.get(countedCurrentAreaLength).getPlayersInThisAreas()) {
-                    currentTotalProperty = 0;
-                    totalPieces = 0;
-                    if (!(p.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor()))) {
-                        currentTotalProperty += p.getNumberOfBuildings() + p.getMinionQuantity();
-                        totalPieces += currentPlayer.getNumberOfBuildings() + currentPlayer.getMinionQuantity();
-                    } else {
-                        controlledAreaCounter++;
-                    }
-
-                    if (totalPieces > currentTotalProperty && totalPieces > areas.get(countedCurrentAreaLength).getTrolls() && areas.get(countedCurrentAreaLength).getDemons() == 0)
-                        controlledAreaCounter++;
-                    countedCurrentAreaLength++;
-                }
-            else
-                return Boolean.FALSE;
+    	int currPlayerCount = 0;
+    	int odrPlayerCount = 0;
+    	int controlledAreasPlayer = 0;
+    	int ctrlCount = 0;
+    	ArrayList<Player> temp = new ArrayList<Player>(); 
+        for(Player p : BoardGame.playersInGame){
+        	if(!(p.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor())))
+        		temp.add(p);
         }
-        return controlledAreaCounter >= numberOfAreaTocheck;
-
+    	for(Area a : BoardGame.board_areas){
+    		
+    		if(a.getDemons()==0){
+    			if(a.getAreaName().equalsIgnoreCase("Longwell"))
+    				System.out.println("bdjfsdfdsf");
+    			currPlayerCount = calculateMinion(a, currentPlayer) + calculateBldg(a, currentPlayer);
+    		
+    			for(Player p : temp){
+    				odrPlayerCount = calculateMinion(a, p) + calculateBldg(a, p);
+    			
+    				if(currPlayerCount > odrPlayerCount && currPlayerCount > a.getTrolls()){
+    					ctrlCount++;
+    				}
+    				else
+    					ctrlCount = 0;
+    				
+    			}
+    			if(ctrlCount == 3){
+    				System.out.println("Area Controlled : " +a.getAreaName());
+    				controlledAreasPlayer++;
+    			}
+    		}
+    		
+    	}
+    	if(controlledAreasPlayer==numberOfAreaTocheck)
+    		return Boolean.TRUE;
+    	else
+    		return Boolean.FALSE;
     }
+
+	private int calculateMinion(Area a, Player p){
+		int mincount = 0 ;
+		for(ArrayList<String> s : p.getMinions().values()){
+			for(String str : s){
+				if(!str.equalsIgnoreCase("")){
+					if(str.trim().equalsIgnoreCase(a.getAreaName().trim())){
+						mincount++;
+					}
+				}
+			}
+		}
+	//	System.out.println("Player Color :" +p.getPlayerColor() + " Minions Area "+a.getAreaName());
+		return mincount;
+	}
+		
+	private int calculateBldg(Area a , Player p){	
+		int bldgcount = 0 ;
+		for(CityAreaCardEnum cec : p.getCityAreaCardsStore()){
+			if(cec.getareaName().trim().equalsIgnoreCase(a.getAreaName().trim())){
+				bldgcount++;
+			}
+		}
+	//	System.out.println("Player Color :" +p.getPlayerColor() + " Building Area "+a.getAreaName());
+		return bldgcount;
+	}
 }

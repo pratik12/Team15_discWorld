@@ -1,12 +1,16 @@
 package com.app.CityAreaCardSystem;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.json.JSONException;
 
+import com.app.InterruptCard;
 import com.app.Player;
 import com.app.Area;
 import com.app.BoardGame;
+import com.app.PlayerCardUtility;
+import com.app.StartPlayingGame;
 import com.app.PlayingCardSystem.*;
 
 /**
@@ -21,90 +25,83 @@ import com.app.PlayingCardSystem.*;
 public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	// All the 12 areas represented on the map
-	GLOBAL("self"){},
+	GLOBAL("self","Action"){},
 	
 	//take $2 from bank
-	THEHIPPO("THE HIPPO")	
+	THEHIPPO("THE HIPPO","1.Take $2 from bank")	
 	{
 		@Override
 		public void performTasks(Player currentPlayer) 
 		{
-			System.out.println("Taking $2 from bank.."); 
-			this.takeLoanFromBank(+2,currentPlayer); 
-		
+			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2,currentPlayer);
 		}
 	}, 
 	
 	
 	// discard one card and take $2 from bank
-	THESCOURS("THE SCOURS")	
+	THESCOURS("THE SCOURS","1.Discard one card and take 2$ from bank.")	
 	{
 		@Override
 		public void performTasks(Player currentPlayer)
 		{
-			System.out.println("Player discards one card..");
-			this.discardCard(currentPlayer);
 			
-			System.out.println("Taking $2 from bank.."); 
-			this.takeLoanFromBank(+2,currentPlayer); 
+			discardACard(currentPlayer,this);
+			System.out.println("Player card discarded..");
+			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2,currentPlayer);
 			 
 		}
 
-			},  					
+	},  					
 	
 	//whenever piece affected by random event,can pay $3 to ignore it 
-	SMALLGODS("SMALL GODS")
+	SMALLGODS("SMALL GODS","1.If your piece is affected by random event pay 3$ to ignore it")
 	{
 		@Override
 		public void performTasks(Player currentPlayer)
 		{
-			
+			System.out.println("task pending");
 		}
 
 			}, 
 	
 	
 	//take $2 from bank
-	DRAGONSLANDING("DRAGONS LANDING")	
+	DRAGONSLANDING("DRAGONS LANDING","1.Take 2$ from bank.")	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer) 	
 		{
-			System.out.println("Taking $2 from bank.."); 
-			 this.takeLoanFromBank(+2,currentPlayer); 
-		//GreenPlayerCardEnum.TEST.takeMoneyFromBank(2, currentPlayer);
+			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2, currentPlayer);
 		}
-
 			}, 
 	
 	
 	//take one card from deck and then discard one
-	UNREALESTATE("UNREAL ESTATE")
+	UNREALESTATE("UNREAL ESTATE","1.Draw a card after that dicard one card")
 	{
 		@Override
 		public void performTasks(Player currentPlayer) 
 		{
-			System.out.println("Player draws one card..");
+			System.out.println("Player will draw one card from the pile..");
 			GreenPlayerCardEnum.GLOBALOBJ.drawCardsFromDeck(1, currentPlayer);
 			
-			System.out.println("Player discards one card..");
-			this.discardCard(currentPlayer);
+			System.out.println("Player will discard one card..");
+			discardACard(currentPlayer, this);
 		}
 
 			}, 
 	
 	
 	//pay $3 to bank and place one minion in Dolly Sisters or adjacent area	
-	DOLLYSISTERS("DOLLY SISTERS")
+	DOLLYSISTERS("DOLLY SISTERS","1.Pay $3 to bank and place your minion in Dolly Sisters or adjacent area")
 	{
 
 		@Override
 		public void performTasks(Player currentPlayer ) throws JSONException 
 		{
-			System.out.println("Paying $3 to bank.."); 
-			this.takeLoanFromBank(-3,currentPlayer); 
-			//GreenPlayerCardEnum.TEST.payMoneyToBank(3, currentPlayer);
-			
+			 
+			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, currentPlayer);
+			//GreenPlayerCardEnum.GLOBALOBJ.pl
 			placeoneMinion(currentPlayer, "Dolly Sisters");
 		}
 
@@ -112,85 +109,78 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//take $1 from bank
-	NAPHILL("NAP HILL")	
+	NAPHILL("NAP HILL","1.Take $1 from bank..")	
 	{
 		@Override
 		public void performTasks(Player currentPlayer) 
 		{
-			System.out.println("Taking $1 from bank..");  
-			this.takeLoanFromBank(+1,currentPlayer); 
-		//	 GreenPlayerCardEnum.TEST.takeMoneyFromBank(1, currentPlayer);
+			  
+			 GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(1, currentPlayer);
 		}
 
-			}, 
+	}, 
 	
 	
 	//take $3 from bank
-	SEVENSLEEPERS("SEVEN SLEEPERS")	
+	SEVENSLEEPERS("SEVEN SLEEPERS","1.Take $3 from bank")	
 	{
 		@Override
 		public void performTasks(Player currentPlayer) 
 		{
-			 System.out.println("Taking $3 from bank.."); 
-			 this.takeLoanFromBank(+3,currentPlayer); 
-//			 GreenPlayerCardEnum.TEST.takeMoneyFromBank(3, currentPlayer);
+			 
+			 GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(3, currentPlayer);
 		}
 
 			},
 	
 	
 	//pay $2 to bank and remove one troublemarker on boards
-	ISLEOFGODS("ISLE OF GODS")	
+	ISLEOFGODS("ISLE OF GODS","1.Pay 2$ to bank and remove one troublemarker from the board")	
 	{
 		@Override
 		public void performTasks(Player currentPlayer) 
 		{
+			 
+			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(2, currentPlayer);
 			
-			System.out.println("Paying $2 to bank..");  
-			this.takeLoanFromBank(-2,currentPlayer); 
-		//	GreenPlayerCardEnum.TEST.payMoneyToBank(2, currentPlayer);
-			
-			System.out.println("Removing troublemarker from board..");
+			System.out.println("Now to remove troublemarker from board..");
 			// show to user where trouble markers are
-			String areaName = questionsToAsk("Enter area name to remove trouble marker from:nul");
-			GreenPlayerCardEnum.GLOBALOBJ.removeTroubleMarker(areaName);
+			GreenPlayerCardEnum.GLOBALOBJ.removeTroubleMarker();
 		}
 	}, 
 	
 	
 	//take $1 from bank
-	LONGWELL("LONGWELL")	
+	LONGWELL("LONGWELL","1.Take 1$ from the bank")	
 	{
 		@Override
 		public void performTasks(Player currentPlayer) 
 		{
-			System.out.println("Taking $1 from bank.."); 
-			this.takeLoanFromBank(+1,currentPlayer); 
-		//	GreenPlayerCardEnum.TEST.takeMoneyFromBank(1, currentPlayer);
+		
+		GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(1, currentPlayer);
 		}
 	}, 
 	
 	
 	//pay $3 to bank and place the minions in Dimwell or adjacent area
-	DIMWELL("DIMWELL")
+	DIMWELL("DIMWELL","1.Pay 3$ and place minion in Dimwell or adjacent area")
 	{
 		@Override
 		public void performTasks(Player currentPlayer) throws JSONException 
 		{
-			System.out.println("Paying $3 to bank.."); 
-			this.takeLoanFromBank(-3,currentPlayer); 
-	//	GreenPlayerCardEnum.TEST.payMoneyToBank(3, currentPlayer);
+			
+			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, currentPlayer);
 			placeoneMinion(currentPlayer, "Dimwell");
 		}
 	}, 
 	
 	
 	//place one troublemarker in the Shades or adjacent area
-	THESHADES("THE SHADES")
+	THESHADES("THE SHADES","1.Place a troublemarker in The Shades or adjacent area")
 	{
 		public void performTasks(Player currentPlayer) throws JSONException
 		{
-			this.placeTroubleMarker(currentPlayer,"The Shades");
+			this.placeTroubleMarker("The Shades");
 			
 		}
 	}; 
@@ -204,9 +194,23 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	/** areaName that identifies an area*/
 	private String areaName;
-	private CityAreaCardEnum(String area)
+	private String action;
+	public String getAction() {
+		return action;
+	}
+
+
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+
+
+	private CityAreaCardEnum(String area,String action)
 	{
 			setareaName(area);
+			setAction(action);
 			//setIsActive(true);
 	}
 	
@@ -231,51 +235,37 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		}
 	
 	@Override
-	public void placeTroubleMarker(Player currentPlayer , String areaLocation) throws JSONException
+	public void placeTroubleMarker(String areaLocation) throws JSONException
 	{
-		String res = questionsToAsk("WHere do you want to palce trouble marker. 1. "+areaLocation
-				+"2. Adjacent Areas" +":nul");
-		if(res.equalsIgnoreCase("1")){
+		String troubleLoc = null;
+		System.out.println("Troublemarker will be placed..");
+		for(Area a : BoardGame.board_areas){
+			if((!areaLocation.isEmpty()) && areaLocation.trim().equalsIgnoreCase(a.getAreaName())){
+				System.out.println("You can place troublemarker in these area: \n");
+				String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, areaLocation);
+				BoardGame.displayAdjacentAreas(result,0);
 			
-			for(Area maparea : BoardGame.board_areas)
-			{
-				if(areaLocation.trim().equalsIgnoreCase(maparea.getAreaName()))
-				{
-						//maparea.getTroubleMarkerArea();
-						maparea.setTroubleMarkers(true);
-					maparea.setTroubleMarkerArea(maparea.getTroubleMarkerArea());
+				troubleLoc = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter area name to place troublemarker :nul");
+				if(troubleLoc!=null && !(troubleLoc.matches("\\d+"))){
+					for(Area ar : BoardGame.board_areas){
+						if((!troubleLoc.isEmpty())&& troubleLoc.trim().equalsIgnoreCase(ar.getAreaName()) 
+								&& !(ar.isTroubleMarkers())){
+							ar.setTroubleMarkers(true);
+							System.out.println("Troublemarker placed in "+ar.getAreaName());
+									}
+					
+								}
 				}
-				break;
-			}		
-		}
-			else if(res.equalsIgnoreCase("2")){
-			
-			String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.getInstance().areaDetails, areaLocation);
-			
-			BoardGame.displayAdjacentAreas(result);
-			
-			String res1 = questionsToAsk("Enter area adjacent to place the troublemarker");
-			if(!res1.equals(null))
-			{
-				for(Area maparea : BoardGame.board_areas)
-				{
-					if(res1.trim().equalsIgnoreCase(maparea.getAreaName()))
-					{
-							//maparea.getTroubleMarkerArea();
-							maparea.setTroubleMarkers(true);
-						maparea.setTroubleMarkerArea(maparea.getTroubleMarkerArea());
-					}
-					break;
+				else{
+					System.out.println("Your entered "+troubleLoc+" location is invalid.Try again!!");
+					placeTroubleMarker(areaLocation);
 				}
-			}else{
-					System.out.println("Area name cannot be empty");
-				}
-			}
-		  
-}
-	
+								
+					}	
+				}	
 		
-	
+		}	
+		
 	@Override
 	public void ignoreRandomEvent(Player currentPlayer)
 	{
@@ -285,7 +275,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 
 	@Override
-	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result) {
+	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result,Player p) {
 		  
 		return null;
 	}
@@ -318,7 +308,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	}
 
 	@Override
-	public void takePlayingCards(Player currrentPlayer, int number) {
+	public void takePlayingCards(Player currrentPlayer, int number,boolean b) {
 		  
 		
 	}
@@ -341,80 +331,57 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	@Override
 	public void takeLoanFromBank(int amt, Player currentPlayer) {
 
-		if(amt!=0){
-			currentPlayer.setPlayerAmount(currentPlayer.getPlayerAmount()+amt);
-			BoardGame.setBank(BoardGame.getBank()-amt);
-		}
-		else{
-			System.out.println("Entered amount cannot be 0");
-		}
+		
 	}
-
-	
 
 	@Override
 	public void payMoneyToBank(int amt, Player currentPlayer) {
-		  
-		
 	}
 
 	@Override
 	public void removeMinion(int num, Player currentPlayer) {
-		  
-		
 	}
 
 	@Override
-	public void removeMinionOFAnotherPlayer(int num, Player currentPlayer,
-			Player fromPlayer) {
+	public boolean removeMinionOFAnotherPlayer(int num, Player currentPlayer,
+			Player fromPlayer) throws JSONException {
 		  
-		
+		if(!(InterruptCard.wantToPlayInterruptCard(fromPlayer, currentPlayer).equalsIgnoreCase("success"))){
+			removeMinion(num, fromPlayer);
+			return false;
+		}
+		else{
+			System.out.println("Other player has played an interrupt card");
+		}
+		return true; 
 	}
 
 	@Override
 	public void removeMinionOFYourOwn(int num, Player currentPlayer) {
-		  
-		
-		
 	}
 
 	@Override
 	public void moveMinionToOtherArea(Player currentPlayer, Player fromPlayer,
-			String toLocation) throws JSONException {
-		  
-		
+			String fromLocation, String toLocation) throws JSONException {
 	}
-
-
 	
 	public int rollDie() {
-		  
 		return 0;
 	}
-
-	
-	
-		
 	
 	@Override
 	public void getMoneyForMinionsinArea(int amt, Player currentplayer,
 			String areaName) {
-		  
-		
 	}
 
 	@Override
 	public void removeBuilding(Player currentPlayer, Player fromPlayer) {
-		  
-		
 	}
 
 	@Override
 	public void removeoneTroubleMarker(Player currentPlayer) {
 		System.out.println("Removing a trouble marker from the board..");
-		
-			String arealocation = questionsToAsk("Enter area name to remove the troublemarker from : nul");
-			
+			String arealocation = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter area name to remove the troublemarker from : nul");
 			for(Area maparea : currentPlayer.getPlayerAreas())
 			{
 				if(arealocation.trim().equalsIgnoreCase(maparea.getAreaName()))
@@ -437,7 +404,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	public void discardCard(Player currentPlayer)
 	{	
 		System.out.println("Removing a player card..");
-		String playercardname = questionsToAsk("Enter playercard name to discard");
+		String playercardname = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter player card name to discard");
 		@SuppressWarnings("rawtypes")
 		Iterator it = currentPlayer.getPlayersPlayingCard().iterator();
 		GreenPlayerCardEnum temp =null;
@@ -455,85 +422,170 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			}
 			i++;
 		}
-		addToDiscardPile(1,temp,currentPlayer);
+		addToDiscardPile(1,temp,currentPlayer,true);
 		
 	}
 
+	
+
+	public void discardACard(Player currentPlayingPlayer, CityAreaCardEnum tempname){
+		try{
+			if(currentPlayingPlayer.getPlayersPlayingCard().size()!=0){
+				System.out.println("Card will be discarded as per your wish");
+				
+				System.out.println("Your cards as of now: ");
+				ArrayList<GreenPlayerCardEnum> listOfCurrPlayerCards = currentPlayingPlayer.getPlayersPlayingCard();
+				int count = 1;
+				for(GreenPlayerCardEnum gc : listOfCurrPlayerCards){
+					if(! (gc.getName().equalsIgnoreCase(GreenPlayerCardEnum.THEFOOLSGUILD.getName()) ||
+							gc.getName().equalsIgnoreCase(GreenPlayerCardEnum.DRWHITEFACE.getName()))){
+						System.out.printf("%-2s%-15s\n",count,gc.getName());
+						BoardGame.pieceNumberAreaList.add(""+count+":"+gc.getName());
+						count++;
+					}
+				}
+						
+				String result = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Choose a card to discard:nul");
+				
+				//if(!result.matches("\\w+")){
+				String res = BoardGame.getPieceNumberList(result);
+					
+					GreenPlayerCardEnum gec = PlayerCardUtility.getEnumInstance(res);
+					
+					if(listOfCurrPlayerCards.contains(gec)){
+						GreenPlayerCardEnum.GLOBALOBJ.addToDiscardPile(1,gec, currentPlayingPlayer, false);
+					}
+					//}
+			//else{
+					//	System.out.println("You have entered invalid input....Start Again!!!");
+					//	discardACard(currentPlayingPlayer, tempname);
+					//	return;
+						
+			//		}
+			}
+			System.out.println("Action completed..");
+		}
+		catch(Exception e){
+			throw e ;
+		}	
+	}
 		
 	@Override
 	public void drawCardsFromDeck(int num , Player currentPlayer) {
 	
 	}
 	
-	@Override
-	public void placeoneMinion(Player currentPlayer,String areaLocation) throws JSONException
-	{
-		String res = questionsToAsk("WHere do you want to palce minion. 1. " +areaLocation
-				+"2. Adjacent Areas" +":nul");
-		
-		if(res.equalsIgnoreCase("1")){
-				System.out.println("Placing a minion..");
-				currentPlayer.placeMinion(areaLocation);
-		}
-		else{
-			
-			BoardGame.displayAdjacentAreas(BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, areaLocation));
-			String result = questionsToAsk("Enter one name:nul");
-			currentPlayer.setMinions(currentPlayer.getPlayerColor(), result);
-		}		
-	}
+	
 	
 	@Override
-	public void discardCardsPerYourWish(Player currentPlayingPlayer,
+	public String discardCardsPerYourWish(Player currentPlayingPlayer,
 			GreenPlayerCardEnum gc, int amt) {
 		     
-		
+		return "";
 	}
 	@Override
-	public void removeTroubleMarker(String areaName) {
-		     
-		
+	public void removeTroubleMarker() {
 	}
 	
-	@Override
-	public void takeMoneyFromBank(Player currPlayer, int amount) {
-		     
-		
-	}
 	@Override
 	public void playingCardsAction(Player currentPlayer, Player fromPlayer,
 			int count) {
-		     
-		
 	}
-	
-
 	@Override
 	public void givePlayingCards(Player currrentPlayer, int number) {
-		     
-		
 	}
-
 	@Override
-	public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p) {
-		     
-		
+	public void addToDiscardPile(int num, GreenPlayerCardEnum gc, Player p , boolean addCard) {
 	}
-
 	@Override
 	public void drawCardsFromDiscardPile(int num, Player player) {
-		     
-		
 	}
-
 	@Override
 	public void placeMinionActionPlayerCard(Player currentPlayingPlayer) {
-		     
-		
 	}
 	@Override
 	public void placeMinionActionPlayerCard(Player currentPlayingPlayer,String s){};
 
+	@Override
+	public void fillYourHandWIthPlayerCard(int i, Player ps) {
+	}
+	
+	public static CityAreaCardEnum getCityAreaCardInstance(String cityAreaCardName){
+		CityAreaCardEnum temp = null;
+		String s = null;
+		
+		if(cityAreaCardName.matches("\\d+")){
+			int i = Integer.parseInt(cityAreaCardName.trim()); 
+			
+			for(String stre : StartPlayingGame.currCityAreaCards){
+				int j = Integer.parseInt(stre.split(":")[1].trim());
+				if( i == j){
+					s = stre.split(":")[0].trim();
+					break;
+				}
+			}
+		}
+		
+		for(CityAreaCardEnum gc : CityAreaCardEnum.values()){
+			if(cityAreaCardName.trim().equalsIgnoreCase(gc.getareaName()) && !(cityAreaCardName.matches("\\d+"))){
+				temp  = gc;
+				break;
+			}
+			else if(cityAreaCardName.matches("\\d+")){
+				if(s.equalsIgnoreCase(gc.getareaName())){
+					temp  = gc;
+					break;
+				}
+			}
+		}
+		return temp;
+	}
+	
+	@Override
+	public void addBuildingAction(Player p){}
+	
+	public void placeoneMinion(Player currentPlayer,String areaLocation) throws JSONException
+	{	
+		System.out.println("Minion will be placed..");
+		String res = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Where do you want to place your minion.\n" + "A."+areaLocation
+				+" B. Adjacent Areas" +":nul");
+		
+		if(res.equalsIgnoreCase("A")){
+			for(Area a : BoardGame.board_areas)
+				if((!areaLocation.isEmpty()) && areaLocation.trim().equalsIgnoreCase(a.getAreaName())){	
+				System.out.println("Placing a minion in " +areaLocation);
+				currentPlayer.setMinions(currentPlayer.getPlayerColor(), areaLocation);
+				a.setMinionColor(areaLocation);
+				if(!(a.isTroubleMarkers()) && currentPlayer.totalMinionsInAreaForAllPlayers(areaLocation)>1) //Sanchit Fix
+					a.setTroubleMarkers(true);
+				System.out.println("Minion placed in "+areaLocation);
+				break;
+			}
+				
+		}
+		
+		else if(res.equalsIgnoreCase("B")){
+					
+					System.out.println("You can place minion in following areas adjacent to "+areaLocation);
+					BoardGame.displayMinionsForPlayerOnBoard(currentPlayer,0);
+					System.out.println();
+		
+					String plMin1 = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Choose area name to place minion in:nul");
+					String plMin = BoardGame.getPieceNumberList(plMin1);
+					for(Area a : BoardGame.board_areas)
+						if(a.getAreaName().equalsIgnoreCase(plMin)){
+							currentPlayer.setMinions(currentPlayer.getPlayerColor(), plMin);
+							a.setMinionColor(plMin);
+						
+							if(!(a.isTroubleMarkers()) && currentPlayer.totalMinionsInAreaForAllPlayers(plMin)>1) //Sanchit Fix
+								a.setTroubleMarkers(true);
+							System.out.println("Your Minion is placed in:"+plMin);
+							break;	
+						}
+				}
+				
+			}
+	
 }
 
 

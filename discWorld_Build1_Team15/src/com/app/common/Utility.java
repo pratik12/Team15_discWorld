@@ -2,6 +2,9 @@ package com.app.common;
 
 import com.app.Area;
 import com.app.BoardGame;
+import com.app.ConsoleOutput;
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
+import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 import com.app.Player;
 
 import java.util.Random;
@@ -16,7 +19,7 @@ import java.util.Scanner;
  */
 public class Utility {
 
-
+	ComponentUtilities cu = new ComponentUtilities();
     public int rollDie() {
         Random rand = new Random();
         return rand.nextInt(12) + 1;
@@ -38,28 +41,42 @@ public class Utility {
     public void doFinalPointsCalculation() {
         int eachPlayerTotalPoints = 0;
         for (Player player : BoardGame.playersInGame) {
-            eachPlayerTotalPoints += player.getMinionQuantity() * 5;
+            eachPlayerTotalPoints += (player.getMinionQuantity()) * 5;
+            System.out.println("Player Collor::::"+player.getPlayerColor()+ "Minions"+eachPlayerTotalPoints);
             for (Area area : player.getPlayerAreas()) {
-                if (!area.isAreaCityCards())
+                if (area.isAreaCityCards()){
                     eachPlayerTotalPoints += area.getCostOfArea();
+                    System.out.println("Player Collor::::"+player.getPlayerColor()+ "Buildings"+eachPlayerTotalPoints);
+                }
                 if (area.getDemons() > 0)
-                    eachPlayerTotalPoints = 0;
+                    eachPlayerTotalPoints = eachPlayerTotalPoints-area.getCostOfArea();
             }
-            if (player.getPlayerAmount() > player.getPlayerLoan()) {
-                player.setPlayerAmount(player.getPlayerAmount() - player.getPlayerLoan());
-                eachPlayerTotalPoints += player.getPlayerAmount();
-            } else
-                eachPlayerTotalPoints += (player.getPlayerAmount() - 15);
+
+            int count = player.getPlayerLoan() / 10;
+            while(count!=0){
+            	if (player.getPlayerAmount() > 10 && player.getPlayerAmount() >= 12)
+            		player.setPlayerAmount(player.getPlayerAmount() - 12);
+            	else
+            		eachPlayerTotalPoints = (eachPlayerTotalPoints - 15);
+            }
+            for(int i = 1 ;i<=player.getPlayerAmount();i++)
+            	eachPlayerTotalPoints++;
             player.setPoints(eachPlayerTotalPoints);
+            eachPlayerTotalPoints = 0;
         }
     }
 
     public void announceWinner() {
         doFinalPointsCalculation();
+        
+        System.out.println();
         System.out.println("**************GAME IS OVER**************");
+        System.out.printf("%3s%25s\n","Player Color","Points");
         for (Player player : BoardGame.playersInGame) {
-            System.out.println("******" + player.getPlayerColor() + "**********" + player.getPoints() + "POINTS");
+            System.out.printf("%3s%25s\n",player.getPlayerColor(),player.getPoints());
         }
+        
+        ConsoleOutput.printOutGameBoardState();
     }
 
     public int calculateNumberOfTroubleMarkers() {
@@ -72,14 +89,11 @@ public class Utility {
     }
 
     public String giveTurnToleft() {
-        System.out.println("Enter the player in your left (r/g/b/y)?");
-        Scanner in = new Scanner(System.in);
-
-        String result = in.nextLine();
-        if (!result.isEmpty())
-            result = result.trim();
-        System.out.println("It is player with color " + result + " turn");
-        return result;
+        //String player = CityAreaCardEnum.GLOBAL.questionsToAsk("Enter the player in your left (r/g/b/y)?");
+    	String player = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter the player in your left (r/g/b/y)?");
+        System.out.println("It is player with color " + player + " turn");
+        
+        return player;
     }
 
     public int getNumberOfMinions(String areaName) {
@@ -98,19 +112,19 @@ public class Utility {
         return result;
     }
 
-    public String checkInputAnswer() {
-        System.out.println();
-        String result = null;
-        Scanner in = new Scanner(System.in);
-        result = in.nextLine();
-        if (!result.isEmpty())
-            return result;
-        else {
-            System.out.println("Enter a valid input");
-            checkInputAnswer();
-        }
-        return result;
-    }
 
-
-}
+   /* public String checkInputAnswer() {
+    	        System.out.println();
+    	        String result = null;
+    	        Scanner in = new Scanner(System.in);
+    	        result = in.nextLine();
+    	        if (!result.isEmpty())
+    	            return result;
+    	        else {
+    	            System.out.println("Enter a valid input");
+    	            checkInputAnswer();
+    	        }
+    	        return result;
+    	    }
+*/
+   }

@@ -5,6 +5,7 @@ import javax.swing.*;
 import org.json.JSONException;
 
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.rules.RandomEventCard;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -93,22 +94,18 @@ public class FileManager {
      * @param filePath the file path
      * @return the array list
      * @throws JSONException 
+     * @throws FileNotFoundException 
      */
-    public static ArrayList<String> loadFile(String filePath, String fileName) throws JSONException {
+    public static ArrayList<String> loadFile(String fileName) throws JSONException, FileNotFoundException {
 
-        BufferedReader br = null;
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
         
         ArrayList<String> playersRecords = new ArrayList<String>();
         if (isFileNameValid(fileName)) {
-            try {
-                br = new BufferedReader(new FileReader(filePath));
-            } catch (FileNotFoundException e) {
-                System.out.println("File Not found");  //To change body of catch statement use File | Settings | File Templates.
-            }
+           
             String line;
             try {
                 while ((line = br.readLine()) != null) {
-                   // System.out.println(line);
                     playersRecords.add(line);
                 }
             } catch (IOException e) {
@@ -140,19 +137,9 @@ public class FileManager {
         String[] firstLine = playersRecords.get(0).split(":");
         int noOfPlayers = Integer.parseInt(firstLine[1].trim());
         playersRecords.remove(0);
-        // initializing the board
         BoardGame.start(noOfPlayers);
-        // creating number of players
-       // System.out.println(noOfPlayers);
-      //  System.out.println(playersRecords.get(0));
-
-
         createPlayers(playersRecords);
-      //  initializeTroubleMarkerOnGameBoard(playersRecords);
-        
-        
     }
-
     private static void emptyAllDataStructures() throws JSONException {
     	
     	if((BoardGame.playersInGame) != null){
@@ -161,6 +148,10 @@ public class FileManager {
     		p.getPlayerAreas().clear();
     		p.getMinions().clear();
     		p.getPlayersPlayingCard().clear();
+    		BoardGame.player_cards.clear();
+     		BoardGame.playersInGame.clear();
+     		
+    		
     	}
     	}
     	if((BoardGame.board_areas) != null){
@@ -180,8 +171,6 @@ public class FileManager {
     		//BoardGame.getInstance()=null;
     		BoardGame.setInstance();
     		
-    		// BoardGame.game.setInstance();
-    		// need to destroy the boardgame instance
     		System.gc();
     	}
     	
@@ -193,8 +182,9 @@ public class FileManager {
      *
      * @param playersRecords - initializing troubleMarkers on the game board
      */
-    private static void initializeTroubleMarkerOnGameBoard(String[] playersRecords) {
-        
+    	 //private static void initializeTroubleMarkerOnGameBoard(ArrayList<String> playersRecords) {
+    	 private static void initializeTroubleMarkerOnGameBoard(String[] playersRecords) {	
+        //tempTroubleMarker = playersRecords.get(0).split(":");
         for (String str : playersRecords) {
             String areaName = str.split("-")[1];
             for (Area a : BoardGame.board_areas) {
@@ -213,32 +203,44 @@ public class FileManager {
      * @param playersRecords - An arraylist that contains the records from the file for each player's data
      */
     private static void createPlayers(ArrayList<String> playersRecords) {
-    	
+
     	String[] tempTroubleMarker = null;
-        tempTroubleMarker = playersRecords.get(0).split(":");
+    	
+    	tempTroubleMarker = playersRecords.get(0).split(":");
         playersRecords.remove(0);
-        String[] playerInfo = null;
+        String[] demonArray = null;
+        demonArray = playersRecords.get(0).split("-");
+        playersRecords.remove(0);
+        String[] trollArray = null;
+        trollArray = playersRecords.get(0).split("-");
+        playersRecords.remove(0);
+    	String[] playerInfo = null;
         for (String str : playersRecords) {
             if (!str.startsWith("BankAmount")) {
                 playerInfo = str.split(":");
-
 
                 Player player = new Player(playerInfo[0]); // setting players color
                 player.setWinningCondition(playerInfo[1]); // setting personality card
                 player.setMinionQuantity(Integer.parseInt(playerInfo[2])); // setting number of minions
                 int index = 3;
+                //int countMinion = 12 - player.getMinionQuantity();
                 int countMinion = 12 - Integer.parseInt(playerInfo[2]);
                 // setting minions in respective areas
                 if (countMinion != 0) {
 
                     do {
                         player.setMinions(player.getPlayerColor(), playerInfo[index].split("-")[1]);
+                        for(Area iterAreas : BoardGame.board_areas){
+                        	if(playerInfo[index].split("-")[1].equalsIgnoreCase(iterAreas.getAreaName())){
+                        		iterAreas.setMinionColor(iterAreas.getAreaName());
+                        	}
+                        }
                         index++;
                         countMinion--;
                     } while (countMinion != 0);
 
                 }
-
+                player.setPlayerAmount(100);
                 int countBuilding = 6 - Integer.parseInt(playerInfo[index]);
                 index++;
                 BoardGame.playersInGame.add(player);
@@ -253,7 +255,7 @@ public class FileManager {
                         if (countBuilding != 0) {
 
                             do {
-                            	playerInBoardGame.addBuilding(playerInfo[index].split("-")[1]);
+                                playerInBoardGame.addBuilding(playerInfo[index].split("-")[1]);
                                 index++;
                                 countBuilding--;
                             } while (countBuilding != 0);
@@ -268,7 +270,7 @@ public class FileManager {
                                 do {
                                     //PlayerCard p = new PlayerCard(Integer.parseInt(playerInfo[index].split("-")[1]), "Green", " ", " ");
                                 	GreenPlayerCardEnum p = returnInstanceOfPlayerCard(playerInfo[index].split("-")[1]);
-                                	playerInBoardGame.setPlayersPlayingCard(p);
+                                    playerInBoardGame.setPlayersPlayingCard(p);
                                     index++;
                                     BoardGame.player_cards.remove(p);
                                 } while (!(playerInfo[index].split("-")[0].equalsIgnoreCase("bank")));
@@ -279,16 +281,37 @@ public class FileManager {
 
                     }
                 }
-
+                
+                
+                
             } else {
                 // write bank amount
                 BoardGame.setBank(Integer.parseInt(str.split("-")[1]));
             }
         }
+        for(String s : demonArray){
+        	if(!s.equalsIgnoreCase("Demons")){
+        		
+        		Area temp = BoardGame.playersInGame.get(0).getAreaInstanceFromAreaName(s.trim());
+        		temp.setDemons(temp.getDemons()+1);
+        		BoardGame.setDemons(BoardGame.getDemons()-1);
+        	}
+        }
+        for(String s : trollArray){
+        	if(!s.equalsIgnoreCase("Trolls")){
+        		
+        		Area area = BoardGame.playersInGame.get(0).getAreaInstanceFromAreaName(s.trim());
+        		area.setTrolls(area.getTrolls()+1);
+        		BoardGame.setTrolls(BoardGame.getTrolls()-1);
+        	}
+        }
+        
         initializeTroubleMarkerOnGameBoard(tempTroubleMarker);
-        intializeBoardGameDataStructures();
-        for(Player playerInBoardGame : BoardGame.getInstance().playersInGame){
+        initializeBoardGameDataStructures(); 
+        BoardGame.getInstance();
+		for(Player playerInBoardGame : BoardGame.playersInGame){
         	      ConsoleOutput.printOutPlayerState(playerInBoardGame);
+        	      System.out.println();
         	      ConsoleOutput.printOutInventory(playerInBoardGame);
         	
         }
@@ -296,10 +319,11 @@ public class FileManager {
         System.out.println();
     }
 
-    private static void intializeBoardGameDataStructures() {
+    private static void initializeBoardGameDataStructures() {
 		
-    	
-		
+		BoardGame.setDiscardedRandomEventCards(RandomEventCard.DemonsFromTheDungeonDimensions);
+		BoardGame.setDiscardedRandomEventCards(RandomEventCard.Trolls);
+		BoardGame.setDiscardedRandomEventCards(RandomEventCard.BloodyStupidJohnson);
 	}
 
 	private static GreenPlayerCardEnum returnInstanceOfPlayerCard(String string) {

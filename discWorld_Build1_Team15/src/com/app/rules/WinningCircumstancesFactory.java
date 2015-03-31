@@ -14,15 +14,21 @@ import java.util.Map;
 public class WinningCircumstancesFactory {
 
     public enum PersonalityCards {
-        LordDeWorde(1),
-        LordVetinari(2),
-        LordSelachii(3),
-        DragonKingOfArms(4),
-        Chrysoprase(5),
-        CommanderVimes(6),
-        LordRust(7);
-
-        private static final Map<Integer, String> lookup
+        LordDeWorde("Lord De Worde",1),
+        LordVetinari("Lord Vetinari",2),
+        LordSelachii("Lord Selachi",3),
+        DragonKingOfArms("Dragon King Of Arms",4),
+        Chrysoprase("Chrysoprase",5),
+        CommanderVimes("Commander Vimes",6),
+        LordRust("Lord Rust",7);
+        
+        private String name ;
+        private int num;
+        private PersonalityCards(String name, int num){
+        	this.setName(name);
+        	this.setNum(num);
+        }
+        /*private static final Map<Integer, String> lookup
                 = new HashMap<Integer, String>();
 
         static {
@@ -42,20 +48,49 @@ public class WinningCircumstancesFactory {
 
         public static String get(int code) {
             return lookup.get(code);
-        }
+        }*/
+		/**
+		 * @return the name
+		 */
+		public String getName() {
+			return name;
+		}
+		/**
+		 * @param name the name to set
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
+		/**
+		 * @return the num
+		 */
+		public int getNum() {
+			return num;
+		}
+		/**
+		 * @param num the num to set
+		 */
+		public void setNum(int num) {
+			this.num = num;
+		}
     }
 
     public static WinningCircumstances getWinningCircumstance(String personalityCardType) {
-        if (personalityCardType.equals(PersonalityCards.get(2)))
+        
+    	for(PersonalityCards pc : PersonalityCards.values()){
+    	if (personalityCardType.trim().equalsIgnoreCase(PersonalityCards.LordVetinari.getName()))
             return new LordVetinari();
-        else if (personalityCardType.equals(PersonalityCards.get(1)) || personalityCardType.equals(PersonalityCards.get(3)) || personalityCardType.equals(PersonalityCards.get(7)))
+        else if (personalityCardType.equals(PersonalityCards.LordSelachii.getName()) || 
+        		personalityCardType.equals(PersonalityCards.LordRust.getName()) || 
+        		personalityCardType.equals(PersonalityCards.LordDeWorde.getName()))
             return new LordSelRusWor();
-        else if (personalityCardType.equals(PersonalityCards.get(4)))
+        else if (personalityCardType.equals(PersonalityCards.DragonKingOfArms.getName()))
             return new DragonKingOfArms();
-        else if (personalityCardType.equals(PersonalityCards.get(5)))
+        else if (personalityCardType.equals(PersonalityCards.Chrysoprase.getName()))
             return new Chrysoprase();
-        else if (personalityCardType.equals(PersonalityCards.get(6)))
+        else if (personalityCardType.equals(PersonalityCards.CommanderVimes.getName()))
             return new CommanderVimes();
+    	}
         return null;
     }
 }

@@ -1,9 +1,11 @@
 package com.app;
 
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 import com.app.rules.RandomEventCard;
-import com.app.rules.WinningCircumstancesFactory;
+import com.app.rules.WinningCircumstancesFactory.PersonalityCards;
 import com.testcase.BoardGameClassTest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,15 +40,22 @@ public class BoardGame {
      * The board_areas.
      */
     public static ArrayList<Area> board_areas;
-
+    
     /**
      * The player_cards.
      */
     public static ArrayList<GreenPlayerCardEnum> player_cards;
-    private static ArrayList<GreenPlayerCardEnum> discardPilePlayerCards = new ArrayList<GreenPlayerCardEnum>();
-
-    private static ArrayList<RandomEventCard> discardedRandomEventCards = new ArrayList<RandomEventCard>();
-
+    private static ArrayList<GreenPlayerCardEnum> discardPilePlayerCards ;
+    
+    private static ArrayList<RandomEventCard> discardedRandomEventCards ;
+    private static ArrayList<CityAreaCardEnum> cityAreaCardRepo ;
+    
+    public static ArrayList<String> pieceNumberAreaList = new ArrayList<String>();
+    static int piececount = 0;
+    
+    private static int demonsQty = 0;
+    private static int trollsQty = 0;
+    
     /**
      * The bank.
      */
@@ -80,6 +89,10 @@ public class BoardGame {
         personality_cards = new ArrayList<String>(7);
         random_event_cards = new ArrayList<String>(12);
         player_cards = new ArrayList<GreenPlayerCardEnum>(101);
+        discardPilePlayerCards = new ArrayList<GreenPlayerCardEnum>();
+        discardedRandomEventCards = new ArrayList<RandomEventCard>();
+        cityAreaCardRepo = new ArrayList<CityAreaCardEnum>();
+        		
         bank = 120;
         init();
 
@@ -97,10 +110,7 @@ public class BoardGame {
 
             board_areas.add(new Area(tempArea, areaNumber, temp.split(":")[0]));
         }
-        /*for(Iterator iterator = areaDetails.keys().iterator(); iterator.hasNext();) {
-		    String key = (String) iterator.next();
-		    System.out.println(jsonObject.get(key));
-		}*/
+       
     }
 
     public static void setInstance() throws JSONException {
@@ -133,43 +143,27 @@ public class BoardGame {
                 && (random_event_cards.isEmpty()) && (player_cards.isEmpty())) {
 
 
-        	areaDetails.append("Dolly Sisters",new JSONObject().put("1", "6:12:3:2"));
-    		areaDetails.append("Unreal Estate",new JSONObject().put("2", "18:3:1:12:10:4:11"));
-    		areaDetails.append("Dragons Landing",new JSONObject().put("3", "12:1:4"));
-    		areaDetails.append("Small Gods",new JSONObject().put("4", "18:3:6:5:2:10"));
-    		areaDetails.append("The Scours",new JSONObject().put("5", "6:10:4:6:7"));
-    		areaDetails.append("The Hippo",new JSONObject().put("6", "12:4:5:7"));
-    		areaDetails.append("The Shades",new JSONObject().put("7", "6:8:6:5"));
-    		areaDetails.append("Dimwell",new JSONObject().put("8", "6:7:5:9"));
-    		areaDetails.append("Longwell",new JSONObject().put("9", "12:8:10:11"));
-    		areaDetails.append("Isle of Gods",new JSONObject().put("10", "12:9:11:2:4:5"));
-    		areaDetails.append("Seven Sleepers",new JSONObject().put("11", "18:12:9:1:2:10"));
-    		areaDetails.append("Nap Hill",new JSONObject().put("12", "12:1:2:11"));
+        	        	areaDetails.append("Dolly Sisters",new JSONObject().put("1", "6:12:3:2"));
+        	    		areaDetails.append("Unreal Estate",new JSONObject().put("2", "18:3:1:12:10:4:11"));
+        	    		areaDetails.append("Dragons Landing",new JSONObject().put("3", "12:1:4"));
+        	    		areaDetails.append("Small Gods",new JSONObject().put("4", "18:3:6:5:2:10"));
+        	    		areaDetails.append("The Scours",new JSONObject().put("5", "6:10:4:6:7"));
+        	    		areaDetails.append("The Hippo",new JSONObject().put("6", "12:4:5:7"));
+        	    		areaDetails.append("The Shades",new JSONObject().put("7", "6:8:6:5"));
+        	    		areaDetails.append("Dimwell",new JSONObject().put("8", "6:7:5:9"));
+        	    		areaDetails.append("Longwell",new JSONObject().put("9", "12:8:10:11"));
+        	   			areaDetails.append("Isle of Gods",new JSONObject().put("10", "12:9:11:2:4:5"));
+        	    		areaDetails.append("Seven Sleepers",new JSONObject().put("11", "18:12:9:1:2:10"));
+        	    		areaDetails.append("Nap Hill",new JSONObject().put("12", "12:1:2:11"));
 
-            //getAdjacentAreaIDs(areaDetails, "Nap Hill");
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(2));
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(3));
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(7));
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(1));
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(4));
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(5));
-            personality_cards.add(WinningCircumstancesFactory.PersonalityCards.get(6));
+        	    		for(PersonalityCards pc : PersonalityCards.values()){
+        	    			personality_cards.add(pc.getName());
+        	    		}
+        	    		
+        	    		for(RandomEventCard rc : RandomEventCard.values())
+        	    			random_event_cards.add(rc.name());
 
-            random_event_cards.add(RandomEventCard.get(1));
-            random_event_cards.add(RandomEventCard.get(2));
-            random_event_cards.add(RandomEventCard.get(3));
-            random_event_cards.add(RandomEventCard.get(4));
-            random_event_cards.add(RandomEventCard.get(5));
-            random_event_cards.add(RandomEventCard.get(6));
-            random_event_cards.add(RandomEventCard.get(7));
-            random_event_cards.add(RandomEventCard.get(8));
-            random_event_cards.add(RandomEventCard.get(9));
-            random_event_cards.add(RandomEventCard.get(10));
-            random_event_cards.add(RandomEventCard.get(11));
-            random_event_cards.add(RandomEventCard.get(12));
-
-
-            for(GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()){
+        	   for(GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()){
     			if(!(pc.getName().equalsIgnoreCase("self")))
     			player_cards.add(pc);
     		}
@@ -179,7 +173,8 @@ public class BoardGame {
     			cityAreaCardRepo.add(city);
     		}
     		
-
+    		setDemons(4);
+    		setTrolls(3);
         }
     }
 
@@ -208,8 +203,7 @@ public class BoardGame {
                 player.placeMinion("The Scours");
                 player.placeMinion("Dolly Sisters");
                 playersInGame.add(player); // add the player to the store
-                // every player will be assigned 5 playing cards..first only green ones are to be used
-                ArrayList<Integer> temp = new ArrayList<Integer>();
+                new ArrayList<Integer>();
                 for (int j = 0; j < 5; j++) {
 
                     int randInt = shuffle(BoardGame.player_cards.size() - 1);
@@ -226,11 +220,7 @@ public class BoardGame {
                         j--;
                     }
 
-                    //player.getPlayersPlayingCard().get(0).performAction(player.getPlayersPlayingCard().get(0).getName(),player);
                 }
-                // temporary printing out to console from here
-
-
                 ConsoleOutput.printOutPlayerState(player);
                 ConsoleOutput.printOutInventory(player);
 
@@ -243,28 +233,63 @@ public class BoardGame {
         for (GreenPlayerCardEnum pc : GreenPlayerCardEnum.values()) {
             if (pc.getName().equalsIgnoreCase("boggis")) {
             }
-            //ScrollUtility.TESTR.performAction(pc.getName(), BoardGame.playersInGame.get(0));
-            //GreenPlayerCardEnum.GIMLETDWARFDELICATESSEN.performTasks(BoardGame.playersInGame.get(0));
         }
         ConsoleOutput.printOutGameBoardState();
 
     }
 
-    public static int shuffle(int i) {
+    //New Function, Getting area id given a area - SAnchit */
+    public static int getAreaId(String areaName){
+    	switch (areaName){
+    		case "Dolly Sisters":
+    			return 1;
+    		case "Unreal Estate":
+    			return 2;
+    		case "Dragons Landing":
+    			return 3;
+    		case "Small Gods":
+    			return 4;
+    		case "The Scours":
+    			return 5;
+    		case "The Hippo":
+    			return 6;
+    		case "The Shades":
+    			return 7;
+    		case "Dimwell":
+    			return 8;
+    		case "Longwell":
+    			return 9;
+    		case "Isle of Gods":
+    			return 10;
+    		case "Seven Sleepers":
+    			return 11;
+    		case "Nap Hill":
+    			return 12;
+    		default:
+    			return 13;
+    	}
+		
+    }
+    public static int shuffle(int range) {
 
-    	if(!(i<0) || !(i == Integer.valueOf(i))){
-    		Random rand = new Random();
-    		return rand.nextInt(i);
-    		}else{
+       
+    	if(!(range<0) || !(range == Integer.valueOf(range))){
+    	Random rand = new Random();
+    		
+    	return rand.nextInt(range);
+    	}
+    	else{
     			return -1;
-    		}
+    }
+
+
     }
 
     public static void start(int playersNumber) throws JSONException {
 
         BoardGame.setInstance();
 //		board_Game_Object = BoardGame.getInstance();
- //       startGame(playersNumber);
+     //   startGame(playersNumber);
 
     }
 
@@ -280,7 +305,7 @@ public class BoardGame {
         System.out.println("Are there more than 1 board in use for the current game? " + result.wasSuccessful());
         rand = new Random();
 
-        for (Area temp : BoardGame.board_Game_Object.board_areas) {
+        for (Area temp : BoardGame.board_areas) {
             if (temp.getAreaName().equalsIgnoreCase("The Scours") ||
                     temp.getAreaName().equalsIgnoreCase("The Shades") ||
                     temp.getAreaName().equalsIgnoreCase("Dolly Sisters")) {
@@ -288,8 +313,7 @@ public class BoardGame {
             }
         }
         initiateNumberOfPlayers((playersNumber));
-        StartPlayingGame sg = new StartPlayingGame();
-        sg.start();
+        StartPlayingGame.start();
     }
 
 
@@ -358,23 +382,49 @@ public class BoardGame {
             BoardGame.discardPilePlayerCards.add(discardPilePlayerCards);
     }
 
-    public static void displayAdjacentAreas(String result) {
+    public static void displayAdjacentAreas(String result,int c) {
 
+    	
         String[] temp = result.split(":");
-        System.out.println("ADJACENT AREAS ");
-        for (int i = 0; i < temp.length; i++) {
+        
+        //int count = c+1;
+        for (int i = 1; i < temp.length; i++) {
             for (Area a : BoardGame.board_areas) {
                 if (a.getAreaNumber() == Integer.parseInt(temp[i])) {
-                	System.out.printf("%-20s%-2s",a.getAreaName(),",");
+                	System.out.printf("%4s%20s\n",piececount,a.getAreaName());
+                	BoardGame.pieceNumberAreaList.add(""+piececount+":"+a.getAreaName());
+                	piececount++;
                 }
             }
         }
+    	
+        //
+    }
+    
+    /*New Function by Sanchit */
+    public static void displayAdjacentAreasInMoving(String result, String fromLocation) {
+
+        String[] temp = result.split(":");
+        System.out.println("POSSIBLE ADJACENT AREAS TO MOVE ARE ");
+        System.out.printf("%-10s\n","Area Name");
+        for (int i = 0; i < temp.length; i++) {
+            for (Area a : BoardGame.board_areas) {
+            	//if(a.getAreaNumber() != getAreaId(fromLocation)){
+	                if (a.getAreaNumber() == Integer.parseInt(temp[i].trim())) {
+	                	System.out.printf("%2s%25s\n",piececount,a.getAreaName().trim());
+	                	BoardGame.pieceNumberAreaList.add(""+piececount +":"+a.getAreaName());
+	                	piececount++;
+	                }
+            	//}
+            }
+        }
+       // piececount=0;
     }
 
     public static ArrayList<Area> getAdjacentAreasForAnArea(String areaName) throws JSONException {
 
         ArrayList<Area> tempr = new ArrayList<Area>();
-        displayAdjacentAreas(areaName);
+       // displayAdjacentAreas(areaName);
         JSONArray jsonarray = BoardGame.getAreaDetails().getJSONArray(areaName);
 
         JSONObject innerjson = jsonarray.getJSONObject(0);
@@ -384,9 +434,12 @@ public class BoardGame {
         while (keys.hasNext()) {
             temp = innerjson.get((String) keys.next());
             temps = temp.toString();
+            String[] r = temps.split(":");
+            for(int i = 1; i<r.length;i++){
             for (Area a : BoardGame.board_areas) {
-                if (a.getAreaNumber() == Integer.parseInt(temps))
+                if (a.getAreaNumber() == Integer.parseInt(r[i].trim()))
                     tempr.add(a);
+            }
             }
         }
         return tempr;
@@ -398,7 +451,7 @@ public class BoardGame {
     }
 
     public void setAreaDetails(JSONObject areaDetails) {
-        this.areaDetails = areaDetails;
+        BoardGame.areaDetails = areaDetails;
     }
 
     public static ArrayList<RandomEventCard> getDiscardedRandomEventCards() {
@@ -429,19 +482,73 @@ public class BoardGame {
 		BoardGame.cityAreaCardRepo.add(cityAreaCardRepo);
 	}
 	
-	public static void displayMinionsForPlayerOnBoard(Player currentPlayingPlayer) throws JSONException{
+	public static void displayMinionsForPlayerOnBoard(Player currentPlayingPlayer,int count) throws JSONException{
 	
 		for(ArrayList<String> str : currentPlayingPlayer.getMinions().values()){
 		for(String s : str){
-			if(!(s.equalsIgnoreCase(""))){
+			if(!(s.equals(""))){
+				
+				piececount++;
 				String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, s);
-				BoardGame.displayAdjacentAreas(result);
+				BoardGame.displayAdjacentAreas(result,piececount);
+				System.out.println();
 			}
 		}
 	}
+		piececount=0;
+	}
+	
+	//to show which buildings are on board for a player,will help in removing
+	
+	
+	public static String getPieceNumberList(String resut){
+		String res = null;
+		for(String s : pieceNumberAreaList){
+			if(Integer.parseInt(s.split(":")[0].trim()) == Integer.parseInt(resut.trim())){
+				res = s.split(":")[1].trim();
+			}
+		}
+		pieceNumberAreaList.clear();
+		return res;
 	}
 
+	/**
+	 * @return the demons
+	 */
+	public static int getDemons() {
+		return demonsQty;
+	}
 
+	/**
+	 * @param demons the demons to set
+	 */
+	public static void setDemons(int demons) {
+		BoardGame.demonsQty = demons;
+	}
+
+	/**
+	 * @return the trolls
+	 */
+	public static int getTrolls() {
+		return trollsQty;
+	}
+
+	/**
+	 * @param trolls the trolls to set
+	 */
+	public static void setTrolls(int trolls) {
+		BoardGame.trollsQty = trolls;
+	}
+	
+	public static void setNumberPieceList(String s){
+		BoardGame.getPieceNumberAreaList().add(s);
+	}
+	
+	public static ArrayList<String> getPieceNumberAreaList(){
+		return BoardGame.pieceNumberAreaList;
+	}
+	
+	
 }
 
 

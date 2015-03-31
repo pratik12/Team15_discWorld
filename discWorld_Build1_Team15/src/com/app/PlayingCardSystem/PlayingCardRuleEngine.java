@@ -14,6 +14,7 @@ public enum PlayingCardRuleEngine {
 			if(!(temp.getPlayerColor().toLowerCase().equals(currentPlayingPlayer.getPlayerColor().toLowerCase()))
 					&& !(temp.getPlayerAmount()<0) && !(currentPlayingPlayer.getPlayerAmount() < 0)){
 				
+				System.out.println(amt +" $ taken from every player..");
 				temp.setPlayerAmount(temp.getPlayerAmount() - amt);
 				currentPlayingPlayer.setPlayerAmount(currentPlayingPlayer.getPlayerAmount() + amt);
 			}
@@ -33,6 +34,7 @@ public enum PlayingCardRuleEngine {
 		}
 	}
 	
+	//not invoked anywhere : Sanchit
 	public Player selectPlayer(Player currentPlayer,String playerToSelect){
 		
 		Player temps = null;

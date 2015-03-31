@@ -1,7 +1,5 @@
 package com.app;
 
-import java.io.ObjectInputStream.GetField;
-
 import org.json.JSONException;
 
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
@@ -14,29 +12,35 @@ import com.app.PlayingCardSystem.GreenPlayerCardEnum;
  */
 public class InterruptCard {
 	
+	
 	private static String interruptMessage;
+	
 	
 	public static String wantToPlayInterruptCard(Player affectedPlayer, Player currentPlayer) throws JSONException{
 		InterruptCard icard = new InterruptCard();
 		String result = null;
 		for(GreenPlayerCardEnum gec : affectedPlayer.getPlayersPlayingCard()){
-			if(gec.getName().equalsIgnoreCase("gaspode") ||
-					gec.getName().equalsIgnoreCase("wallace sonky") ||
-					gec.getName().equalsIgnoreCase("fresh start club")){
+			if(gec.getName().equalsIgnoreCase("gaspode")){
+				
 				String res = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("PLAYER "+affectedPlayer.getPlayerColor()+
-						" Do you want to play your interrupt card. Hit 'Y' or 'N':nul");
-				if(res.equalsIgnoreCase("y")){
+						" Do you want to play your "+gec.getName()+ " card. Hit 'Y' or 'N':nul");
+				if(res.equalsIgnoreCase("y") && !(res.matches("\\d+"))){
 					gec.performTasks(affectedPlayer);
 					result = icard.getInterruptMessage();
-					if(result.equalsIgnoreCase("Stop minion")){
+					if(result.equalsIgnoreCase("Sm")){
 						System.out.println("Player "+currentPlayer.getPlayerColor()+" cannot carry out the action... ");
-						System.out.println("");
+						result = "gasp";
 						break;
 					}
 				}
 			}
+			if(gec.getName().equalsIgnoreCase("Fresh start club")){
+						result = "fsc";
+						break;
+				}
 			else{
-				result = "fail";
+				result = "none";
+				//break;
 			}
 		}
 		return result;
@@ -51,7 +55,7 @@ public class InterruptCard {
 	 * @param interruptMessage the interruptMessage to set
 	 */
 	public void setInterruptMessage(String interruptMessage) {
-		this.interruptMessage = interruptMessage;
+		InterruptCard.interruptMessage = interruptMessage;
 	}
 
 }

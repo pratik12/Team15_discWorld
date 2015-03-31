@@ -1,10 +1,12 @@
 package com.app;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.JSONException;
 
-import com.app.PlayingCardSystem.GreenPlayerCardEnum;
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.common.Utility;
 import com.app.rules.WinningCircumstancesFactory;
 
@@ -16,56 +18,93 @@ import com.app.rules.WinningCircumstancesFactory;
  */
 public class StartPlayingGame {
 	
+	public static ArrayList<String> currPlayingCards = new ArrayList<String>(); 
+	public static ArrayList<String> currCityAreaCards = new ArrayList<String>();
+	
 	public int currentPlayer = 0;
 	//WinningCircumstancesFactory factoryObj = new WinningCircumstancesFactory();
 	Scanner in = new Scanner(System.in);
-	Utility playerTurn = new Utility();
+	static Utility playerTurn = new Utility();
+	static UserCardChoice uc = new UserCardChoice();
 	InterruptCard ic = new InterruptCard();
 	
-	public void start() throws JSONException{
+	public static void start() throws JSONException{
 		System.out.printf("%-30s\n","*********GAME STARTED********");
 		int currTurn = BoardGame.shuffle(BoardGame.playersInGame.size()-1);
 		System.out.println("Player selected with initial shuffling......");
-		do{
+		boolean ctrl = true;
+		//while( checkWinningConditionEveryPlayer() == null ){
+			do{
 			Player currPlayer = BoardGame.playersInGame.get(currTurn);
+			if(checkWinningConditionEveryPlayer(currPlayer) == null){
+				ctrl = false;
 			System.out.println("PLAYERS INVENTORY BEFORE PLAYING TURN...");
 			ConsoleOutput.printOutPlayerState(currPlayer);
 			ConsoleOutput.printOutInventory(currPlayer);
-			displayPlayerInstructions(currPlayer);
-			String res = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter the card name you want to play:nul");
-			GreenPlayerCardEnum gec = PlayerCardUtility.getEnumInstance(res);
-			gec.performTasks(currPlayer);
+			//displayPlayerInstructions(currPlayer);
+			addGlobalStore(currPlayer);
+			uc.askUsercardchoice(currPlayer);
+			//res = "DRUMKNOTT"; //Hard Coded Remove
+			clearPlayersData(currPlayer);
 			System.out.println("PLAYERS INVENTORY AFTER PLAYING TURN...");
 			ConsoleOutput.printOutPlayerState(currPlayer);
 			ConsoleOutput.printOutInventory(currPlayer);
 			System.out.println("Next Players Turn....");
 			currTurn = BoardGame.getInstance().getIndexOfPlayer(playerTurn.giveTurnToleft());
 			ConsoleOutput.printOutGameBoardState();
+			}
 			
-		}while(BoardGame.player_cards.size()!=0 || !(checkWinningConditionEveryPlayer()));
+			
+			
+		}while(!ctrl);
 		
-			System.out.println("Hope you all enjoyed!!!!!!!!!!!!!!!");
-			System.exit(0);
 		
 	}
 	
 	
-	private void displayPlayerInstructions(Player player) {
-		
-		PlayerCardUtility.displayPlayerCardDetails(player);
+	private static void addGlobalStore(Player currPlayer) {
+			
+		if(!currPlayer.getCityAreaCardsStore().isEmpty() && currPlayer.getCityAreaCardsStore()!=null)
+			for(CityAreaCardEnum c : currPlayer.getCityAreaCardsStore())
+				UserCardChoice.dupCardStore.add(c);
 	}
 
-	public boolean checkWinningConditionEveryPlayer(){
+
+	private static void clearPlayersData(Player currPlayer) {
 		
-		for(int i=0; i<BoardGame.playersInGame.size();i++ ){
+		StartPlayingGame.currCityAreaCards.clear();
+		StartPlayingGame.currPlayingCards.clear();
+		UserCardChoice.dupCardStore.clear();
 		
-			if(WinningCircumstancesFactory.getWinningCircumstance(BoardGame.playersInGame.get(i).getWinningCondition()).isWinner())
-				return true;
-			
-		}
-		return false;
+	}
+
+
+	public void displayPlayerInstructions(Player player) {
+		
+		PlayerCardUtility.displayPlayerCardDetails(player);
+		PlayerCardUtility.displayCityAreaCardDetails(player);
+	}
+
+	public static Player checkWinningConditionEveryPlayer(Player pla){
+		Player player = null;
+			System.out.println("Checking winning condition for Player with Color "+pla.getPlayerColor());
+			String wc = pla.getWinningCondition();
+			if(WinningCircumstancesFactory.getWinningCircumstance(wc).isWinner()){
+				player = pla;
+				System.out.println("Player "+player.getPlayerColor()+" playing with " +player.getWinningCondition()+
+						" has won..");
+				System.out.println("Hope you all enjoyed!!!!!!!!!!!!!!!");
+				System.exit(0);
+			}
+			else
+				player = null;
+		return player;
 	}
 	
-	
+	public static void main(String args[]) throws FileNotFoundException, JSONException{
+		
+		FileManager.loadFile("test.txt");
+		start();
+	}
 
 }
