@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Created with IntelliJ IDEA.
  * User: Mahdiye
@@ -22,7 +21,6 @@ import static org.junit.Assert.assertTrue;
  */
 
 public class RandomEventCardTest {
-
     @Test
     public void testTheDragon() {
         try {
@@ -41,8 +39,146 @@ public class RandomEventCardTest {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
-     /*
+
+
     @Test
+    public void testFog() {
+
+        try {
+            FileManager.loadFile("fog.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+        try {
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.Fog, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    @Test
+    public void testEarthquake() {
+        try {
+            FileManager.loadFile("earthquake.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+        try {
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.Earthquake, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    @Test
+    public void testRiots() {
+        try {
+            FileManager.loadFile("riots.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+        try {
+            //Less troublemarkers on board , the random event cannot happen
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.Riots, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    public void testRiotsToEndTheGame() {
+
+        try {
+            FileManager.loadFile("riotsToEndTheGame.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+
+        try {
+            // With 8 trouble marker ends the game
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.Riots, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+    }
+
+    @Test
+    public void testExplosion() {
+        try {
+            FileManager.loadFile("explosion.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+        try {
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.Explosion, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+/*
+
+    @Test
+    public void testMysteriousMurdor() {
+
+        try {
+            FileManager.loadFile("mysteriousMurder.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+        try {
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.MysteriousMurders, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    @Test
+    public void testSubsidence() {
+        try {
+            FileManager.loadFile("subsidence.txt");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        Player currentPlayer = BoardGame.playersInGame.get(3);
+        try {
+            assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayer, RandomEventCard.Subsidence, GreenPlayerCardEnum.RINCEWIND));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+
+
+
+
+     @Test
     public void testFlood() {
         try {
             FileManager.loadFile("C:\\fakeFile.txt");
@@ -65,25 +201,7 @@ public class RandomEventCardTest {
         assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(null, RandomEventCard.Fire, null));
     }
 
-    @Test
-    public void testRiots() {
-        assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(null, RandomEventCard.Riots, null));
-    }
 
-    @Test
-    public void testExplosion() {
-        assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(null, RandomEventCard.Explosion, null));
-    }
-
-    @Test
-    public void testMysteriousDemonsFromTheDungeonDimensions() {
-        assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(null, RandomEventCard.DemonsFromTheDungeonDimensions, null));
-    }
-
-    @Test
-    public void testSubsidence() {
-        assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(null, RandomEventCard.Subsidence, null));
-    }
 
     @Test
     public void testTrolls() {
@@ -91,10 +209,7 @@ public class RandomEventCardTest {
     }
 
 
-    @Test
-    public void testEarthquake() {
-        assertTrue(RandomEventCard.GLOBALOBJ.doTheTasks(null, RandomEventCard.Earthquake, null));
-    }
+
     */
 
 }
