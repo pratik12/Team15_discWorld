@@ -25,13 +25,13 @@ import com.app.PlayingCardSystem.*;
 public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 	// All the 12 areas represented on the map
-	GLOBAL("self","Action"){},
+	GLOBAL("self","Action",true){},
 	
 	//take $2 from bank
-	THEHIPPO("THE HIPPO","1.Take $2 from bank")	
+	THEHIPPO("THE HIPPO","1.Take $2 from bank",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer,boolean b) 
 		{
 			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2,currentPlayer);
 		}
@@ -39,10 +39,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	// discard one card and take $2 from bank
-	THESCOURS("THE SCOURS","1.Discard one card and take 2$ from bank.")	
+	THESCOURS("THE SCOURS","1.Discard one card and take 2$ from bank.",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer)
+		public void performTasks(Player currentPlayer,boolean b)
 		{
 			
 			discardACard(currentPlayer,this);
@@ -54,10 +54,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	},  					
 	
 	//whenever piece affected by random event,can pay $3 to ignore it 
-	SMALLGODS("SMALL GODS","1.If your piece is affected by random event pay 3$ to ignore it")
+	SMALLGODS("SMALL GODS","1.If your piece is affected by random event pay 3$ to ignore it",true)
 	{
 		@Override
-		public void performTasks(Player currentPlayer)
+		public void performTasks(Player currentPlayer,boolean b)
 		{
 			System.out.println("task pending");
 		}
@@ -66,10 +66,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//take $2 from bank
-	DRAGONSLANDING("DRAGONS LANDING","1.Take 2$ from bank.")	
+	DRAGONSLANDING("DRAGONS LANDING","1.Take 2$ from bank.",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 	
+		public void performTasks(Player currentPlayer,boolean b) 	
 		{
 			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2, currentPlayer);
 		}
@@ -77,10 +77,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//take one card from deck and then discard one
-	UNREALESTATE("UNREAL ESTATE","1.Draw a card after that dicard one card")
+	UNREALESTATE("UNREAL ESTATE","1.Draw a card after that dicard one card",true)
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer,boolean b) 
 		{
 			System.out.println("Player will draw one card from the pile..");
 			GreenPlayerCardEnum.GLOBALOBJ.drawCardsFromDeck(1, currentPlayer);
@@ -93,11 +93,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//pay $3 to bank and place one minion in Dolly Sisters or adjacent area	
-	DOLLYSISTERS("DOLLY SISTERS","1.Pay $3 to bank and place your minion in Dolly Sisters or adjacent area")
+	DOLLYSISTERS("DOLLY SISTERS","1.Pay $3 to bank and place your minion in Dolly Sisters or adjacent area",true)
 	{
 
 		@Override
-		public void performTasks(Player currentPlayer ) throws JSONException 
+		public void performTasks(Player currentPlayer , boolean b) throws JSONException 
 		{
 			 
 			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, currentPlayer);
@@ -109,10 +109,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//take $1 from bank
-	NAPHILL("NAP HILL","1.Take $1 from bank..")	
+	NAPHILL("NAP HILL","1.Take $1 from bank..",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer,boolean b) 
 		{
 			  
 			 GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(1, currentPlayer);
@@ -122,10 +122,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//take $3 from bank
-	SEVENSLEEPERS("SEVEN SLEEPERS","1.Take $3 from bank")	
+	SEVENSLEEPERS("SEVEN SLEEPERS","1.Take $3 from bank",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer,boolean b) 
 		{
 			 
 			 GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(3, currentPlayer);
@@ -135,10 +135,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//pay $2 to bank and remove one troublemarker on boards
-	ISLEOFGODS("ISLE OF GODS","1.Pay 2$ to bank and remove one troublemarker from the board")	
+	ISLEOFGODS("ISLE OF GODS","1.Pay 2$ to bank and remove one troublemarker from the board",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer,boolean b) 
 		{
 			 
 			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(2, currentPlayer);
@@ -151,10 +151,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//take $1 from bank
-	LONGWELL("LONGWELL","1.Take 1$ from the bank")	
+	LONGWELL("LONGWELL","1.Take 1$ from the bank",true)	
 	{
 		@Override
-		public void performTasks(Player currentPlayer) 
+		public void performTasks(Player currentPlayer,boolean b) 
 		{
 		
 		GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(1, currentPlayer);
@@ -163,10 +163,10 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//pay $3 to bank and place the minions in Dimwell or adjacent area
-	DIMWELL("DIMWELL","1.Pay 3$ and place minion in Dimwell or adjacent area")
+	DIMWELL("DIMWELL","1.Pay 3$ and place minion in Dimwell or adjacent area",true)
 	{
 		@Override
-		public void performTasks(Player currentPlayer) throws JSONException 
+		public void performTasks(Player currentPlayer,boolean b) throws JSONException 
 		{
 			
 			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, currentPlayer);
@@ -176,9 +176,9 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	
 	
 	//place one troublemarker in the Shades or adjacent area
-	THESHADES("THE SHADES","1.Place a troublemarker in The Shades or adjacent area")
+	THESHADES("THE SHADES","1.Place a troublemarker in The Shades or adjacent area",true)
 	{
-		public void performTasks(Player currentPlayer) throws JSONException
+		public void performTasks(Player currentPlayer,boolean b) throws JSONException
 		{
 			this.placeTroubleMarker("The Shades");
 			
@@ -195,6 +195,20 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	/** areaName that identifies an area*/
 	private String areaName;
 	private String action;
+	private Boolean activeValue;
+	
+	public Boolean getActiveValue() {
+		return activeValue;
+	}
+
+
+
+	public void setActiveValue(Boolean activeValue) {
+		this.activeValue = activeValue;
+	}
+
+
+
 	public String getAction() {
 		return action;
 	}
@@ -207,11 +221,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 
 
 
-	private CityAreaCardEnum(String area,String action)
+	private CityAreaCardEnum(String area,String action,Boolean b)
 	{
 			setareaName(area);
 			setAction(action);
-			//setIsActive(true);
+			setActiveValue(b);
 	}
 	
 
@@ -227,7 +241,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	}
 	
 	@Override
-	public void performTasks(Player currentPlayingPlayer) throws JSONException {}
+	public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {}
 
 		@Override
 	public String questionsToAsk(String qns) {
@@ -237,7 +251,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	@Override
 	public void placeTroubleMarker(String areaLocation) throws JSONException
 	{
-		String troubleLoc = null;
+		String troubleLoc1 = null;
 		System.out.println("Troublemarker will be placed..");
 		for(Area a : BoardGame.board_areas){
 			if((!areaLocation.isEmpty()) && areaLocation.trim().equalsIgnoreCase(a.getAreaName())){
@@ -245,7 +259,8 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 				String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, areaLocation);
 				BoardGame.displayAdjacentAreas(result,0);
 			
-				troubleLoc = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter area name to place troublemarker :nul");
+				troubleLoc1 = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter area name to place troublemarker :nul");
+				String troubleLoc = BoardGame.getPieceNumberList(troubleLoc1);
 				if(troubleLoc!=null && !(troubleLoc.matches("\\d+"))){
 					for(Area ar : BoardGame.board_areas){
 						if((!troubleLoc.isEmpty())&& troubleLoc.trim().equalsIgnoreCase(ar.getAreaName()) 
@@ -291,7 +306,7 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	}
 
 	@Override
-	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp) throws JSONException{
+	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp,boolean b) throws JSONException{
 		  
 	}
 

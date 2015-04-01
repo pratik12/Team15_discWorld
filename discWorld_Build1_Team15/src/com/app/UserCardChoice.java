@@ -35,7 +35,7 @@ public class UserCardChoice {
 				 gecDup = gec;
 				// before playing first symbol
 				
-					gec.performTasks(player);
+					gec.performTasks(player,true);
 			}
 			else if(!dupCardStore.isEmpty()){
 				playCityAreaCards(player, gecDup);
@@ -57,7 +57,7 @@ public class UserCardChoice {
 	public boolean wishToPlayCityCard(Player player) {
 		
 		Boolean dec = false;
-		if(!player.getCityAreaCardsStore().isEmpty()){
+		if(!dupCardStore.isEmpty()){
 			
 			String result = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Do you wish to play city area card. Hit 'Y' or 'N':"
 					+ "nul");
@@ -81,14 +81,15 @@ public class UserCardChoice {
 
 	public void playCityAreaCards(Player player, GreenPlayerCardEnum gec) throws JSONException {
 		
-		if(!player.getCityAreaCardsStore().isEmpty()){
+		if(!dupCardStore.isEmpty()){
 		do{
+			
 		displayCityAreaCards(player,dupCardStore);
 		String result = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Which city area card. Enter number:"
 				+ "nul");
 		String areaCard = BoardGame.getPieceNumberList(result);
 		CityAreaCardEnum temp = CityAreaCardEnum.getCityAreaCardInstance(areaCard);
-		temp.performTasks(player);
+		temp.performTasks(player,true);
 		dupCardStore.remove(temp);
 		if(wishToPlayCityCard(player) && !dupCardStore.isEmpty()){
 			continue;

@@ -58,8 +58,8 @@ public class LordSelRusWor implements WinningCircumstances {
     	for(Area a : BoardGame.board_areas){
     		
     		if(a.getDemons()==0){
-    			if(a.getAreaName().equalsIgnoreCase("Longwell"))
-    				System.out.println("bdjfsdfdsf");
+    			//if(a.getAreaName().equalsIgnoreCase("Longwell"))
+    				//System.out.println("bdjfsdfdsf");
     			currPlayerCount = calculateMinion(a, currentPlayer) + calculateBldg(a, currentPlayer);
     		
     			for(Player p : temp){
@@ -75,6 +75,7 @@ public class LordSelRusWor implements WinningCircumstances {
     			if(ctrlCount == 3){
     				System.out.println("Area Controlled : " +a.getAreaName());
     				controlledAreasPlayer++;
+    				ctrlCount = 0;
     			}
     		}
     		

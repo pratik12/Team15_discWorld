@@ -16,14 +16,14 @@ public interface PlayingCardRulesInterface {
 	 * @param player
 	 * @throws JSONException 
 	 */
-	public void performTasks(Player player) throws JSONException;
+	public void performTasks(Player player, boolean b) throws JSONException;
 	public String questionsToAsk(String qns);
 	
 	public String askSymbolsInOrder(GreenPlayerCardEnum tempEnum, String result, Player p) throws JSONException;
 	public void moveMinion();
 	public void assasinate(Player ps) throws JSONException;
 	public void removeTroubleMarker();
-	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp) throws JSONException;
+	public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumTemp, boolean b) throws JSONException;
 	public void interrupt();
 	
 	public boolean takeMoneyFromPlayer(int amt, Player currentPlayingPlayer, Player fromPlayer);

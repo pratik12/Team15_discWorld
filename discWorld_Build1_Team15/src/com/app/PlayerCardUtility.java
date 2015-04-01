@@ -17,14 +17,15 @@ public abstract class PlayerCardUtility {
 		
 		try{
 			  			System.out.printf("%-25s\n","-----AVAILABLE PLAYING CARDS-----");
-			  			int count = 1;
-			  			System.out.printf("%-45s%5s%-55s\n","PLAYING CARD NAME","            ","ACTIONS TO PERFORM");
+			  			int count = 1 ;
+			  			System.out.printf("%25s%5s%55s\n","PLAYING CARD NAME","     ","ACTIONS TO PERFORM");
 			  			for(GreenPlayerCardEnum gc : player.getPlayersPlayingCard()){
 			  				
 			  				System.out.printf("%-1s%-1s%-25s",count,":",gc.getName());
 			  				StartPlayingGame.currPlayingCards.add(""+count+":"+gc.getName());
 			  				for(String str : gc.getSymbols()){
 			  					System.out.printf("%20s%2s",str,"  ");
+			  					
 			  					}
 			  				System.out.println();
 			  				count++;

@@ -39,7 +39,7 @@ import com.app.common.Utility;
 		BOGGIS("Mr.Boggis","green","DeckPile", new String[]{"Read Scroll-> Take 2$ from every player","Place minion"} ){
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 			String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 			
@@ -54,7 +54,7 @@ import com.app.common.Utility;
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}
 				else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer, true);
+					addToDiscardPile(1, this, currentPlayingPlayer, b);
 					return;
 	
 				}
@@ -72,7 +72,7 @@ import com.app.common.Utility;
 	BEGGARSGUILD("THE BEGGARS GUILD","green","DeckPile", new String[]{"Read Scroll-> Take 2 playing cards","Place minion"} ) {
 			
 		@Override
-		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+		public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 			String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -85,7 +85,7 @@ import com.app.common.Utility;
 				res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}
 				else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer, true);
+					addToDiscardPile(1, this, currentPlayingPlayer, b);
 					return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])
@@ -98,7 +98,7 @@ import com.app.common.Utility;
 				
 		
 			}
-			addToDiscardPile(1, this, currentPlayingPlayer, true);
+			addToDiscardPile(1, this, currentPlayingPlayer, b);
 		}
 				
 			
@@ -108,7 +108,7 @@ import com.app.common.Utility;
 				+ " you must pay back 12$ or you loose 15 points", "Play another card"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 				String res = askSymbolsInOrder(this, "0",currentPlayingPlayer);
 	
@@ -121,25 +121,25 @@ import com.app.common.Utility;
 	                    res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);
 	                }
 	                else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-	    				addToDiscardPile(1, this, currentPlayingPlayer, true);
+	    				addToDiscardPile(1, this, currentPlayingPlayer, b);
 	    				return;
 	    			}
 	                else if (res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])
 	                		&& 
 	    					!(res.split(":")[0].trim().equalsIgnoreCase("exit"))) {
 	                    try {
-	                        playAnotherCard(currentPlayingPlayer, this);
+	                        playAnotherCard(currentPlayingPlayer, this,true);
 	                    } catch (JSONException e) {
 	                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 	                    }
 	                    res = lastaction(currentPlayingPlayer,res);
 	                }
 	                else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 	            }
-	            addToDiscardPile(1, this, currentPlayingPlayer, true);
+	            addToDiscardPile(1, this, currentPlayingPlayer, b);
 				
 			}
 		}, //loan of 10$ from bank. at end payback 12$ or loose 15 points
@@ -148,7 +148,7 @@ import com.app.common.Utility;
 				+ " cards","Play Another Card"}) {
 	
 		@Override
-		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+		public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 			String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 			
@@ -183,28 +183,28 @@ import com.app.common.Utility;
 				res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}
 				else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer, true);
+					addToDiscardPile(1, this, currentPlayingPlayer, b);
 					return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 						!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
 					// call the function of playing another card
-					playAnotherCard(currentPlayingPlayer, this);
+					playAnotherCard(currentPlayingPlayer, this,true);
 					res = lastaction(currentPlayingPlayer,res);
 				}
 				else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer, true);
+					addToDiscardPile(1, this, currentPlayingPlayer, b);
 					return;
 				}
 			}
-			addToDiscardPile(1, this, currentPlayingPlayer, true);
+			addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		}, // take 1$ from every player or one card
 		
 		ANGUA("Sergeant Angua","green","DeckPile",new String[]{"Remove Trouble Marker","Play Another Card"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -218,27 +218,27 @@ import com.app.common.Utility;
 						removeTroubleMarker();
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						playAnotherCard(currentPlayingPlayer, this);
+						playAnotherCard(currentPlayingPlayer, this,true);
 						res = lastaction(currentPlayingPlayer,res);
 					}
 					else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer, true);	
+				addToDiscardPile(1, this, currentPlayingPlayer, b);	
 			}
 		},//
 		
 	AGONYAUNTS("THE AGONY AUNTS","green","DeckPile", new String[]{"Assasinate","Take 2$ from Bank","Place Minion"}) {
 			
 		@Override
-		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+		public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -263,19 +263,19 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 					}
 					else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 					
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer, true);
+				addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		},
 		
 	DYSK("THE DYSK","green","DeckPile",new String[]{"Add building","Read Scroll-> Earn 1$ for each minion in Isle of Gods"}) {
 			
 		@Override
-		public void performTasks(Player currentPlayingPlayer) throws JSONException {
+		public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 			String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 			
@@ -309,12 +309,12 @@ import com.app.common.Utility;
 					res = lastaction(currentPlayingPlayer,res);
 				}
 				else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer, true);
+					addToDiscardPile(1, this, currentPlayingPlayer, b);
 					return;
 				}
 			}	
 				
-			addToDiscardPile(1, this, currentPlayingPlayer, true);
+			addToDiscardPile(1, this, currentPlayingPlayer, b);
 			
 				
 			}
@@ -323,7 +323,7 @@ import com.app.common.Utility;
 		DUCKMAN("THE DUCKMAN","green","DeckPile",new String[]{"Read Scroll->  Move minion of opponent to another area that is adjacent"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -337,17 +337,17 @@ import com.app.common.Utility;
 						mu = new ComponentUtilities();
 						mu.displayMinionsOfotherPlayer(selectedPlayer);
 						String fromLocation = questionsToAsk("Choose from where the Minion has to be moved:nul");
-						String area = BoardGame.getPieceNumberList(fromLocation);
-						moveMinionToOtherArea(currentPlayingPlayer, selectedPlayer, area, "");
+						//String area = BoardGame.getPieceNumberList(fromLocation);
+						moveMinionToOtherArea(currentPlayingPlayer, selectedPlayer, fromLocation, "");
 						
 						res = lastaction(currentPlayingPlayer,res);					
 						}
 					else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer, true);
+				addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		},
 		
@@ -355,7 +355,7 @@ import com.app.common.Utility;
 		DRUMKNOTT("DRUMKNOTT","green","DeckPile",new String[]{"Read Scroll->  Play 2 other cards from your hand"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -365,25 +365,26 @@ import com.app.common.Utility;
 					if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[0])&& 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
 						try {
-	                        playAnotherCard(currentPlayingPlayer, this);
-	                        playAnotherCard(currentPlayingPlayer, this);
+							
+	                        playAnotherCard(currentPlayingPlayer, this,false);
+	                        playAnotherCard(currentPlayingPlayer, this,false);
 	                        res = lastaction(currentPlayingPlayer,res);
 	                    } catch (JSONException e) {
 	                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 	                    }
 	
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, false);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer, true);	
+			addToDiscardPile(1, this, currentPlayingPlayer, b);	
 			}
 		},
 		CMOTDIBBLER("CMOT DIBBLER","green","DeckPile",new String[]{"Read Scroll->  Roll die to determine action","Play another card"}) {
 			// roll die. if 7 take 4 from bank. if 1 pay 2$ to bank or remove 1 YOUR minion.
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -411,21 +412,21 @@ import com.app.common.Utility;
 						}
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						playAnotherCard(currentPlayingPlayer, this);
+						playAnotherCard(currentPlayingPlayer, this,true);
 						res = lastaction(currentPlayingPlayer,res);
 					}
 			}
-				addToDiscardPile(1, this, currentPlayingPlayer, true);
+				addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		},
 		DRCRUCES("DR.CRUCES","green","DeckPile",new String[]{"Assasinate","take 3$"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -442,16 +443,16 @@ import com.app.common.Utility;
 						takeMoneyFromBank(3, currentPlayingPlayer);
 						 res = lastaction(currentPlayingPlayer,res);
 						}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer, true);
+				addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		},
 		CAPTAINCARROT("CAPTAIN CARROT","green","DeckPile",new String[]{"Place minion","Remove Trouble Marker","take 1$"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -471,7 +472,7 @@ import com.app.common.Utility;
 						removeTroubleMarker();
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[2])&& 
@@ -481,12 +482,12 @@ import com.app.common.Utility;
 					}
 				
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer, true);
+				addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		},
 		MRSCAKE("MRS.CAKE","green","DeckPile",new String[]{"Read Scroll->","take 2$","Add building"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -512,7 +513,7 @@ import com.app.common.Utility;
 						takeMoneyFromBank(2, currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[2])&& 
@@ -527,7 +528,7 @@ import com.app.common.Utility;
 		},
 		MRBENT("MR.BENT","green","DeckPile",new String[]{"Read Scroll->  Take 10$ loan from bank","Play another card"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				
 				String res = askSymbolsInOrder(this, "0",currentPlayingPlayer);
 	
@@ -539,12 +540,12 @@ import com.app.common.Utility;
 	                    this.takeLoanFromBank(10, currentPlayingPlayer);
 	                    res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);
 	                }else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-	    				addToDiscardPile(1, this, currentPlayingPlayer, true);
+	    				addToDiscardPile(1, this, currentPlayingPlayer, b);
 	    				return;
 	    			} else if (res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 	    					!(res.split(":")[0].trim().equalsIgnoreCase("exit"))) {
 	                    try {
-	                        playAnotherCard(currentPlayingPlayer, this);
+	                        playAnotherCard(currentPlayingPlayer, this,true);
 	                        System.out.println("You have played the last action.This card will be discarded");
 	                    } catch (JSONException e) {
 	                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -559,7 +560,7 @@ import com.app.common.Utility;
 		GROAT("GROAT","green","DeckPile",new String[]{"Place Minion"}) {
 			
 			@Override
-	        public void performTasks(Player currentPlayingPlayer) throws JSONException {
+	        public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -571,30 +572,30 @@ import com.app.common.Utility;
 						placeMinionActionPlayerCard(currentPlayingPlayer);
 						res = lastaction(currentPlayingPlayer,res);
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer, true);
+						addToDiscardPile(1, this, currentPlayingPlayer, b);
 						return;
 					}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 	        }
 		},
 		GASPODE("GASPODE","green","DeckPile",new String[]{"Interrupt"}) {
 			
 			@Override
-	        public void performTasks(Player currentPlayingPlayer) throws JSONException {
+	        public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				InterruptCard ic = new InterruptCard();
 				ic.setInterruptMessage("SM");
-	            addToDiscardPile(1, this, currentPlayingPlayer, true);
+	            addToDiscardPile(1, this, currentPlayingPlayer, b);
 			}
 		},
 		FRESHSTARTCLUB("FRESH START CLUB","green","DeckPile",new String[]{"Interrupt"}) {
 			@Override
-	        public void performTasks(Player currentPlayingPlayer) throws JSONException {
+	        public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 				String res = questionsToAsk("Player "+currentPlayingPlayer.getPlayerColor().toUpperCase()+
 						" Do you want to play "+getName()+ " card. Hit Y or N:nul");
 				if(res.equalsIgnoreCase("y")){
 					placeMinionActionPlayerCard(currentPlayingPlayer);
-					addToDiscardPile(1, this, currentPlayingPlayer,true);
+					addToDiscardPile(1, this, currentPlayingPlayer,b);
 				}
 				else if(res.equalsIgnoreCase("n")){
 					System.out.println("You choose not to play this card");
@@ -605,7 +606,7 @@ import com.app.common.Utility;
 		FOULOLERON("Foul Ole ron","green","DeckPile",new String[]{"Read Scroll->  Move opponent minion in adjacent area","Play another card"}) {
 			// moveminion of OTHER player from an area to adjacent area
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 			String res = askSymbolsInOrder(this, "0",currentPlayingPlayer);
 	
@@ -628,14 +629,14 @@ import com.app.common.Utility;
 			}
 	        else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 					!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-	        	playAnotherCard(currentPlayingPlayer, this);
+	        	playAnotherCard(currentPlayingPlayer, this,true);
 	        	res = lastaction(currentPlayingPlayer,res);
 	        }else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 				return;
 			}
 	        }
-	        addToDiscardPile(1, this, currentPlayingPlayer,true);
+	        addToDiscardPile(1, this, currentPlayingPlayer,b);
 	        }
 		},
 		
@@ -643,7 +644,7 @@ import com.app.common.Utility;
 				+ "If they cannot give you 5$ place this card in front of them.This card goes in their hand and cannot be removed","Place Minion"}) {
 			
 			@Override
-	        public void performTasks(Player currentPlayingPlayer) throws JSONException {
+	        public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 	
 	            String res = askSymbolsInOrder(this, "0",currentPlayingPlayer);
 	
@@ -671,11 +672,11 @@ import com.app.common.Utility;
 	                	placeMinionActionPlayerCard(currentPlayingPlayer);
 	                	res = lastaction(currentPlayingPlayer,res);
 	                }else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-	    				addToDiscardPile(1, this, currentPlayingPlayer,true);
+	    				addToDiscardPile(1, this, currentPlayingPlayer,b);
 	    				return;
 	    			}
 	            }
-	            addToDiscardPile(1, this, currentPlayingPlayer,true);
+	            addToDiscardPile(1, this, currentPlayingPlayer,b);
 	        }
 		},
 		
@@ -684,7 +685,7 @@ import com.app.common.Utility;
 				+ "Else you can remove a building of his","Play another card"}) {
 			// select plaeyr if they dont give you 5$ remove 1 of his building from board
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this, "0",currentPlayingPlayer);
 	
@@ -703,22 +704,22 @@ import com.app.common.Utility;
 				}
 				res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 			}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 				return;
 			}
 	                else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 	    					!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-	                	playAnotherCard(currentPlayingPlayer, this);
+	                	playAnotherCard(currentPlayingPlayer, this,true);
 	                	res = lastaction(currentPlayingPlayer,res);
 	                	}
 	                }
-	            addToDiscardPile(1, this, currentPlayingPlayer,true);
+	            addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		INIGOSKIMMER("Inigo Skimmer","green","DeckPile",new String[]{"Assasinate","Take 2$"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -736,16 +737,16 @@ import com.app.common.Utility;
 						takeMoneyFromBank(2, currentPlayingPlayer);
 						res = lastaction(currentPlayingPlayer,res);
 						}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-							addToDiscardPile(1, this, currentPlayingPlayer,true);
+							addToDiscardPile(1, this, currentPlayingPlayer,b);
 							return;
 						}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		HISTORYMONKS("History Monks","green","DeckPile",new String[]{"Read Scroll->  Draw 4 cards from discard pile","Place minion"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -758,7 +759,7 @@ import com.app.common.Utility;
 						drawCardsFromDiscardPile(4, currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					
@@ -770,12 +771,12 @@ import com.app.common.Utility;
 					}
 					
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		HEX("Hex","green","DeckPile", new String[]{"Read Scroll->  Draw 3 cards from deck","Add building"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -788,7 +789,7 @@ import com.app.common.Utility;
 						drawCardsFromDeck(3, currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					
@@ -799,13 +800,13 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 					}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		HERENOW("Here N Now","green","DeckPile",new String[]{"Read Scroll->  Roll Die. If 7 take 3$ from player of ur choice."
 				+ "IF 1 remove a minion of your own","Play Another card"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -833,24 +834,24 @@ import com.app.common.Utility;
 							res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 						}
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						playAnotherCard(currentPlayingPlayer, this);
+						playAnotherCard(currentPlayingPlayer, this,true);
 						res = lastaction(currentPlayingPlayer,res);
 					}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		
 		HARRYKING("Harry King","green","DeckPile",new String[]{"Place minion","Read Scroll->  Discard cards of your choice"}) {
 			// discrad as many cards as uw ish, get 2 for each
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 			String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 			
@@ -863,7 +864,7 @@ import com.app.common.Utility;
 					placeMinionActionPlayerCard(currentPlayingPlayer);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);
+					addToDiscardPile(1, this, currentPlayingPlayer,b);
 					return;
 				}
 				
@@ -874,13 +875,13 @@ import com.app.common.Utility;
 					res = lastaction(currentPlayingPlayer,res);
 				}
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);
+			addToDiscardPile(1, this, currentPlayingPlayer,b);
 		}
 		},
 		GRYLE("MR.GRYLE","green","DeckPile",new String[]{"Assasinate","Take 1$"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -894,7 +895,7 @@ import com.app.common.Utility;
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 						
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					
@@ -905,13 +906,13 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 					}
 			}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		HARGAHOUSEOFRIBS("HARGA HOUSE OF RIBS","green","DeckPile",new String[]{"Take 3$","Place Minion"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -924,7 +925,7 @@ import com.app.common.Utility;
 						takeMoneyFromBank(3, currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					
@@ -934,7 +935,7 @@ import com.app.common.Utility;
 							res = lastaction(currentPlayingPlayer,res);
 						}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		THEPEELEDNUTS("THE PEELED NUTS","green","DeckPile",new String[]{"No actions to perform on this card.."}) {
@@ -944,7 +945,7 @@ import com.app.common.Utility;
 		THEOPERAHOUSE("THE OPERA HOUSE","green","DeckPile",new String[]{"Add building","Read Scroll->  Take 1$ for minions in Isle of GOds"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException {
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -958,7 +959,7 @@ import com.app.common.Utility;
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 						
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					
@@ -981,13 +982,13 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 						}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 			
 		},
 		NOBBYNOBBSS("NOBBY NOBBSS","green","DeckPile",new String[]{"Read Scroll->  Take 3$ from player of your choice","Play another card"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1002,21 +1003,21 @@ import com.app.common.Utility;
 						takeMoneyFromPlayer(3, currentPlayingPlayer, selectedPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						playAnotherCard(currentPlayingPlayer, this);
+						playAnotherCard(currentPlayingPlayer, this,true);
 						res = lastaction(currentPlayingPlayer,res);
 					}
 					}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		MODO("MODO","green","DeckPile",new String[]{"Read Scroll->  Discard one card of your choice","Place Minion"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1029,7 +1030,7 @@ import com.app.common.Utility;
 						discardACard(currentPlayingPlayer, this);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
@@ -1045,7 +1046,7 @@ import com.app.common.Utility;
 		},
 		THEMENDEDDRUM("THE MENDEDDRUM","green","DeckPile",new String[]{"Add building","Take 2$"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1059,7 +1060,7 @@ import com.app.common.Utility;
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
@@ -1075,7 +1076,7 @@ import com.app.common.Utility;
 		},
 		LIBRARIAN("LIBRARIAN","green","DeckPile",new String[]{"Read Scroll->  Draw 4 cards from deck"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1088,17 +1089,17 @@ import com.app.common.Utility;
 								drawCardsFromDeck(4, currentPlayingPlayer);
 								res = lastaction(currentPlayingPlayer,res);
 						}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-							addToDiscardPile(1, this, currentPlayingPlayer,true);
+							addToDiscardPile(1, this, currentPlayingPlayer,b);
 							return;
 						}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		LEONARDOFQUIRM("LEONARD OF QUIRM","green","DeckPile",new String[]{"Read Scroll->  Draw 4 cards from deck"}) {
 			// draw 4 cards from the deck
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1111,17 +1112,17 @@ import com.app.common.Utility;
 								drawCardsFromDeck(4, currentPlayingPlayer);
 								res = lastaction(currentPlayingPlayer,res);
 						}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-							addToDiscardPile(1, this, currentPlayingPlayer,true);
+							addToDiscardPile(1, this, currentPlayingPlayer,b);
 							return;
 						}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		SHONKYSHOP("SHONKY SHOP","green","DeckPile",new String[]{"Read Scroll->  Discard cards as per yur wish","Add building"}) {
 			
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1133,7 +1134,8 @@ import com.app.common.Utility;
 							discardCardsPerYourWish(currentPlayingPlayer, this, 1);
 							res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 						}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-							addToDiscardPile(1, this, currentPlayingPlayer,true);return;
+							addToDiscardPile(1, this, currentPlayingPlayer,b);
+							return;
 						}
 						else if(res.split(":")[0].trim().equalsIgnoreCase("Add building") && 
 								!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
@@ -1142,12 +1144,12 @@ import com.app.common.Utility;
 							res = lastaction(currentPlayingPlayer,res);
 						}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		SACHARISSACRIPSLOCK("SACHARISSA CRIPSLOCK","green","DeckPile",new String[]{"Read Scroll->  Take 1$ for every trouble marker on board","Place Minion"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1161,7 +1163,8 @@ import com.app.common.Utility;
 								takeMoneyFromBank(1, currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);return;
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
+						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase("Place Minion") && 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
@@ -1169,12 +1172,12 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 					}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		ROSIEPALM("ROSIE PALM","green","DeckPile",new String[]{"Place Minion","Read Scroll->  Take money in exchange for cards from another player"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1186,7 +1189,7 @@ import com.app.common.Utility;
 						placeMinionActionPlayerCard(currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1]) && 
@@ -1196,18 +1199,18 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 					}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		
 		//a few bugs need to be removed
 		RINCEWIND("RINCEWIND","green","DeckPile",new String[]{"Read Scroll->Move minion from area with trouble marker to an adjacent area","Play another Card"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				System.out.println("Random Event Card will occur ");
 				RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayingPlayer, 
-						RandomEventCard.Flood, this);
+						RandomEventCard.Subsidence, this);
 				//RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayingPlayer, RandomEventCard.getShuffledRandomEventCard(), this); //Changed from fire to getshuffledrandomeventcard
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1229,7 +1232,7 @@ import com.app.common.Utility;
 								if(!s.equalsIgnoreCase("") ){
 									if( currentPlayingPlayer.getAreaInstanceFromAreaName(s).isTroubleMarkers()){
 										
-										System.out.printf("%2s%15s",ocunt,s);
+										System.out.printf("%2s%15s\n",ocunt,s);
 									tempar.add(s);
 									BoardGame.pieceNumberAreaList.add(""+ocunt+":"+s);
 									ocunt++;
@@ -1277,20 +1280,20 @@ import com.app.common.Utility;
 				}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						playAnotherCard(currentPlayingPlayer, this);
+						playAnotherCard(currentPlayingPlayer, this,true);
 						res = lastaction(currentPlayingPlayer,res);
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);
+			addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 			
 		},
 		THEROYALMINT("THE ROYAL MINT","green","DeckPile",new String[]{"Add building","Take 5$"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -1308,17 +1311,17 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);
 						}
 					else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-							addToDiscardPile(1, this, currentPlayingPlayer,true);
+							addToDiscardPile(1, this, currentPlayingPlayer,b);
 							return;
 						}
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);	
+			addToDiscardPile(1, this, currentPlayingPlayer,b);	
 			}
 			
 		},
 		QUEENMOLLY("QUEEN MOLLY","green","DeckPile",new String[]{"Place minion","Read Scroll->  Take 2 cards from player of your choice"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -1329,7 +1332,7 @@ import com.app.common.Utility;
 						placeMinionActionPlayerCard(currentPlayingPlayer);
 						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,true);
+						addToDiscardPile(1, this, currentPlayingPlayer,b);
 						return;
 					}
 					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
@@ -1357,12 +1360,12 @@ import com.app.common.Utility;
 						res = lastaction(currentPlayingPlayer,res);	
 					}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		PINKPUSSYCATCLUB("PINK PUSSY CAT CLUB","green","DeckPile",new String[]{"Take 3$","Play another card"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -1374,21 +1377,21 @@ import com.app.common.Utility;
 					takeMoneyFromBank(5, currentPlayingPlayer);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);
+					addToDiscardPile(1, this, currentPlayingPlayer,b);
 					return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 						!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					playAnotherCard(currentPlayingPlayer, this);
+					playAnotherCard(currentPlayingPlayer, this,true);
 					res = lastaction(currentPlayingPlayer,res);
 				}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		ZORGOTHERETROPHRENOLOGIST("ZORGO THE RETROPHRENOLOGIST","green","DeckPile",new String[]{"Read Scroll->  Exchange perosnality card","Add building"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
 	
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
@@ -1400,7 +1403,7 @@ import com.app.common.Utility;
 					currentPlayingPlayer.exchangePersonalityCard();
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);return;
+					addToDiscardPile(1, this, currentPlayingPlayer,b);return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 						!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
@@ -1408,28 +1411,28 @@ import com.app.common.Utility;
 					res = lastaction(currentPlayingPlayer,res);
 				}
 				}
-				addToDiscardPile(1, this, currentPlayingPlayer,true);
+				addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 			
 			
 		},
 		DRWHITEFACE("DR.WHITEFACE","green","DeckPile",new String[]{"Read Scroll->  Take 5$ from player of choice or give them this card"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				
-				PlayerCardUtility.getEnumInstance("The Fools Guild").performTasks(currentPlayingPlayer);
+				PlayerCardUtility.getEnumInstance("The Fools Guild").performTasks(currentPlayingPlayer,true);
 			}
 		},
 		WALLACESONKY("WALLACE SONKY","green","DeckPile") {
 			@Override
-			public void performTasks(Player currentPlayingPlayer){
+			public void performTasks(Player currentPlayingPlayer,boolean b){
 				
 				
 			}
 		},
 		THESEAMSTRESSESGUILD("THE SEAMSTRESSES GUILD","green","DeckPile",new String[]{"Read Scroll->  Take money in exchange of cards from Another player ","Place minion"}) {
 			@Override                                                              
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -1442,19 +1445,19 @@ import com.app.common.Utility;
 					takeMoneyExchangeCardsFromAnotherPlayer(currentPlayingPlayer,2);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);return;
+					addToDiscardPile(1, this, currentPlayingPlayer,b);return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 						!(res.split(":")[0].trim().equalsIgnoreCase("exit")))
 					placeMinionActionPlayerCard(currentPlayingPlayer);
 				res = lastaction(currentPlayingPlayer,res);
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);
+			addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		},
 		MRPINANDMRTULIP("MR.PIN & MR.TULIP","green","DeckPile",new String[]{"Assasinate","Take 1$->From Bank"}) {
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
 			(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
@@ -1465,7 +1468,7 @@ import com.app.common.Utility;
 					assasinate(currentPlayingPlayer);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(), currentPlayingPlayer);
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);
+					addToDiscardPile(1, this, currentPlayingPlayer,b);
 					return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
@@ -1473,14 +1476,14 @@ import com.app.common.Utility;
 					takeMoneyFromBank(1, currentPlayingPlayer);
 				res = lastaction(currentPlayingPlayer,res);
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);
+			addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 			
 		},
 		THETHIEVESGUILD("THE THIEVES GUILD","green","DeckPile",new String[]{"Read Scroll->  2$ will be taken from every Player","Place Minion"}) {
 			// take 2$ from every other player
 			@Override
-			  public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			  public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 			
 				String res = askSymbolsInOrder(this ,"0", currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
@@ -1494,7 +1497,7 @@ import com.app.common.Utility;
 					}
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(), currentPlayingPlayer);
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);return;
+					addToDiscardPile(1, this, currentPlayingPlayer,b);return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 						!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
@@ -1502,13 +1505,13 @@ import com.app.common.Utility;
 				res = lastaction(currentPlayingPlayer,res);
 				}
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);
+			addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}  
 		}, 
 		
 		GIMLETDWARFDELICATESSEN("GIMLET DWARF DELICATESSEN","green","DeckPile",new String[]{"Take 3$","Place minion"}){
 			@Override
-			public void performTasks(Player currentPlayingPlayer) throws JSONException{
+			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException{
 				String res = askSymbolsInOrder(this ,"0", currentPlayingPlayer);
 				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
 			(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
@@ -1518,7 +1521,7 @@ import com.app.common.Utility;
 					takeMoneyFromBank(3, currentPlayingPlayer);
 					res = askSymbolsInOrder(this, res.split(":")[1].trim(), currentPlayingPlayer);
 				}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-					addToDiscardPile(1, this, currentPlayingPlayer,true);return;
+					addToDiscardPile(1, this, currentPlayingPlayer,b);return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
 						!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
@@ -1526,7 +1529,7 @@ import com.app.common.Utility;
 					res = lastaction(currentPlayingPlayer,res);
 				}
 				}
-			addToDiscardPile(1, this, currentPlayingPlayer,true);
+			addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 		};
 		
@@ -1643,34 +1646,40 @@ import com.app.common.Utility;
 		 * first dispalying to him the player cards available in his hand
 		 */
 		 @Override   
-		public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumType) throws JSONException {
+		public void playAnotherCard(Player currentPlayingPlayer, GreenPlayerCardEnum enumType,boolean b) throws JSONException {
 			 
+			 ArrayList<GreenPlayerCardEnum> temporary = new ArrayList<GreenPlayerCardEnum>();
+			 
+			 for(GreenPlayerCardEnum gec : currentPlayingPlayer.getPlayersPlayingCard()){
+				 	temporary.add(gec);
+			 }
 			 System.out.println("You need to play another card of yours..");
 			 
-			 System.out.printf("%1s%15s","   ","Cards to choose from.");
+			 System.out.printf("%1s%15s\n","   ","Cards to choose from.");
 			 int c =1;
-			 for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard()){
+			 for(GreenPlayerCardEnum gc : temporary){
 				if(!(gc.getName().equalsIgnoreCase(enumType.getName()))){
-					System.out.printf("%1s%2s%15s",c,"  ",gc.getName());
+					System.out.printf("%1s%2s%15s\n",c,"  ",gc.getName());
 					BoardGame.pieceNumberAreaList.add(""+c+":"+gc.getName());
 					c++;
 				}
 			 }
 			 String res1 = questionsToAsk("Choose which card to play:nul");
 			 String res = BoardGame.getPieceNumberList(res1);
-			 for(GreenPlayerCardEnum gc : currentPlayingPlayer.getPlayersPlayingCard())
+			 for(GreenPlayerCardEnum gc : temporary)
 					if((gc.getName().equalsIgnoreCase(res.trim()))){
-						gc.performTasks(currentPlayingPlayer);
+						gc.performTasks(currentPlayingPlayer,b);
 						break;
 					}
-			 System.out.println("Action completed..");		
+			 System.out.println("Action completed..");	
+			 temporary = null;
 		}
 		@Override    
 		public void interrupt() {
 		}
 	
 		@Override
-		public void performTasks(Player currentPlayingPlayer) throws JSONException {}
+		public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {}
 		
 		/**
 		 * this method will ask a player all his actions on player card in order
@@ -1766,9 +1775,9 @@ import com.app.common.Utility;
 			while(number!=0){
 			System.out.println("Your cards as of now  "+selectedPlayer.getPlayerColor()+" player");
 			int c = 1;
-			System.out.printf("%1s%15s","       "," PLAYER CARDS");
+			System.out.printf("%1s%15s\n","       "," PLAYER CARDS");
 			for(GreenPlayerCardEnum gc : selectedPlayer.getPlayersPlayingCard()){
-				System.out.printf("%1s%1s%15s",c,"  ",gc.getName());
+				System.out.printf("%1s%1s%15s\n",c,"  ",gc.getName());
 				BoardGame.pieceNumberAreaList.add(""+c+":"+gc.getName());
 				c++;
 			}
@@ -1819,7 +1828,7 @@ import com.app.common.Utility;
 	
 			for(int i = 0 ; i < temp.length ; i++){
 				if(!temp[i].trim().equalsIgnoreCase("nul"))
-				System.out.printf("%-40s",temp[i]);
+				System.out.printf("%-40s\n",temp[i]);
 			}
 			result = in.nextLine();
 			if(!result.isEmpty())
@@ -1929,19 +1938,20 @@ import com.app.common.Utility;
 		
 		public void removeMinionFromLocation(int num, Player currentPlayer, String fromLocation) {
 			
+			ArrayList<String> minArea = new ArrayList<String>();
+			for(ArrayList<String> str : currentPlayer.getMinions().values())
+				for(String t : str)
+					minArea.add(t);
 			while(num!=0){
-			for(ArrayList<String> str : currentPlayer.getMinions().values()){
-				for(String temp : str){
-					if(fromLocation.equalsIgnoreCase(temp.trim()) && !(temp.equalsIgnoreCase(""))){
+					if(minArea.contains(fromLocation)){
 						currentPlayer.removeMinionInList(fromLocation);
+						//currentPlayer.getMinions().remove(temp);
 						currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity()-1);
-						currentPlayer.getAreaInstanceFromAreaName(temp).setTroubleMarkers(false);
-						break;
+						currentPlayer.getAreaInstanceFromAreaName(fromLocation).setTroubleMarkers(false);
 					}
+				//	break;
 					
-				}
 				num--;
-			}			
 		}
 	}
 		
@@ -2009,12 +2019,17 @@ import com.app.common.Utility;
 		public void removeBuilding(Player currentPlayer, Player fromPlayer) {
 			
 			System.out.println("Opposite Players Areas where he has Building,You can select from below ");
+			System.out.printf("%2s%15s\n","    ","Building Area Names");
 			if(!(fromPlayer.getPlayerAreas().isEmpty())){
+				int count =1;
 				for(Area str : fromPlayer.getPlayerAreas()){
-					System.out.print(str.getAreaName() + ", ");
+					System.out.printf("%1s%2s%15s\n",count,"  ",str.getAreaName());
+					BoardGame.pieceNumberAreaList.add(count+":"+str.getAreaName());
+					count++;
 				}
 			}
-			String res = questionsToAsk("Enter the area name you want to remove building from : nul");
+			String res1 = questionsToAsk("Enter the area name you want to remove building from : nul");
+			String res = BoardGame.getPieceNumberList(res1);
 			int areaIndex = 0;
 			for(Area area : fromPlayer.getPlayerAreas()){				
 				if(res.trim().equalsIgnoreCase(area.getAreaName())){
@@ -2079,7 +2094,7 @@ import com.app.common.Utility;
 				System.out.println("Minion assasinated..");
 				
 				if(r.equalsIgnoreCase("fsc")){
-					PlayerCardUtility.getEnumInstance("Fresh Start Club").performTasks(fromPlayer);
+					PlayerCardUtility.getEnumInstance("Fresh Start Club").performTasks(fromPlayer,true);
 				}
 				return false;
 				}
@@ -2266,6 +2281,7 @@ import com.app.common.Utility;
 			for(Player assassinatePlayer : BoardGame.playersInGame){
 				if(playerToSelect.equalsIgnoreCase(ps.getPlayerColor())){
 					System.out.println("You cannot assasinate your own minion");
+					assasinate(ps);
 				}
 				else{
 					if(playerToSelect.equalsIgnoreCase(assassinatePlayer.getPlayerColor())){
@@ -2457,10 +2473,13 @@ import com.app.common.Utility;
 		@Override
 		public String discardCardsPerYourWish(Player currentPlayingPlayer, GreenPlayerCardEnum tempname, int amt){
 			
+			ArrayList<GreenPlayerCardEnum> temporary = new ArrayList<GreenPlayerCardEnum>();
+			for(GreenPlayerCardEnum gec : currentPlayingPlayer.getPlayersPlayingCard())
+				temporary.add(gec);
 			try{
 			System.out.println("Cards will be discarded as per your wish");
 			int numOfCards = Integer.parseInt(questionsToAsk("Enter the no of cards you want to discard"));
-			while(currentPlayingPlayer.getPlayersPlayingCard().size()!=0 && numOfCards>0){
+			while(temporary.size()!=0 && numOfCards>0){
 				int count = 1;
 				System.out.printf("%-10s\n","Your player cards ");
 				ArrayList<GreenPlayerCardEnum> listOfCurrPlayerCards = currentPlayingPlayer.getPlayersPlayingCard();
@@ -2492,6 +2511,8 @@ import com.app.common.Utility;
 				throw e ;
 			}
 			System.out.println("Action completed..");
+			temporary = null;
+			
 			return "";
 		}
 
@@ -2509,7 +2530,7 @@ public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempna
 				int count =1;
 				for(GreenPlayerCardEnum gc : listOfCurrPlayerCards){
 					if(!gc.getName().equalsIgnoreCase(tempname.getName())){
-						System.out.printf("%-2s-15s",count,gc.getName());
+						System.out.printf("%-2s-15s\n",count,gc.getName());
 						BoardGame.pieceNumberAreaList.add(""+count+":"+gc.getName());
 						count++;
 					}

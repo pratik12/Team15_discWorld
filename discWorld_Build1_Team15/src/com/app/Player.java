@@ -252,7 +252,7 @@ public class Player {
 				
 				ArrayList<Area> temp = BoardGame.getAdjacentAreasForAnArea(location);
 				System.out.println("You can place minions in any of these areas");
-				System.out.printf("%10s","Area Names");
+				System.out.printf("%10s\n","Area Names");
 				int count =1;
 				System.out.printf("%2s%2s%15s\n",count,"  ",location);
 				BoardGame.pieceNumberAreaList.add(""+count+":"+location);
