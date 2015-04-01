@@ -87,6 +87,7 @@ public enum RandomEventCard {
 
     Utility utility = new Utility();
     ComponentUtilities cu = new ComponentUtilities();
+    
     public Boolean doTheTasks(Player currentPlayer, RandomEventCard rc, GreenPlayerCardEnum tempGreenPlayerCard) throws JSONException {
         switch (rc) {
         
@@ -99,20 +100,53 @@ public enum RandomEventCard {
                 System.out.println(area.getAreaName()+" has been struck by Dragon..Wohhoo");
                 currentPlayer.getAreaInstanceFromAreaName(area.getAreaName()).setTroubleMarkers(false);
                 System.out.printf("%2s%10s\n","  ","Removed ");
+               
+               // boolean cardUsed = false;
                 for(Player p : BoardGame.playersInGame){
+                	
+                	System.out.println("Carrying out removing of pieces for Player "+p.getPlayerColor());
+                	ArrayList<String> minArea = new ArrayList<String>();
+                	for(ArrayList<String> s : p.getMinions().values())
+                		for(String str : s)
+                			minArea.add(str);
+                	
+                	
+                	
                 	int count = 0 ;
-                	for(ArrayList<String> s : p.getMinions().values()){
-                		for(String st : s){
-                			if(!(st.equalsIgnoreCase(""))){
+                	//boolean remPiece = false;
+                	//boolean askForSmallGod = true;
+                	//for(ArrayList<String> s : p.getMinions().values()){
+                		for(String st : minArea){
+                			if(!(st.equalsIgnoreCase("")) && st!=null){
                 				count++;
-                				if(p.getMinions().values().size()!=0 && p.getMinions().values()!=null )
+                				//if(p.getMinions().values().size()!=0 && p.getMinions().values()!=null ){
+                					/*if(askForSmallGod){
+                					if(isSmallGods(p)){
+                						String qns = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Would you like to use your "
+                								+ " Small Gods City Area Card, Hit Y or N:nul");
+                						if(qns.equalsIgnoreCase("y")){
+                							remPiece = true;
+                							askForSmallGod = false;
+                							GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, p);
+                							cardUsed = true;
+                						}
+                						else{
+                							remPiece = false;
+                						}
+                					}
+                					}					*/
+                				//	if(!remPiece){
                 					GreenPlayerCardEnum.GLOBALOBJ.removeMinionFromLocation(p.getMinions().values().size(), p, area.getAreaName());
+                					
+                				//	}
+                				//}
                 			}
                 		}
-                	}
+                	//}
                 	System.out.println(count+" "+p.getPlayerColor()+" been removed..");
                 }
-                area.removeBuilding(area.getAreaName());
+                //if(!cardUsed)
+                	area.removeBuilding(area.getAreaName());
                 if(area.getTrolls()>0){
                 	System.out.println(area.getTrolls()+" Trolls been removed..");
                 	BoardGame.setTrolls(BoardGame.getTrolls()+area.getTrolls());
@@ -142,7 +176,7 @@ public enum RandomEventCard {
             case Fire: {
             	System.out.println(rc.name() + " occured..");
             	 int areaNumber = utility.rollDie();
-                 Area initiateAreaOnFire = utility.getAreaByNumber(5);
+                 Area initiateAreaOnFire = utility.getAreaByNumber(areaNumber);
                 try {
                     performFireAction(initiateAreaOnFire);
                     return Boolean.TRUE;
@@ -231,19 +265,24 @@ public enum RandomEventCard {
             }
             case BloodyStupidJohnson: {
             	System.out.println(rc.name() + " occured..");
+            	
                 int areaNumber = utility.rollDie();
                 Area area = utility.getAreaByNumber(areaNumber);
+                
+                CityAreaCardEnum en = CityAreaCardEnum.getCityAreaCardInstance(area.getAreaName());
                 for (Player player : BoardGame.playersInGame) {
-                    for (Area tempArea : player.getPlayerAreas()) {
-                        if (tempArea.equals(area)) {
-                            int minionNumber = player.getMinionQuantity();
-                            minionNumber--;
-                            player.setMinionQuantity(minionNumber);
-                            area.setAreaCityCards(Boolean.FALSE);
-                        }
-                    }
-
+                	if(player.getCityAreaCardsStore().contains(en)){
+                		System.out.println(en.getareaName()+ " Card set to one side");
+                		en.setActiveValue(false);
+                		GreenPlayerCardEnum.GLOBALOBJ.removeMinionFromLocation(1, player,area.getAreaName());
+                		System.out.println("Minion of Player "+player.getPlayerColor()+ " removed from "
+                				+en.getareaName() );
+                	}
+                	else{
+                		System.out.println("No CityAreaCard for Player "+player.getPlayerColor()+" in "+en.getareaName());
+                	}
                 }
+                    
                 return Boolean.TRUE;
 
             }
@@ -321,7 +360,7 @@ public enum RandomEventCard {
 			System.out.println("Minion assasinated..");
 			
 			if(r.equalsIgnoreCase("fsc")){
-				PlayerCardUtility.getEnumInstance("Fresh Start Club").performTasks(fromPlayer);
+				PlayerCardUtility.getEnumInstance("Fresh Start Club").performTasks(fromPlayer,true);
 			}
 			}
 			else{
@@ -338,7 +377,12 @@ public enum RandomEventCard {
     	
 	    	cu.displayBuildingsForPlayeronBoard(p);
 	    	System.out.println();
-			for(CityAreaCardEnum cae : p.getCityAreaCardsStore()){
+	    	
+	    	ArrayList<CityAreaCardEnum> temporary = new ArrayList<CityAreaCardEnum>();
+	    	for(CityAreaCardEnum cae : p.getCityAreaCardsStore()){
+	    		temporary.add(cae);
+	    	}
+			for(CityAreaCardEnum cae : temporary){
 				if(!(p.getPlayerAmount()<2)){
 					GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(2, p);
 					System.out.println("2$ paid to bank for building in area "+cae.getareaName()+ 
@@ -394,14 +438,9 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
                 String selectedAdjacentArea1 = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Choose an area:nul");
                 String selectedAdjacentArea = BoardGame.getPieceNumberList(selectedAdjacentArea1);
                 if (!selectedAdjacentArea.equals(area.getAreaName())) {
-                    //remove minion from destination
-                	//currentPlayer.getMinions().values();
                 	for(int i =0 ; i < minionAreas.size(); i++)
-                 //   for(ArrayList<String> minionArea : currentPlayer.getMinions().values()) {
-                  //      for (String temp : minionArea) {
                         	if(!(minionAreas.get(i).equalsIgnoreCase(""))){	
                            if (minionAreas.get(i).trim().equalsIgnoreCase(area.getAreaName())) {
-                    		//if(currentPlayer.getMinions().containsValue(area.getAreaName())){
                                 currentPlayer.getMinions().remove(area.getAreaName());
                                 currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity() - 1);
                                 currentPlayer.getAreaInstanceFromAreaName(area.getAreaName()).setTroubleMarkers(false);
@@ -409,9 +448,6 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
                                 //break;
                             }
                         }
-                    //    }
-                      //  minionAreas.clear();
-                   // }
                 } else {
                     System.out.println("Selected Area Is An Affected Area and not acceptable");
                 }
@@ -444,4 +480,12 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
                 //break;
             }
     }
+
+	public boolean isSmallGods(Player ps){
+		
+		if(ps.getCityAreaCardsStore().contains(CityAreaCardEnum.SMALLGODS))
+			return true;
+		else
+			return false;
+	}
 }

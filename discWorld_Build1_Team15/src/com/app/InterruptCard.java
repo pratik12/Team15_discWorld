@@ -25,7 +25,7 @@ public class InterruptCard {
 				String res = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("PLAYER "+affectedPlayer.getPlayerColor()+
 						" Do you want to play your "+gec.getName()+ " card. Hit 'Y' or 'N':nul");
 				if(res.equalsIgnoreCase("y") && !(res.matches("\\d+"))){
-					gec.performTasks(affectedPlayer);
+					gec.performTasks(affectedPlayer,true);
 					result = icard.getInterruptMessage();
 					if(result.equalsIgnoreCase("Sm")){
 						System.out.println("Player "+currentPlayer.getPlayerColor()+" cannot carry out the action... ");

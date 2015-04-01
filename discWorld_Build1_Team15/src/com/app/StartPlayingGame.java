@@ -101,7 +101,7 @@ public class StartPlayingGame {
 		return player;
 	}
 	
-	public static void main(String args[]) throws FileNotFoundException, JSONException{
+	public static void main(String... args) throws FileNotFoundException, JSONException{
 		
 		FileManager.loadFile("test.txt");
 		start();
