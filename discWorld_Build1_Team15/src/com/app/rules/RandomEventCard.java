@@ -143,7 +143,7 @@ public enum RandomEventCard {
                 			}
                 		}
                 	//}
-                	System.out.println(count+" "+p.getPlayerColor()+" been removed..");
+                	//System.out.println(count+" "+p.getPlayerColor()+" been removed..");
                 }
                 //if(!cardUsed)
                 	area.removeBuilding(area.getAreaName());
@@ -326,7 +326,7 @@ public enum RandomEventCard {
     	
     	int i = utility.rollDie();
     	Area a = utility.getAreaByNumber(i);
-    	if(a.getMinionsForEveryPlayer(a.getAreaName(),currentPlayer)!="none"){
+    	if(a.getMinionsForEveryPlayer(a.getAreaName(),currentPlayer)!=null){
     		System.out.printf("%15s%10s\n","Player Color","Area Name");
     		for(Player p : BoardGame.playersInGame){
     			
@@ -338,7 +338,7 @@ public enum RandomEventCard {
     		Player fromPlayer = cu.getPlayerFromPieceColor(s.split(":")[1]);
     		remMinionRECFucntion(fromPlayer,currentPlayer,s.split(":")[0]);
     	}else{
-    		System.out.println("No minions to choose from"+a.getAreaName());
+    		System.out.println("No minions to choose from "+a.getAreaName());
     	}
     	
     		count--;

@@ -83,17 +83,22 @@ public class ComponentUtilities {
 	}
 	public void showMinionsAllPlayers(String areaName,Player player) {
 		
+		ArrayList<String> temporary = new ArrayList<String>();
 		for(ArrayList<String> a : player.getMinions().values()){
-			
 			for(String str : a){
+				temporary.add(str);
+			}
+		}
+			for(String str : temporary){
 				if(str.equalsIgnoreCase(areaName)){
 					System.out.printf("%-2s%8s%2s%10s\n",count,player.getPlayerColor(),"  ",areaName);
 					BoardGame.setNumberPieceList((""+
 					count+":"+areaName+":"+player.getPlayerColor()));
 					count++;
 				}
-			}
 		}
+			temporary.clear();
+			temporary = null;
 	}
 	
 	public String getAreaNameDisplayMinion(String num){

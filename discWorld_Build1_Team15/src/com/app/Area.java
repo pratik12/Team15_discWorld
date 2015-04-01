@@ -206,28 +206,32 @@ public class Area {
 	 * @return the minions placed by players in any area.
 	 */
 	public String getMinionsForEveryPlayer(String area,Player poa) {
-
-		String result = "";
-
+		
+		ArrayList<String> temporary = new ArrayList<String>();
+		for(ArrayList<String> a : poa.getMinions().values()){
+			for(String str : a){
+				temporary.add(str);
+			}
+		}
+		String result = null;
 		// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
 		for(Player p : BoardGame.playersInGame){
 			// checking for every minion location for all the players
 			if(p.getPlayerColor().equalsIgnoreCase(poa.getPlayerColor())){
-			for(String minion_location : p.getMinions().get(p.getPlayerColor())){
+			for(String minion_location : temporary){
 
 				if(minion_location.equalsIgnoreCase(area)) // changed from equals to equalsignorecase
 					result += " " +p.getPlayerColor();
 			}
 			}
-
 		}
-		if(result!="none")
+		temporary.clear();
+		temporary = null;
+		if(result!=null)
 			return result;
 		else
-			return "none";
-
+			return result;
 	}
-
 	/**
 	 * Gets the minions.
 	 *
