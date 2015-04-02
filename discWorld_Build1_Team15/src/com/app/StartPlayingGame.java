@@ -28,6 +28,10 @@ public class StartPlayingGame {
 	static UserCardChoice uc = new UserCardChoice();
 	InterruptCard ic = new InterruptCard();
 	
+	/**
+	 * the start function , this is the starting point of the game
+	 * @throws JSONException
+	 */
 	public static void start() throws JSONException{
 		System.out.printf("%-30s\n","*********GAME STARTED********");
 		int currTurn = BoardGame.shuffle(BoardGame.playersInGame.size()-1);
@@ -54,14 +58,16 @@ public class StartPlayingGame {
 			ConsoleOutput.printOutGameBoardState();
 			}
 			
-			
-			
 		}while(!ctrl);
 		
 		
 	}
 	
-	
+	/**
+	 * Adding a Global duplicate store to initalize the intial step of asking the 
+	 * user to play his city area cards.  
+	 * @param currPlayer - instance of ythe current player
+	 */
 	private static void addGlobalStore(Player currPlayer) {
 			
 		if(!currPlayer.getCityAreaCardsStore().isEmpty() && currPlayer.getCityAreaCardsStore()!=null)
@@ -69,7 +75,11 @@ public class StartPlayingGame {
 				UserCardChoice.dupCardStore.add(c);
 	}
 
-
+	/**
+	 * the flobal data structures need to be cleared once they are used for a current players turn
+	 * to avoid the duplicate data and/or garbage data to be seen in other players turn
+	 * @param currPlayer - instance of ythe current player
+	 */
 	private static void clearPlayersData(Player currPlayer) {
 		
 		StartPlayingGame.currCityAreaCards.clear();
@@ -78,13 +88,21 @@ public class StartPlayingGame {
 		
 	}
 
-
+	/**
+	 * displays the player plying cards and city area cards
+	 * @param player - instance of ythe current player
+	 */
 	public void displayPlayerInstructions(Player player) {
 		
 		PlayerCardUtility.displayPlayerCardDetails(player);
 		PlayerCardUtility.displayCityAreaCardDetails(player);
 	}
-
+	
+	/**
+	 * checking the winning conditions for every player at the beginning of his turn
+	 * @param player whose winning condition has to be checked for
+	 * @return - instance of the player who ahs won the game before his turn if not returns null
+	 */
 	public static Player checkWinningConditionEveryPlayer(Player pla){
 		Player player = null;
 			System.out.println("Checking winning condition for Player with Color "+pla.getPlayerColor());
@@ -101,6 +119,12 @@ public class StartPlayingGame {
 		return player;
 	}
 	
+	/**
+	 * Start AnkhMorpork game
+	 * @param args
+	 * @throws FileNotFoundException
+	 * @throws JSONException
+	 */
 	public static void main(String... args) throws FileNotFoundException, JSONException{
 		
 		FileManager.loadFile("test.txt");
