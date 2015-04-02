@@ -68,7 +68,7 @@ import com.app.common.Utility;
 			}
 			}
 		},//take 2$ from all players
-		
+	
 	BEGGARSGUILD("THE BEGGARS GUILD","green","DeckPile", new String[]{"Read Scroll-> Take 2 playing cards","Place minion"} ) {
 			
 		@Override
@@ -736,7 +736,8 @@ import com.app.common.Utility;
 							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
 						takeMoneyFromBank(2, currentPlayingPlayer);
 						res = lastaction(currentPlayingPlayer,res);
-						}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
+						}
+					else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
 							addToDiscardPile(1, this, currentPlayingPlayer,b);
 							return;
 						}
@@ -947,42 +948,7 @@ import com.app.common.Utility;
 			@Override
 			public void performTasks(Player currentPlayingPlayer,boolean b) throws JSONException {
 			
-				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
-				
-				while(  !((res.split(":")[0].trim().equalsIgnoreCase("exit"))) ||
-						(!res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[this.getSymbols().length-1])) ){
-				
-					if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[0])&& 
-							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						
-						addBuildingAction(currentPlayingPlayer);
-						res = askSymbolsInOrder(this, res.split(":")[1].trim(),currentPlayingPlayer);;
-						
-					}else if((res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						addToDiscardPile(1, this, currentPlayingPlayer,b);
-						return;
-					}
-					
-					else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
-							!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
-						//getMoneyForMinionsinArea(1, currentPlayingPlayer, "Isle of Gods");
-						for(Player iteratePlayers : BoardGame.playersInGame){
-							for(Area a : BoardGame.board_areas){
-								if((a.getAreaName().equalsIgnoreCase("isle of gods")) && 
-									currentPlayingPlayer.doYouHaveMinionInThisArea(iteratePlayers, a.getAreaName())){
-									currentPlayingPlayer.setPlayerAmount(currentPlayingPlayer.getPlayerAmount() + 1);
-									
-							
-								}
-								System.out.println("Player amout updated: "+currentPlayingPlayer.getPlayerAmount());
-								
-							}
-						}
-						
-						res = lastaction(currentPlayingPlayer,res);
-						}
-					}
-				addToDiscardPile(1, this, currentPlayingPlayer,b);
+				PlayerCardUtility.getEnumInstance("The Dysk").performTasks(currentPlayingPlayer, b);
 			}
 			
 		},
@@ -1210,7 +1176,7 @@ import com.app.common.Utility;
 				
 				System.out.println("Random Event Card will occur ");
 				RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayingPlayer, 
-						RandomEventCard.Subsidence, this);
+						RandomEventCard.Riots, this);
 				//RandomEventCard.GLOBALOBJ.doTheTasks(currentPlayingPlayer, RandomEventCard.getShuffledRandomEventCard(), this); //Changed from fire to getshuffledrandomeventcard
 				String res = askSymbolsInOrder(this ,"0",currentPlayingPlayer);
 				
@@ -1472,10 +1438,11 @@ import com.app.common.Utility;
 					return;
 				}
 				else if(res.split(":")[0].trim().equalsIgnoreCase(this.getSymbols()[1])&& 
-						!(res.split(":")[0].trim().equalsIgnoreCase("exit")))
+						!(res.split(":")[0].trim().equalsIgnoreCase("exit"))){
 					takeMoneyFromBank(1, currentPlayingPlayer);
+				
 				res = lastaction(currentPlayingPlayer,res);
-				}
+				}}
 			addToDiscardPile(1, this, currentPlayingPlayer,b);
 			}
 			
@@ -1906,7 +1873,7 @@ import com.app.common.Utility;
 			
 		}
 		/**
-		 * removes specified number of  minion for a player
+		 * removes specified number of minion for a player
 		 * @throws JSONException 
 		 */
 		@Override
@@ -1923,7 +1890,6 @@ import com.app.common.Utility;
 								currentPlayer.getMinions().remove(temp);
 								currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity()-1);
 								currentPlayer.getAreaInstanceFromAreaName(temp).setTroubleMarkers(false);
-								
 							}
 							break;
 						}
@@ -1949,10 +1915,10 @@ import com.app.common.Utility;
 						currentPlayer.setMinionQuantity(currentPlayer.getMinionQuantity()-1);
 						currentPlayer.getAreaInstanceFromAreaName(fromLocation).setTroubleMarkers(false);
 					}
-				//	break;
-					
 				num--;
 		}
+			minArea.clear();
+			minArea = null;
 	}
 		
 	
@@ -1971,19 +1937,7 @@ import com.app.common.Utility;
 				
 				if(!(InterruptCard.wantToPlayInterruptCard(fromPlayer, currentPlayer).equalsIgnoreCase("success"))){
 				String loc = BoardGame.getPieceNumberList(fromLocation);	
-				/*HashMap<String, ArrayList<String>> minionsList = fromPlayer.getMinions();
-				ArrayList<String> availableMinions = minionsList.get(fromPlayer.getPlayerColor());
-				//currentPlayer.placeMinion(toLocation);
-				for (String temp: availableMinions){
-					if(temp.trim() != ""){
-						if(!temp.equals(loc)){
-							System.out.println();
-							System.out.println("Player has a Minion in the below location ");
-							System.out.println(temp);
-						}
-						//System.out.println("Below are the possible Adjacent Areas ");
-					}
-				}*/
+				
 				String result = BoardGame.getInstance().getAdjacentAreaIDs(BoardGame.areaDetails, loc);
 				BoardGame.displayAdjacentAreasInMoving(result, loc);
 				
@@ -2043,9 +1997,7 @@ import com.app.common.Utility;
 					break;
 				}
 				++areaIndex;
-				
 			}
-			
 		}
 		
 		/**
@@ -2223,7 +2175,8 @@ import com.app.common.Utility;
 		}
 		
 		/**
-		 * method takes as input the area name from which the trouble marker needs to be removed
+		 * method removes the trouble marker. prompts the user to choose from areas list
+		 * having a trouble marker already
 		 */
 		@Override
 		public void removeTroubleMarker() {
@@ -2246,11 +2199,15 @@ import com.app.common.Utility;
 			System.out.println("Action Completed...");
 		}
 	
-		/**
-		 * method removes a players minion
-		 */
 		
 		//adding a check for verifying if you are trying to assasinate opponent's minion or not -Sanchit
+		/**
+		 * Assasinates , removes the opposite players minion piececs or demons or trolls.
+		 * Displays a list of players whom u want ot select and remove his minion piece
+		 * displays area list if a demon has to be removed.
+		 * @param ps - instance of current playing player.
+		 * 
+		 */
 		@Override
 		public void assasinate(Player ps) throws JSONException {
 			
@@ -2373,7 +2330,9 @@ import com.app.common.Utility;
 		public void placeoneMinion(Player currentPlayer, String areaLocation)
 				throws JSONException {}
 		/**
-		 * draw specified number of cards from discard pile 
+		 * draw specified number of cards from discard pile
+		 * @param Player - instance of current playing player
+		 * @param num - number of cards to be drawn from discarded pile 
 		 */
 		@Override
 		public void drawCardsFromDiscardPile(int num, Player player) {
@@ -2395,7 +2354,10 @@ import com.app.common.Utility;
 		}
 		
 		/**
-		 * place a minion with all the rules of placing a minion being implemented
+		 * Place a minion with all the rules of placing a minion being implemented,
+		 * Displays a list of all possible area where teh minion can be placed
+		 * @param currentPlayingPlayer - instance of current playing player
+		 * 
 		 */
 		@Override
 		public void placeMinionActionPlayerCard(Player currentPlayingPlayer) throws JSONException {
@@ -2468,7 +2430,11 @@ import com.app.common.Utility;
 			System.out.println("Action completed...");
 		}
 		/**
-		 * This method will allow the user to discard as many cards as he wants from his hand
+		 * This method will allow the user to discard as many cards as he wants from his hand and take specified amount from 
+		 * bank for per card discarded.
+		 * @param currentPlayingPlayer - instance of current playing player
+		 * @param tempname - currentPlayingPlayer playing card instance
+		 * @param amt - amount wished ot be taken from bank for each discarded player card
 		 */
 		@Override
 		public String discardCardsPerYourWish(Player currentPlayingPlayer, GreenPlayerCardEnum tempname, int amt){
@@ -2516,8 +2482,12 @@ import com.app.common.Utility;
 			return "";
 		}
 
-		
-public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempname){
+		/**
+		 * Allows the player to discard a card of his choice from his hand 
+		 * @param currentPlayingPlayer - instance of current playing player
+		 * @param tempname - Plyers playing card
+		 */
+		public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempname){
 		
 		
 		
@@ -2530,7 +2500,7 @@ public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempna
 				int count =1;
 				for(GreenPlayerCardEnum gc : listOfCurrPlayerCards){
 					if(!gc.getName().equalsIgnoreCase(tempname.getName())){
-						System.out.printf("%-2s-15s\n",count,gc.getName());
+						System.out.printf("%-2s%-15s\n",count,gc.getName());
 						BoardGame.pieceNumberAreaList.add(""+count+":"+gc.getName());
 						count++;
 					}
@@ -2560,8 +2530,11 @@ public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempna
 
 		
 		/**
-		 * 
-		 * 
+		 * Allows a user to take money in exchange of his playing player cards.
+		 * Asks a user to sleect  a player of his choice so that he can give him his player card
+		 * and take money in exchange of it.
+		 * The amount transferred is appropriatly ddeducted from the sleected player and added to the 
+		 * current player amount
 		 */
 		@Override
 		public void takeMoneyExchangeCardsFromAnotherPlayer(Player currentPlayingPlayer,int amt){
@@ -2588,7 +2561,10 @@ public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempna
 		public void placeMinionActionPlayerCard(Player currentPlayingPlayer,String s) throws JSONException{
 				
 		};
-		
+		/**
+		 * Method to add a building for a player. Displays a list of areas where a user is 
+		 * allowed to place a building.
+		 */
 		@Override
 		public void addBuildingAction(Player player){
 			System.out.println("You can place a building in either of these areas: ");
@@ -2604,6 +2580,14 @@ public void discardACard(Player currentPlayingPlayer, GreenPlayerCardEnum tempna
 			
 		}
 		
+		/**
+		 * A method to prompt the user for asking users to play a city area card after the last 
+		 * action  is performed
+		 * @param currentPlayingPlayer
+		 * @param res
+		 * @return
+		 * @throws JSONException
+		 */
 		public String lastaction(Player currentPlayingPlayer, String res) throws JSONException{
 			
 			System.out.println("You have finished playing this card. It will be discarded");

@@ -7,6 +7,8 @@ import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 import com.app.Player;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -30,6 +32,11 @@ public class Utility {
         return rand.nextInt(num) + 1;
     }
 
+    /**
+     * Returns the area instance for the input number
+     * @param areaNumber Number whose area is desired by user
+     * @return Area instance 
+     */
     public Area getAreaByNumber(int areaNumber) {
         for (Area area : BoardGame.board_areas)
             if (area.getAreaNumber() == areaNumber) {
@@ -37,7 +44,9 @@ public class Utility {
             }
         return null;
     }
-
+    /**
+     * Final points calculation for all players
+     */
     public void doFinalPointsCalculation() {
         int eachPlayerTotalPoints = 0;
         for (Player player : BoardGame.playersInGame) {
@@ -65,7 +74,9 @@ public class Utility {
             eachPlayerTotalPoints = 0;
         }
     }
-
+    /**
+     * Announce winner after doing the final points calculation
+     */
     public void announceWinner() {
         doFinalPointsCalculation();
         
@@ -76,9 +87,49 @@ public class Utility {
             System.out.printf("%3s%25s\n",player.getPlayerColor(),player.getPoints());
         }
         
+        ArrayList<Player> tiedList = new ArrayList<Player>();
+        ArrayList<Integer> ptList = new ArrayList<Integer>();
+        boolean tie = false;
+        for(int i = 0 ; i < BoardGame.playersInGame.size(); i++){
+        	for(int j = i+1 ; j < BoardGame.playersInGame.size(); j++){
+            	if(BoardGame.playersInGame.get(i).getPoints() == BoardGame.playersInGame.get(j).getPoints())
+            	{
+            		Player fp = BoardGame.playersInGame.get(i);
+            		Player sp = BoardGame.playersInGame.get(j);
+            		tiedList.add(fp);
+            		tiedList.add(sp);
+            		ptList.add(fp.getPoints());
+            		ptList.add(sp.getPoints());
+            		System.out.println("Tie Has occured between Player " + BoardGame.playersInGame.get(i).getPlayerColor()+
+            				" and Player"+BoardGame.playersInGame.get(j).getPlayerColor());
+            	tie = true;
+            	}
+            }
+        }
+        if(tie){
+        	Player winTiePlayer = null;
+        	Collections.sort(ptList);
+        	int max = ptList.get(ptList.size()-1);
+        	int count = 1;
+        	for(Player p : tiedList){
+        		
+        		if(p.getPoints()==max){
+        			winTiePlayer = p;
+        			count++;
+        			break;
+        		}
+        	}
+        	
+        	
+        }
+        
         ConsoleOutput.printOutGameBoardState();
     }
-
+    /**
+     * Calculate the number of troublemarkers on board,important for 
+     * Dragon King of Arms and the Riots
+     * @return
+     */
     public int calculateNumberOfTroubleMarkers() {
         int numberOfTroubleMarkers = 0;
         for (Area area : BoardGame.board_areas) {
@@ -87,7 +138,10 @@ public class Utility {
         }
         return numberOfTroubleMarkers;
     }
-
+    /**
+     * Passing the turn to the next playing player
+     * @return String - player piece color
+     */
     public String giveTurnToleft() {
         //String player = CityAreaCardEnum.GLOBAL.questionsToAsk("Enter the player in your left (r/g/b/y)?");
     	String player = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Enter the player in your left (r/g/b/y)?");
@@ -95,7 +149,11 @@ public class Utility {
         
         return player;
     }
-
+    /**
+     * Returns the number of minions in an area
+     * @param areaName - whose minions are to be known
+     * @return Number of minions in that area
+     */
     public int getNumberOfMinions(String areaName) {
         int result = 0;
 
@@ -112,19 +170,4 @@ public class Utility {
         return result;
     }
 
-
-   /* public String checkInputAnswer() {
-    	        System.out.println();
-    	        String result = null;
-    	        Scanner in = new Scanner(System.in);
-    	        result = in.nextLine();
-    	        if (!result.isEmpty())
-    	            return result;
-    	        else {
-    	            System.out.println("Enter a valid input");
-    	            checkInputAnswer();
-    	        }
-    	        return result;
-    	    }
-*/
    }

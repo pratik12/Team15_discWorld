@@ -1,5 +1,6 @@
 package com.app.common;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -21,7 +22,7 @@ public class ComponentUtilities {
 	static int count = 1;
 	/**
 	 * dispalys the Area names of other player where he has plced his minions 
-	 * @param selectedPlayer
+	 * @param selectedPlayer - the player whose minions needs to be disaplyed
 	 */
 	public void displayMinionsOfotherPlayer(Player selectedPlayer){
 		
@@ -64,6 +65,11 @@ public class ComponentUtilities {
 		
 	}
 	
+	/**
+	 * Displays the buildings for a player on board
+	 * @param player
+	 * @throws JSONException
+	 */
 	public void displayBuildingsForPlayeronBoard(Player player) throws JSONException{
 		
 		if(player.getCityAreaCardsStore().size()!=0){
@@ -78,9 +84,12 @@ public class ComponentUtilities {
 		else{
 			System.out.printf("%20s","no buildings on Board");
 		}
-		
-		
 	}
+	/**
+	 * Displays the minions for all players in the given area
+	 * @param areaName
+	 * @param player
+	 */
 	public void showMinionsAllPlayers(String areaName,Player player) {
 		
 		ArrayList<String> temporary = new ArrayList<String>();
@@ -101,6 +110,11 @@ public class ComponentUtilities {
 			temporary = null;
 	}
 	
+	/**
+	 * 
+	 * @param num
+	 * @return
+	 */
 	public String getAreaNameDisplayMinion(String num){
 		
 		String res = null;
@@ -113,6 +127,11 @@ public class ComponentUtilities {
 		return res;
 	}
 	
+	/**
+	 * Returns the Player from his piece color
+	 * @param color - players piece color
+	 * @return player instance
+	 */
 	public Player getPlayerFromPieceColor(String color){
 		Player fromPlayer = null;
 		for(Player po : BoardGame.playersInGame){

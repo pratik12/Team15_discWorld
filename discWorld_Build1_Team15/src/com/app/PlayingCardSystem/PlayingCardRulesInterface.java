@@ -5,7 +5,7 @@ import org.json.JSONException;
 import com.app.Player;
 
 /**
- * This interface contains all the fumcitons need ot play a card
+ * This interface contains all the fumcitons need to play a card
  * @author Pratik Bidkar
  *
  */

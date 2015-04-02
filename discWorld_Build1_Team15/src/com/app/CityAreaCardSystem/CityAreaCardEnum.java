@@ -15,10 +15,12 @@ import com.app.PlayingCardSystem.*;
 
 /**
  * CityAreaCardEnum
- * @author Sanchit Mehta
+ * @author Sanchit 
  *
  * @see
- * CityAreaCards representing an Area owned by a player
+ * CityAreaCards representing an Area owned by a player ,the power of every 
+ * city area card can be used on every turn once with the symbols on the green
+ * player cards.
  */
 
 
@@ -33,7 +35,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 
 		{
+			if(getActiveValue()){
 			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2,currentPlayer);
+			}else{
+				System.out.println( getareaName()+" City Area Card is inactive");
+			}
 		}
 	}, 
 	
@@ -44,10 +50,13 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b)
 		{
-			
+			if(getActiveValue()){
 			discardACard(currentPlayer,this);
 			System.out.println("Player card discarded..");
 			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2,currentPlayer);
+			}else{
+				System.out.println( getareaName()+" City Area Card is inactive");
+			}
 			 
 		}
 
@@ -59,7 +68,12 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b)
 		{
-			System.out.println("task pending");
+			if(getActiveValue()){
+			//System.out.println("task pending");
+				
+			}else{
+				System.out.println( getareaName()+" City Area Card is inactive");
+			}
 		}
 
 			}, 
@@ -71,7 +85,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 	
 		{
+			if(getActiveValue()){
 			GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(2, currentPlayer);
+			}else{
+				System.out.println( getareaName()+" City Area Card is inactive");
+			}
 		}
 			}, 
 	
@@ -82,11 +100,15 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 
 		{
+			if(getActiveValue()){
 			System.out.println("Player will draw one card from the pile..");
 			GreenPlayerCardEnum.GLOBALOBJ.drawCardsFromDeck(1, currentPlayer);
 			
 			System.out.println("Player will discard one card..");
 			discardACard(currentPlayer, this);
+			}else{
+				System.out.println( getareaName()+" City Area Card is inactive");
+			}
 		}
 
 			}, 
@@ -99,10 +121,13 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer , boolean b) throws JSONException 
 		{
-			 
+			 if(getActiveValue()){
 			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, currentPlayer);
 			//GreenPlayerCardEnum.GLOBALOBJ.pl
 			placeoneMinion(currentPlayer, "Dolly Sisters");
+			 }else{
+					System.out.println( getareaName()+" City Area Card is inactive");
+				}
 		}
 
 			}, 
@@ -114,8 +139,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 
 		{
-			  
+			 if(getActiveValue()){ 
 			 GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(1, currentPlayer);
+			 }else{
+					System.out.println( getareaName()+" City Area Card is inactive");
+				}
 		}
 
 	}, 
@@ -127,8 +155,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 
 		{
-			 
+			 if(getActiveValue()){
 			 GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(3, currentPlayer);
+			 }else{
+					System.out.println( getareaName()+" City Area Card is inactive");
+				}
 		}
 
 			},
@@ -140,12 +171,15 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 
 		{
-			 
+			 if(getActiveValue()){
 			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(2, currentPlayer);
 			
 			System.out.println("Now to remove troublemarker from board..");
 			// show to user where trouble markers are
 			GreenPlayerCardEnum.GLOBALOBJ.removeTroubleMarker();
+		}else{
+			System.out.println( getareaName()+" City Area Card is inactive");
+		}
 		}
 	}, 
 	
@@ -156,8 +190,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) 
 		{
-		
+		if(getActiveValue()){
 		GreenPlayerCardEnum.GLOBALOBJ.takeMoneyFromBank(1, currentPlayer);
+		}else{
+			System.out.println( getareaName()+" City Area Card is inactive");
+		}
 		}
 	}, 
 	
@@ -168,9 +205,12 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		@Override
 		public void performTasks(Player currentPlayer,boolean b) throws JSONException 
 		{
-			
+			if(getActiveValue()){
 			GreenPlayerCardEnum.GLOBALOBJ.payMoneyToBank(3, currentPlayer);
 			placeoneMinion(currentPlayer, "Dimwell");
+			}else{
+				System.out.println( getareaName()+" City Area Card is inactive");
+			}
 		}
 	}, 
 	
@@ -180,7 +220,11 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 	{
 		public void performTasks(Player currentPlayer,boolean b) throws JSONException
 		{
+			if(getActiveValue()){
 			this.placeTroubleMarker("The Shades");
+		}else{
+			System.out.println( getareaName()+" City Area Card is inactive");
+		}
 			
 		}
 	}; 
@@ -219,8 +263,13 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 		this.action = action;
 	}
 
-
-
+	/**
+	 * Constructor that sets every enum instance if the cotiy area card with 
+	 * its name, set of actions and a defult boolean value true
+	 * @param area
+	 * @param action
+	 * @param b
+	 */
 	private CityAreaCardEnum(String area,String action,Boolean b)
 	{
 			setareaName(area);
@@ -248,6 +297,9 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			return null;
 		}
 	
+		/**
+		 * Places a troublemarker in an area or its adjacent areas
+		 */	
 	@Override
 	public void placeTroubleMarker(String areaLocation) throws JSONException
 	{
@@ -462,7 +514,6 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 						
 				String result = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Choose a card to discard:nul");
 				
-				//if(!result.matches("\\w+")){
 				String res = BoardGame.getPieceNumberList(result);
 					
 					GreenPlayerCardEnum gec = PlayerCardUtility.getEnumInstance(res);
@@ -470,13 +521,6 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 					if(listOfCurrPlayerCards.contains(gec)){
 						GreenPlayerCardEnum.GLOBALOBJ.addToDiscardPile(1,gec, currentPlayingPlayer, false);
 					}
-					//}
-			//else{
-					//	System.out.println("You have entered invalid input....Start Again!!!");
-					//	discardACard(currentPlayingPlayer, tempname);
-					//	return;
-						
-			//		}
 			}
 			System.out.println("Action completed..");
 		}
@@ -578,18 +622,21 @@ public enum CityAreaCardEnum implements PlayingCardRulesInterface{
 			}
 				
 		}
-		
+		//adjacent areas chosen
 		else if(res.equalsIgnoreCase("B")){
 					
 					System.out.println("You can place minion in following areas adjacent to "+areaLocation);
+					//displaying the minions for a player on the board
 					BoardGame.displayMinionsForPlayerOnBoard(currentPlayer,0);
 					System.out.println();
 		
 					String plMin1 = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Choose area name to place minion in:nul");
 					String plMin = BoardGame.getPieceNumberList(plMin1);
+					//iterating through the all the board areas to check if the area entered matches the location 
 					for(Area a : BoardGame.board_areas)
 						if(a.getAreaName().equalsIgnoreCase(plMin)){
 							currentPlayer.setMinions(currentPlayer.getPlayerColor(), plMin);
+							//minion placed in the area
 							a.setMinionColor(plMin);
 						
 							if(!(a.isTroubleMarkers()) && currentPlayer.totalMinionsInAreaForAllPlayers(plMin)>1) //Sanchit Fix
