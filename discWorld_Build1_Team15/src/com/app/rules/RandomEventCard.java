@@ -1,23 +1,16 @@
 package com.app.rules;
 
-import com.app.Area;
-import com.app.BoardGame;
-import com.app.InterruptCard;
-import com.app.Player;
-import com.app.PlayerCardUtility;
+import com.app.*;
 import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 import com.app.common.ComponentUtilities;
 import com.app.common.Utility;
-
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -187,15 +180,16 @@ public enum RandomEventCard {
             }
             case Fog: {
             	System.out.println(rc.name() + " occured..");
-                int c = 0 ; 
-            	do{
-            		GreenPlayerCardEnum temp = BoardGame.player_cards.get(0);
-            		System.out.println("Cards Drawn "+temp);
-            		BoardGame.getDiscardPilePlayerCards().add(temp);
-            		BoardGame.player_cards.remove(temp);
-            		System.out.println("Cards discarded... "+temp);
-            		c++;
-            	}while(c!=5);
+                for (int i = 0; i < 5; i++) {
+                    if (!BoardGame.player_cards.isEmpty()) {
+                        GreenPlayerCardEnum temp = BoardGame.player_cards.get(0);
+                        System.out.println("Cards Drawn " + temp);
+                        BoardGame.getDiscardPilePlayerCards().add(temp);
+                        BoardGame.player_cards.remove(temp);
+                        System.out.println("Cards discarded... " + temp);
+                    }else
+                        System.out.println("Player Card bunch is empty!");
+                }
                 return Boolean.TRUE;
             }
             case Riots: {
