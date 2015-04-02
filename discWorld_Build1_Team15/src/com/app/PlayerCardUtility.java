@@ -11,7 +11,10 @@ import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 public abstract class PlayerCardUtility {
 	
 	
-	
+	/**
+	 * Displays the player cards and the actions that can be performed from them
+	 * @param player  - instance of the player whose player cards needs to be displayed
+	 */
 	public static void displayPlayerCardDetails(Player player){
 		
 		
@@ -36,7 +39,11 @@ public abstract class PlayerCardUtility {
 		
 	}
 
-	
+	/**
+	 * Gets the GreenPlayercard enum instance for the current Playing card
+	 * @param enumName - the String name of the playing card whose instance needs to be returned at runtime 
+	 * @return - instance of the players playing card
+	 */
 	public static GreenPlayerCardEnum getEnumInstance(String enumName){
 		GreenPlayerCardEnum temp = null;
 		String s = null;
@@ -66,8 +73,11 @@ public abstract class PlayerCardUtility {
 		}
 		return temp;
 	}
-	
-public static void displayCityAreaCardDetails(Player player){
+	/**
+	 * Displays the cityareacards and the actions that can be performed from them
+	 * @param player - instance of the player whose city area cards needs to be displayed
+	 */
+	public static void displayCityAreaCardDetails(Player player){
 		
 		System.out.println();
 		try{

@@ -15,7 +15,9 @@ public class InterruptCard {
 	
 	private static String interruptMessage;
 	
-	
+	/**
+	 * checks if the player is willing to play the interrupt card
+	 */
 	public static String wantToPlayInterruptCard(Player affectedPlayer, Player currentPlayer) throws JSONException{
 		InterruptCard icard = new InterruptCard();
 		String result = null;

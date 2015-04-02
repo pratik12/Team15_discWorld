@@ -19,7 +19,12 @@ public class UserCardChoice {
 		checkInput(temp,currPlayer);
 		
 	}
-
+	/**
+	 * checks the input for the choice the player enters to play specific set of cards
+	 * @param temp - string passed to differentiate between player card and city area card choice
+	 * @param player - instance of player
+	 * @throws JSONException
+	 */
 	private void checkInput(String temp,Player player) throws JSONException {
 		GreenPlayerCardEnum gecDup = null;
 		
@@ -53,7 +58,11 @@ public class UserCardChoice {
 	}
 
 	
-
+	/**
+	 * Returns a boolean value to check if the player wants to play the city area card
+	 * @param player - instance of the player
+	 * @return
+	 */
 	public boolean wishToPlayCityCard(Player player) {
 		
 		Boolean dec = false;
@@ -78,7 +87,13 @@ public class UserCardChoice {
 		}
 		return dec;
 	}
-
+	
+	/**
+	 * Tasks to be performed when the player selects to play the city area cards
+	 * @param player instance of the current playing  the player
+	 * @param gec - instance of the current playing card of the player
+	 * @throws JSONException
+	 */
 	public void playCityAreaCards(Player player, GreenPlayerCardEnum gec) throws JSONException {
 		
 		if(!dupCardStore.isEmpty()){
@@ -108,6 +123,11 @@ public class UserCardChoice {
 		
 	}
 
+	/**
+	 * display the city area cards that are available to a player
+	 * @param player
+	 * @param dupStore
+	 */
 	private void displayCityAreaCards(Player player, ArrayList<CityAreaCardEnum> dupStore) {
 		System.out.printf("%15s%30s\n","CITY CARD NAME","ACTIONS TO PERFORM");
 		int count = 1 ;

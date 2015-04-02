@@ -9,6 +9,7 @@ import com.app.rules.RandomEventCard;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  * This class adds modularity for separation of concerns.
@@ -141,7 +142,7 @@ public class FileManager {
         createPlayers(playersRecords);
     }
     private static void emptyAllDataStructures() throws JSONException {
-    	
+    	try{
     	if((BoardGame.playersInGame) != null){
     	for(Player p : BoardGame.playersInGame){
     		// clearing players own area list
@@ -172,6 +173,9 @@ public class FileManager {
     		BoardGame.setInstance();
     		
     		System.gc();
+    	}
+    	}catch(ConcurrentModificationException e){
+    		System.out.println("ConcurrentModificationException caught.........");
     	}
     	
     	

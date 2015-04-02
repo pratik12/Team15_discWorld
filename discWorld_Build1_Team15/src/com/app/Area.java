@@ -2,6 +2,8 @@ package com.app;
 
 import java.util.ArrayList;
 
+import com.app.CityAreaCardSystem.CityAreaCardEnum;
+
 // TODO: Auto-generated Javadoc
 /**
  * 
@@ -210,10 +212,11 @@ public class Area {
 		ArrayList<String> temporary = new ArrayList<String>();
 		for(ArrayList<String> a : poa.getMinions().values()){
 			for(String str : a){
-				temporary.add(str);
+				if(!str.equalsIgnoreCase(""))
+					temporary.add(str);
 			}
 		}
-		String result = null;
+		String result = "";
 		// iterating over the NUMBER OF MINIONS THAT PLAYER HAS PLACED IN HIS AREA. 
 		for(Player p : BoardGame.playersInGame){
 			// checking for every minion location for all the players
@@ -227,11 +230,12 @@ public class Area {
 		}
 		temporary.clear();
 		temporary = null;
-		if(result!=null)
+		if(result!="")
 			return result;
 		else
 			return result;
 	}
+
 	/**
 	 * Gets the minions.
 	 *
@@ -352,7 +356,7 @@ public class Area {
 	}
 
 	/**
-	 * Remves building only for those players who have atleast a building on the board.
+	 * Remves building only for those players 
 	 * Does not remove a building if there is no building for a player.
 	 * @param areaName
 	 */
@@ -361,13 +365,17 @@ public void removeBuilding(String areaName){
 		for(Player p : BoardGame.playersInGame){
 			for(Area a : p.getPlayerAreas()){
 				if(a.getAreaName().equalsIgnoreCase(areaName)){
+					CityAreaCardEnum tempcec = null;
+					for(CityAreaCardEnum cec : p.getCityAreaCardsStore())
+						if(cec.getareaName().equalsIgnoreCase(areaName))
+							tempcec = cec;
 					a.setBuildngs(false);
 					a.getPlayersInThisAreas().remove(p);
 					a.setAreaCityCards(false);
 					
 					p.getPlayerAreas().remove(a);
-					BoardGame.setCityAreaCardRepo(p.getCityReaCardFromAreaName(areaName));
-					p.getCityAreaCardsStore().remove(p.getCityReaCardFromAreaName(areaName));
+					BoardGame.setCityAreaCardRepo(tempcec);
+					p.getCityAreaCardsStore().remove(tempcec);
 					p.setNumberOfBuildings(p.getNumberOfBuildings()+1);
 					System.out.println("Building from "+areaName+" has been removed for Player "+p.getPlayerColor());
 					break;
@@ -394,38 +402,4 @@ public void removeBuilding(String areaName){
 			this.minionColor.add(minions);
 		}
 
-		
-		//created this function to print the buildings on the display -Sanchit
-	/*	public String getBuildingsForEveryPlayer(String areaname) {
-		
-			String result = "";
-		
-			// iterating over the NUMBER OF Buildings THAT PLAYER HAS PLACED IN HIS AREA. 
-			for(Player p : BoardGame.playersInGame){
-				// checking for every minion location for all the players
-				for(Area a : BoardGame.board_areas){
-					
-					if(a.area_name.equalsIgnoreCase(areaname)){
-					if(a.isBuildngs())
-					{
-						result= p.getPlayerColor();
-					}
-					else
-						result = "no";
-					
-					}		
-				}
-		
-			}
-			
-			
-			if(result!="none")
-				return result;
-			else
-				return "none";
-		
-			
-			
-		
-		}*/
-}
+		}
