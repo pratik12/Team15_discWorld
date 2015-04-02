@@ -23,7 +23,7 @@ public class PlayerTest {
         Player playerObject = new Player("K");
         
         boolean thrown = false;
-        assertEquals(Area.class, playerObject.getAreaInstanceFromAreaName("Dolly Sisters"));
+        assertTrue(playerObject.getAreaInstanceFromAreaName("Dolly Sisters") instanceof Area);
         assertEquals(null, playerObject.getAreaInstanceFromAreaName(" "));
         
         assertNotNull(playerObject);

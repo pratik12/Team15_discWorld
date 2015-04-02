@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 import org.junit.runner.RunWith;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({FileManagerClassTest.class, WinningConditionTest.class, RandomEventCardTest.class})
+@Suite.SuiteClasses({FileManagerClassTest.class, WinningConditionTest.class, RandomEventCardTest.class,
+	GreenPlayerEnumTest.class,PlayerTest.class})
 
 
 public class TestSuite {

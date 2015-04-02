@@ -47,7 +47,7 @@ public class GreenPlayerEnumTest {
 			} catch (Exception e) {
 				msg = true;
 			}
-			assertTrue(msg);
+			assertTrue(!msg);
 	}
 	
 	@Test

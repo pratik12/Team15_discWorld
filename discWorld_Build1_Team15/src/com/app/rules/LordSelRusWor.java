@@ -87,15 +87,22 @@ public class LordSelRusWor implements WinningCircumstances {
     }
 
 	private int calculateMinion(Area a, Player p){
+		
+		ArrayList<String> temporary = new ArrayList<String>();
+		for(ArrayList<String> at : p.getMinions().values()){
+			for(String str : at){
+				temporary.add(str);
+			}
+		}
 		int mincount = 0 ;
-		for(ArrayList<String> s : p.getMinions().values()){
-			for(String str : s){
+		//for(ArrayList<String> s : p.getMinions().values()){
+			for(String str : temporary){
 				if(!str.equalsIgnoreCase("")){
 					if(str.trim().equalsIgnoreCase(a.getAreaName().trim())){
 						mincount++;
 					}
 				}
-			}
+			//}
 		}
 	//	System.out.println("Player Color :" +p.getPlayerColor() + " Minions Area "+a.getAreaName());
 		return mincount;
@@ -103,7 +110,11 @@ public class LordSelRusWor implements WinningCircumstances {
 		
 	private int calculateBldg(Area a , Player p){	
 		int bldgcount = 0 ;
-		for(CityAreaCardEnum cec : p.getCityAreaCardsStore()){
+		ArrayList<CityAreaCardEnum> temporary = new ArrayList<CityAreaCardEnum>();
+		for(CityAreaCardEnum at : p.getCityAreaCardsStore()){
+				temporary.add(at);
+		}
+		for(CityAreaCardEnum cec : temporary){
 			if(cec.getareaName().trim().equalsIgnoreCase(a.getAreaName().trim())){
 				bldgcount++;
 			}

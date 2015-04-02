@@ -1,18 +1,27 @@
 package com.app.rules;
 
-import com.app.*;
+import com.app.Area;
+import com.app.BoardGame;
+import com.app.InterruptCard;
+import com.app.Player;
+import com.app.PlayerCardUtility;
 import com.app.CityAreaCardSystem.CityAreaCardEnum;
 import com.app.PlayingCardSystem.GreenPlayerCardEnum;
 import com.app.common.ComponentUtilities;
 import com.app.common.Utility;
+
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
+ * 
+ * 
  * Created with IntelliJ IDEA.
  * User: Mahdiye
  * Date: 2/26/15
@@ -34,6 +43,10 @@ public enum RandomEventCard {
     Earthquake(11),
     Fire(12);
 
+    /**
+     * 
+     * @return
+     */
     public static RandomEventCard getShuffledRandomEventCard() { // made static for verification
     	
     	
@@ -55,7 +68,10 @@ public enum RandomEventCard {
         }
         return retVal;
     }
-
+    
+    /**
+     * 
+     */
     private static final Map<Integer, String> lookup
             = new HashMap<Integer, String>();
 
@@ -80,7 +96,14 @@ public enum RandomEventCard {
 
     Utility utility = new Utility();
     ComponentUtilities cu = new ComponentUtilities();
-    
+    /**
+     * 
+     * @param currentPlayer
+     * @param rc
+     * @param tempGreenPlayerCard
+     * @return
+     * @throws JSONException
+     */
     public Boolean doTheTasks(Player currentPlayer, RandomEventCard rc, GreenPlayerCardEnum tempGreenPlayerCard) throws JSONException {
         switch (rc) {
         
@@ -102,8 +125,6 @@ public enum RandomEventCard {
                 	for(ArrayList<String> s : p.getMinions().values())
                 		for(String str : s)
                 			minArea.add(str);
-                	
-                	
                 	
                 	int count = 0 ;
                 	//boolean remPiece = false;
@@ -158,10 +179,25 @@ public enum RandomEventCard {
             	System.out.println(rc.name() + " occured..");
             	for(int i =0;i<2;i++){
             		int areaNum = utility.rollDie();
-            		
             		Area area = utility.getAreaByNumber(areaNum);
             		System.out.println("Area Rolled " +area.getAreaName());
-            		doFloodAction(currentPlayer, areaNum, area);
+            		String playerQueue = null;
+            		playerQueue += ":"+currentPlayer.getPlayerColor();
+            		//String nextPlayer = null;
+            		//nextPlayer = utility.giveTurnToleft();
+                    for(Player player : BoardGame.playersInGame){
+                    	if(!(player.getPlayerColor().equalsIgnoreCase(currentPlayer.getPlayerColor())))
+                    		playerQueue += ":"+player.getPlayerColor();
+                    }
+                    String[] playQ = playerQueue.split(":");
+                    for(int j =0 ;j<playQ.length;j++){
+                    	Player tempPla = null;
+                    	if(playQ[j].equalsIgnoreCase("R") || playQ[j].equalsIgnoreCase("Y") 
+                    			|| playQ[j].equalsIgnoreCase("B") || playQ[j].equalsIgnoreCase("G")){
+                    		 tempPla = cu.getPlayerFromPieceColor(playQ[j]);
+                    		 doFloodAction(tempPla, areaNum, area);
+                    	}
+                    }
             	}
                 return Boolean.TRUE;
             }
@@ -179,18 +215,7 @@ public enum RandomEventCard {
 
             }
             case Fog: {
-            	System.out.println(rc.name() + " occured..");
-                for (int i = 0; i < 5; i++) {
-                    if (!BoardGame.player_cards.isEmpty()) {
-                        GreenPlayerCardEnum temp = BoardGame.player_cards.get(0);
-                        System.out.println("Cards Drawn " + temp);
-                        BoardGame.getDiscardPilePlayerCards().add(temp);
-                        BoardGame.player_cards.remove(temp);
-                        System.out.println("Cards discarded... " + temp);
-                    }else
-                        System.out.println("Player Card bunch is empty!");
-                }
-                return Boolean.TRUE;
+            	return doFog(rc);
             }
             case Riots: {
             	System.out.println(rc.name() + " occured..");
@@ -262,10 +287,14 @@ public enum RandomEventCard {
             	
                 int areaNumber = utility.rollDie();
                 Area area = utility.getAreaByNumber(areaNumber);
-                
+                ArrayList<CityAreaCardEnum> temporary = null;
                 CityAreaCardEnum en = CityAreaCardEnum.getCityAreaCardInstance(area.getAreaName());
                 for (Player player : BoardGame.playersInGame) {
-                	if(player.getCityAreaCardsStore().contains(en)){
+                	 temporary = new ArrayList<CityAreaCardEnum>();
+            		for(CityAreaCardEnum at : player.getCityAreaCardsStore()){
+            				temporary.add(at);
+            		}
+                	if(temporary.contains(en)){
                 		System.out.println(en.getareaName()+ " Card set to one side");
                 		en.setActiveValue(false);
                 		GreenPlayerCardEnum.GLOBALOBJ.removeMinionFromLocation(1, player,area.getAreaName());
@@ -276,7 +305,8 @@ public enum RandomEventCard {
                 		System.out.println("No CityAreaCard for Player "+player.getPlayerColor()+" in "+en.getareaName());
                 	}
                 }
-                    
+                temporary.clear();
+                temporary = null;
                 return Boolean.TRUE;
 
             }
@@ -316,7 +346,23 @@ public enum RandomEventCard {
 
     }
     
-    private void doMuder(Player currentPlayer, int count) throws JSONException {
+    public boolean doFog(RandomEventCard rc) {
+    	
+    	System.out.println(rc.name() + " occured..");
+    	for (int i = 0; i < 5; i++) {
+    		if (!BoardGame.player_cards.isEmpty()) {
+    		GreenPlayerCardEnum temp = BoardGame.player_cards.get(0);
+    		System.out.println("Cards Drawn "+temp);
+    		BoardGame.getDiscardPilePlayerCards().add(temp);
+    		BoardGame.player_cards.remove(temp);
+    		System.out.println("Cards discarded... "+temp);
+    	}else{
+    		System.out.println("Player Card bunch is empty!");}
+    	}
+    	return Boolean.TRUE;
+	}
+
+	private void doMuder(Player currentPlayer, int count) throws JSONException {
     	
     	int i = utility.rollDie();
     	Area a = utility.getAreaByNumber(i);
@@ -421,7 +467,6 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
 	ArrayList<String> minionAreas = new ArrayList<String>();
 	for(ArrayList<String> minionArea : currentPlayer.getMinions().values()) {
         for (String temp : minionArea) {
-        	
         		minionAreas.add(temp);
         }
         }
@@ -432,7 +477,7 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
                 String selectedAdjacentArea1 = GreenPlayerCardEnum.GLOBALOBJ.questionsToAsk("Choose an area:nul");
                 String selectedAdjacentArea = BoardGame.getPieceNumberList(selectedAdjacentArea1);
                 if (!selectedAdjacentArea.equals(area.getAreaName())) {
-                	for(int i =0 ; i < minionAreas.size(); i++)
+                	for(int i =0 ; i < minionAreas.size(); i++){
                         	if(!(minionAreas.get(i).equalsIgnoreCase(""))){	
                            if (minionAreas.get(i).trim().equalsIgnoreCase(area.getAreaName())) {
                                 currentPlayer.getMinions().remove(area.getAreaName());
@@ -442,6 +487,7 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
                                 //break;
                             }
                         }
+                	}
                 } else {
                     System.out.println("Selected Area Is An Affected Area and not acceptable");
                 }
@@ -453,27 +499,19 @@ private void doFloodAction(Player currentPlayer,int num,Area area) {
         	System.out.println("Flood cannot occur in "+area.getAreaName());
         	return;
         }
-
-            for (Player player : BoardGame.playersInGame) {
+}   
+        	
             	
-            	String nextPlayer = util.giveTurnToleft();
-            	
-            	ArrayList<String> minionAreass = new ArrayList<String>();
-            	for(ArrayList<String> s : player.getMinions().values())
+            	/*for(ArrayList<String> s : player.getMinions().values())
             		for(String sgh : s)
             			if(!sgh.equalsIgnoreCase(""))
-            				minionAreass.add(sgh);
+            				minionAreas.add(sgh);
             	
-                if (player.getPlayerColor().equalsIgnoreCase(nextPlayer)){// && !nextPlayer.equalsIgnoreCase(currentPlayer.getPlayerColor())){
-                		for(String thisSting : minionAreass)
-                			if(thisSting.trim().equalsIgnoreCase(area.getAreaName()))
-                				doFloodAction(player,num,area);
-                }
-                
-                minionAreass.clear();
-                //break;
-            }
-    }
+                if (player.getPlayerColor().equalsIgnoreCase(nextPlayer)
+                		&& minionAreas.contains(area.getAreaName())){// && !nextPlayer.equalsIgnoreCase(currentPlayer.getPlayerColor())){
+                				System.out.println("Performing replacing action for Player "+player.getPlayerColor()
+                						+ " in "+area.getAreaName());
+                				doFloodAction(player,num,area);*/
 
 	public boolean isSmallGods(Player ps){
 		
